@@ -218,7 +218,7 @@ FixIt 主题旨在在**简洁性**和**可扩展性**之间取得平衡。为此
 - [shortcode-asciinema](https://github.com/hugo-fixit/shortcode-asciinema)\
   A Hugo theme component with asciinema-embed shortcode.
 - [shortcode-caniuse](https://github.com/hugo-fixit/shortcode-caniuse)\
-  一个含有 caniuse shortcode 的 Hugo ���题组件。
+  一个含有 caniuse shortcode 的 Hugo 主题组件。
 - [shortcode-docs-bookmark](https://github.com/hugo-fixit/shortcode-docs-bookmark)\
   🔖 Embed bookmark of FixIt Docs.
 - [shortcode-mmt-netease](https://github.com/hugo-fixit/shortcode-mmt-netease)\
