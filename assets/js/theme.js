@@ -1,3 +1,4 @@
+// TODO use ESLint to check the code style
 import Util from './util';
 
 class FixIt {
@@ -683,17 +684,53 @@ class FixIt {
       this._echartsArr = [];
       const stagingDOM = this.util.getStagingDOM()
       this.util.forEach(document.getElementsByClassName('echarts'), ($echarts) => {
-        if ($echarts.nextElementSibling.tagName === 'TEMPLATE') {
-          const chart = echarts.init($echarts, this.isDark ? 'dark' : 'light', { renderer: 'svg' });
-          stagingDOM.stage($echarts.nextElementSibling.content.cloneNode(true));
-          // support both JSON and JS object literal
-          if ($echarts.nextElementSibling.dataset.fmt === 'js') {
-            eval(`chart.setOption(${stagingDOM.contentAsText()})`);
-          } else {
-            chart.setOption(stagingDOM.contentAsJson());
-          }
-          this._echartsArr.push(chart);
+        const $dataEl = $echarts.nextElementSibling;
+        if ($dataEl.tagName !== 'TEMPLATE') {
+          return;
         }
+        const chart = echarts.init($echarts, this.isDark ? 'dark' : 'light', { renderer: 'svg' });
+        chart.showLoading();
+        stagingDOM.stage($dataEl.content.cloneNode(true));
+        const _setOption = (option) => {
+          if (!option) {
+            chart.hideLoading();
+            console.warn('ECharts option is missing or invalid. Chart disposed.', {
+              element: $echarts,
+              option: $dataEl,
+            });
+            chart.dispose();
+            $echarts.removeAttribute('style');
+            return;
+          }
+          chart.hideLoading();
+          chart.setOption(option);
+          this._echartsArr.push(chart);
+        };
+        // support JS object literal or JS code
+        if ($dataEl.dataset.fmt === 'js') {
+          try {
+            const jsCodes = stagingDOM.contentAsText();
+            /**
+             * Get ECharts option
+             * @param {Object} fixit FixIt instance
+             * @param {Object} chart ECharts instance
+             * @returns {Object|Promise} ECharts option or Promise
+             */
+            const _getOption = new Function('fixit', 'chart',
+              this.util.isObjectLiteral(jsCodes) ? `return ${jsCodes}` : jsCodes
+            );
+            if ($dataEl.dataset.async === 'true') {
+              return Promise.resolve(_getOption(this, chart)).then(option => {
+                _setOption(option);
+              });
+            }
+            return _setOption(_getOption(this, chart));
+          } catch (err) {
+            return console.error(err);
+          }
+        }
+        // support JSON
+        _setOption(stagingDOM.contentAsJson());
       });
       stagingDOM.destroy();
     });
