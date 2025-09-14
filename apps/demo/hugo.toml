@@ -8,8 +8,7 @@
 # -------------------------------------------------------------------------------------
 
 title = "Hugo FixIt Demo"
-baseURL = "http://example.org/"
-# Change the default theme to be use when building the site with Hugo
+baseURL = "https://demo.fixit.lruihao.cn/"
 # theme = "FixIt"
 
 [markup]

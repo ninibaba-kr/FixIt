@@ -1,4 +1,4 @@
-import * as params from '@params'
+import params from '@params'
 
 /**
  * Load MathJax script dynamically
@@ -36,7 +36,6 @@ window.MathJax = {
     },
   },
   options: {
-    ignoreHtmlClass: 'comment',
     processHtmlClass: 'content',
     ...params.options,
   }

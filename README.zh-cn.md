@@ -24,25 +24,21 @@
 
 > 它的原型基于 [LoveIt](https://github.com/dillonzq/LoveIt) 主题，[KeepIt](https://github.com/Fastbyte01/KeepIt) 主题和 [LeaveIt](https://github.com/liuzc/LeaveIt) 主题。
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/hugo-fixit/FixIt?style=flat)](https://github.com/hugo-fixit/FixIt/releases)
+[![Build](https://img.shields.io/github/deployments/hugo-fixit/FixIt/Production?style=flat&label=Build&logo=vercel)](https://demo.fixit.lruihao.cn/)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/hugo-fixit/FixIt?style=flat&label=Release&logo=github&include_prereleases)](https://github.com/hugo-fixit/FixIt/releases)
 [![Hugo](https://img.shields.io/badge/Hugo-%5E0.147.7-ff4088?style=flat&logo=hugo)](https://gohugo.io/)
-[![License](https://img.shields.io/github/license/hugo-fixit/FixIt?style=flat)](/LICENSE)
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/hugo-fixit/FixIt)
+[![License](https://img.shields.io/github/license/hugo-fixit/FixIt?style=flat&label=License)](/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/hugo-fixit/FixIt?style=social)](https://github.com/hugo-fixit/FixIt)
+[![Gitee star of FixIt](https://gitee.com/lruihao/FixIt/badge/star.svg)](https://gitee.com/lruihao/FixIt/stargazers)
 
 ## 即时预览
 
 <p align="center">
-  💟 <a href="https://fixit.lruihao.cn/zh-cn/">Production</a> | ❇️ <a href="https://pre.fixit.lruihao.cn/zh-cn/">Preview</a> | 🚼 <a href="https://demo.fixit.lruihao.cn">Demo</a> | 🆕 <a href="https://hugo-fixit.github.io/hugo-fixit-starter/">Starter</a>
+  💟 <a href="https://fixit.lruihao.cn">Docs</a> | ❇️ <a href="https://demo.fixit.lruihao.cn/test/">Test</a> | 🚼 <a href="https://demo.fixit.lruihao.cn">Demo</a> | 🆕 <a href="https://hugo-fixit.github.io/hugo-fixit-starter/">Starter</a>
 <br>
 <br>
   更多 FixIt 的例子参见 <a href="https://fixit.lruihao.cn/zh-cn/showcase/">这里</a>。
 </p>
-
-## 为什么选择 FixIt
-
-我也不知道为什么 🤷。
-
-<!-- 懒的写…… -->
 
 ## 使用指南
 
@@ -81,10 +77,6 @@ pnpx fixit-cli create my-blog
 [docs:generate]: https://github.com/hugo-fixit/docs/generate
 [lruihao-blog]: https://github.com/Lruihao/hugo-blog
 [lruihao-blog:generate]: https://github.com/Lruihao/hugo-blog/generate
-
-### 镜像
-
-Gitee 镜像仓库：<https://gitee.com/lruihao/FixIt>
 
 ## 特色
 
@@ -146,9 +138,11 @@ Gitee 镜像仓库：<https://gitee.com/lruihao/FixIt>
 - 支持**代码高亮**
 - 一键**复制代码**到剪贴板
 - 支持基于 [lightgallery](https://github.com/sachinchoolur/lightgallery) 的**图片画廊**
-- 支持 **[Font Awesome](https://fontawesome.com/) 图标**的扩展 Markdown 语法
-- 支持**上标注释**的扩展 Markdown 语法
-- 支持**分数**的扩展 Markdown 语法
+- 支持 **[Font Awesome](https://fontawesome.com/) 图标**的 Markdown 扩展语法
+- 支持**上标注释**的 Markdown 扩展语法
+- 支持**分数**的 Markdown 扩展语法
+- 支持多种 **admonitions** shortcode 或 **alerts** 的 Markdown 扩展语法
+- 支持**标签页**的 shortcode，提供多种设计样式
 - 支持基于 [KaTeX](https://katex.org/) 或 [MathJax](https://www.mathjax.org) 的**数学公式**
 - 支持基于 [mermaid](https://github.com/knsv/mermaid) 的**图表** 代码块扩展语法和 shortcode
 - 支持基于 [ECharts](https://echarts.apache.org/) 的**交互式数据可视化** 代码块扩展语法和 shortcode
@@ -156,7 +150,6 @@ Gitee 镜像仓库：<https://gitee.com/lruihao/FixIt>
 - 支持基于 [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js) 的 **Mapbox** shortcode
 - 支持基于 [APlayer](https://github.com/MoePlayer/APlayer) 和 [MetingJS](https://github.com/metowolf/MetingJS) 的**音乐播放器** shortcode
 - 支持 **Bilibili 视频** 和 **抖音视频** shortcode
-- 支持多种**注释**的 shortcode
 - 支持**自定义样式**的 shortcode
 - 支持**自定义脚本**的 shortcode
 - 支持**自定义模板块**
@@ -221,6 +214,8 @@ FixIt 主题旨在在**简洁性**和**可扩展性**之间取得平衡。为此
   A Hugo theme component with caniuse shortcode.
 - [shortcode-docs-bookmark](https://github.com/hugo-fixit/shortcode-docs-bookmark)\
   🔖 Embed bookmark of FixIt Docs.
+- [shortcode-missing-translation](https://github.com/hugo-fixit/shortcode-missing-translation)\
+  A Hugo theme component with missing-translation shortcode.
 - [shortcode-mmt-netease](https://github.com/hugo-fixit/shortcode-mmt-netease)\
   🎶 A Hugo theme component with a NetEase Cloud random comment shortcode.
 - [shortcode-rewards](https://github.com/hugo-fixit/shortcode-rewards)\
@@ -298,6 +293,7 @@ FixIt 主题旨在在**简洁性**和**可扩展性**之间取得平衡。为此
 - [crypto-js](https://github.com/brix/crypto-js)
 - [pace](https://github.com/CodeByZach/pace)
 - [xxhash-wasm](https://github.com/jungomi/xxhash-wasm)
+- [`<tab-container>` element](https://github.com/github/tab-container-element)
 
 </details>
 

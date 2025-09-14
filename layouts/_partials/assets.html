@@ -4,6 +4,7 @@
 {{- $fingerprint := .Site.Store.Get "fingerprint" -}}
 {{- $config := (.Store.Get "this").config -}}
 {{- $config = dict "version" (hugo.Store.Get "version") | merge $config -}}
+{{- $author := partial "function/get-author-map.html" .Params.author -}}
 
 {{- /* Search */ -}}
 {{- if .Site.Params.search | and .Site.Params.search.enable -}}
@@ -106,12 +107,23 @@
 
   {{- /* MathJax */ -}}
   {{- if eq $math.type "mathjax" -}}
-    {{/*  TODO improve MathJax setup. e.g. content encryption, Twikoo math etc.  */}}
     {{- $mathjax := $math.mathjax -}}
-    {{- $source := "js/lib/load-mathjax.js" -}}
-    {{- $options := dict "targetPath" "js/lib/load-mathjax.min.js" "minify" hugo.IsProduction -}}
-    {{- $mathjaxOpts := $mathjax.options | default dict -}}
-    {{- $mathjaxOpts = dict "enableMenu" $mathjaxOpts.enablemenu | merge $mathjaxOpts -}}
+    {{- $source := "js/lib/mathjax.js" -}}
+    {{- $options := dict "targetPath" "js/lib/mathjax.min.js" "minify" hugo.IsProduction -}}
+    {{- $mathjaxOptsConfig := $mathjax.options | default dict -}}
+    {{- $mathjaxOpts := dict -}}
+    {{- with $mathjaxOptsConfig.enableMenu -}}
+      {{- $mathjaxOpts = dict "enableMenu" . | merge $mathjaxOpts -}}
+    {{- end -}}
+    {{- with $mathjaxOptsConfig.ignoreHtmlClass -}}
+      {{- $mathjaxOpts = dict "ignoreHtmlClass" . | merge $mathjaxOpts -}}
+    {{- end -}}
+    {{- with $mathjaxOptsConfig.skipHtmlTags -}}
+      {{- $mathjaxOpts = dict "skipHtmlTags" . | merge $mathjaxOpts -}}
+    {{- end -}}
+    {{- with $mathjaxOptsConfig.includeHtmlTags -}}
+      {{- $mathjaxOpts = dict "includeHtmlTags" . | merge $mathjaxOpts -}}
+    {{- end -}}
     {{- $params := dict
       "cdn" $mathjax.cdn
       "tex" ($mathjax.tex | default dict)
@@ -130,14 +142,9 @@
 
 {{- /* mermaid */ -}}
 {{- if .Store.Get "hasMermaid" -}}
-  {{- $config = dict "themes" .Site.Params.mermaid.themes | dict "mermaid" | merge $config -}}
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.esm.min.mjs';
-    // Style conflict with ZenUML
-    // import zenuml from 'https://cdn.jsdelivr.net/npm/@mermaid-js/mermaid-zenuml@0.2.0/dist/mermaid-zenuml.esm.min.mjs'
-    // await mermaid.registerExternalDiagrams([zenuml]);
-    window.mermaid = mermaid;
-  </script>
+  {{- $options := dict "Source" "js/lib/mermaid.js" "Template" "js/lib/mermaid.js" -}}
+  {{- $options = dict "Context" . "Minify" hugo.IsProduction "Fingerprint" $fingerprint "Attr" `type="module"` | merge $options -}}
+  {{- $options | dict "Page" $ "Data" | partial "store/script.html" -}}
 {{- end -}}
 
 {{- /* ECharts */ -}}
@@ -174,6 +181,12 @@
   {{- dict "Source" $source "Fingerprint" $fingerprint "Defer" true | dict "Page" . "Data" | partial "store/script.html" -}}
 {{- end -}}
 
+{{- /* Tabs and tab */ -}}
+{{- if .Store.Get "hasTabs" -}}
+  {{- $source := $cdn.tabContainerElementJS | default "lib/tab-container-element/bundle.min.js" -}}
+  {{- dict "Source" $source "Fingerprint" $fingerprint "Attr" `type="module"` "Defer" true | dict "Page" . "Data" | partial "store/script.html" -}}
+{{- end -}}
+
 {{- /* Cookie Consent */ -}}
 {{- if .Site.Params.cookieconsent | and .Site.Params.cookieconsent.enable -}}
   {{- $source := $cdn.cookieconsentCSS | default "lib/cookieconsent/cookieconsent.min.css" -}}
@@ -197,8 +210,17 @@
 {{- if eq .Site.Params.watermark.enable true -}}
   {{- $source := $cdn.cellWatermarkJS | default "lib/cell-watermark/watermark.min.js" -}}
   {{- dict "Source" $source "Fingerprint" $fingerprint "Defer" true | dict "Page" . "Data" | partial "store/script.html" -}}
-  {{- /* Hugo bug: case insensitive for `.Site.Params` */ -}}
-  {{- $config = dict "watermark" .Site.Params.watermark | merge $config -}}
+  {{- $watermarkConfig := .Site.Params.watermark | default dict -}}
+  {{- $watermarkConfig = dict
+    "appendTo" ".widgets"
+    "content" ($watermarkConfig.content | default $author.name | default .Site.Title)
+    "rowSpacing" $watermarkConfig.rowSpacing
+    "colSpacing" $watermarkConfig.colSpacing
+    "fontSize" $watermarkConfig.fontSize
+    "fontFamily" $watermarkConfig.fontFamily
+    | merge $watermarkConfig
+  -}}
+  {{- $config = dict "watermark" $watermarkConfig | merge $config -}}
 {{- end -}}
 
 {{- /* Content Decryption */ -}}

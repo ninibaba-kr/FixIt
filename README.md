@@ -24,25 +24,21 @@
 
 > It is based on the original [LoveIt](https://github.com/dillonzq/LoveIt) Theme, [KeepIt](https://github.com/Fastbyte01/KeepIt) Theme and [LeaveIt](https://github.com/liuzc/LeaveIt) Theme.
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/hugo-fixit/FixIt?style=flat)](https://github.com/hugo-fixit/FixIt/releases)
+[![Build](https://img.shields.io/github/deployments/hugo-fixit/FixIt/Production?style=flat&label=Build&logo=vercel)](https://demo.fixit.lruihao.cn/)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/hugo-fixit/FixIt?style=flat&label=Release&logo=github&include_prereleases)](https://github.com/hugo-fixit/FixIt/releases)
 [![Hugo](https://img.shields.io/badge/Hugo-%5E0.147.7-ff4088?style=flat&logo=hugo)](https://gohugo.io/)
-[![License](https://img.shields.io/github/license/hugo-fixit/FixIt?style=flat)](/LICENSE)
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/hugo-fixit/FixIt)
+[![License](https://img.shields.io/github/license/hugo-fixit/FixIt?style=flat&label=License)](/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/hugo-fixit/FixIt?style=social)](https://github.com/hugo-fixit/FixIt)
+[![Gitee star of FixIt](https://gitee.com/lruihao/FixIt/badge/star.svg)](https://gitee.com/lruihao/FixIt/stargazers)
 
 ## Live Preview
 
 <p align="center">
-  💟 <a href="https://fixit.lruihao.cn">Production</a> | ❇️ <a href="https://pre.fixit.lruihao.cn">Preview</a> | 🚼 <a href="https://demo.fixit.lruihao.cn">Demo</a> | 🆕 <a href="https://hugo-fixit.github.io/hugo-fixit-starter/">Starter</a>
+  💟 <a href="https://fixit.lruihao.cn">Docs</a> | ❇️ <a href="https://demo.fixit.lruihao.cn/test/">Test</a> | 🚼 <a href="https://demo.fixit.lruihao.cn">Demo</a> | 🆕 <a href="https://hugo-fixit.github.io/hugo-fixit-starter/">Starter</a>
 <br>
 <br>
   More FixIt examples <a href="https://fixit.lruihao.cn/showcase/">here</a>.
 </p>
-
-## Why choose FixIt
-
-I don't know why 🤷.
-
-<!-- Too lazy to write... -->
 
 ## Usage
 
@@ -145,6 +141,8 @@ Click the following links to generate a new repository with template:
 - Extended Markdown syntax for **[Font Awesome](https://fontawesome.com/) icons**
 - Extended Markdown syntax for **ruby annotation**
 - Extended Markdown syntax for **fraction**
+- Multiple **admonitions** shortcode or **alerts** extended Markdown syntax
+- **Tabs** and **Tab** shortcode with multiple design styles
 - **Mathematical formula** supported by [KaTeX](https://katex.org/) or [MathJax](https://www.mathjax.org)
 - **Diagrams** code fences extended and shortcode supported by [mermaid](https://github.com/knsv/mermaid)
 - **Interactive data visualization** shortcode and code fences extended supported by [ECharts](https://echarts.apache.org/)
@@ -152,7 +150,6 @@ Click the following links to generate a new repository with template:
 - **Mapbox** shortcode supported by [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js)
 - **Music player** shortcode supported by [APlayer](https://github.com/MoePlayer/APlayer) and [MetingJS](https://github.com/metowolf/MetingJS)
 - **Bilibili player** and **Douyin player** shortcode
-- Kinds of **admonitions** shortcode
 - **Custom style** shortcode
 - **Custom script** shortcode
 - Open more **custom blocks**
@@ -217,6 +214,8 @@ The FixIt theme balances **simplicity** and **extensibility** with extra [Hugo t
   A Hugo theme component with caniuse shortcode.
 - [shortcode-docs-bookmark](https://github.com/hugo-fixit/shortcode-docs-bookmark)\
   🔖 Embed bookmark of FixIt Docs.
+- [shortcode-missing-translation](https://github.com/hugo-fixit/shortcode-missing-translation)\
+  A Hugo theme component with missing-translation shortcode.
 - [shortcode-mmt-netease](https://github.com/hugo-fixit/shortcode-mmt-netease)\
   🎶 A Hugo theme component with a NetEase Cloud random comment shortcode.
 - [shortcode-rewards](https://github.com/hugo-fixit/shortcode-rewards)\
@@ -294,6 +293,7 @@ Thanks to all the [contributors](https://github.com/hugo-fixit/FixIt/graphs/cont
 - [crypto-js](https://github.com/brix/crypto-js)
 - [pace](https://github.com/CodeByZach/pace)
 - [xxhash-wasm](https://github.com/jungomi/xxhash-wasm)
+- [`<tab-container>` element](https://github.com/github/tab-container-element)
 
 </details>
 
