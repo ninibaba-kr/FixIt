@@ -1,7 +1,6 @@
 ---
-title: "Alerts and Admonition Syntax Test"
+title: Alerts and Admonition Syntax Test
 date: 2025-09-05T16:57:58+08:00
-draft: false
 collections:
   - Tests
 categories:
@@ -154,3 +153,8 @@ This is the default example type admonition.
 {{< admonition quote "" false >}}
 This is the default quote type admonition. Aliases: `cite`
 {{< /admonition >}}
+
+## Special Types
+
+> [!center]
+> This paragraph is **center-aligned**.

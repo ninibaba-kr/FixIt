@@ -1,3 +1,4 @@
+{{- /* Page level params is not supported */ -}}
 {{- $mermaid := .Site.Params.mermaid -}}
 {{- $mermaidCDN := $mermaid.cdn | default "https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs" -}}
 
@@ -115,9 +116,3 @@ window.FixItMermaid = {
   init: initMermaid,
 }
 window.mermaid = mermaid
-
-if (document.readyState !== 'loading') {
-  initMermaid()
-} else {
-  document.addEventListener('DOMContentLoaded', initMermaid, false)
-}
