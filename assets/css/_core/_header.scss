@@ -27,6 +27,7 @@ header {
 }
 
 .header-title {
+  font-size: $header-title-font-size;
   font-family: $header-title-font-family;
   font-weight: bold;
   margin-right: 0.5rem;
@@ -39,8 +40,9 @@ header {
   .logo {
     min-height: 1.5em;
     height: 1.5em;
-    vertical-align: middle;
     width: auto;
+    vertical-align: top;
+    transform: translateY(calc(#{$header-height} / 2 - 50%));
   }
 
   .header-title-text {
@@ -72,14 +74,10 @@ header {
   .menu-item {
     list-style: none;
 
-    & .dropdown-icon {
+    .dropdown-icon {
       margin-left: 0.25rem;
       font-size: .875em;
-      color: $global-font-color;
-
-      [data-theme='dark'] & {
-        color: $global-font-color-dark;
-      }
+      color: var(#{$rootPrefix}global-font-color);
 
       &.open::before {
         content: "\f078";
@@ -109,11 +107,6 @@ header {
 
     .menu-link:hover i {
       @include transform(perspective(1rem) translateZ(0.2rem));
-    }
-
-    &.language-switch,
-    &.theme-switch {
-      cursor: pointer;
     }
   }
 }
@@ -163,14 +156,13 @@ header {
   .open &,
   &.mobile {
     input {
-      color: $global-font-color;
+      color: var(#{$rootPrefix}global-font-color);
       background-color: $search-background-color;
       padding: 0 2rem 0 2rem;
     }
 
     [data-theme='dark'] & {
       input {
-        color: $global-font-color-dark;
         background-color: $search-background-color-dark;
       }
 
@@ -180,11 +172,7 @@ header {
     @include placeholder($global-font-secondary-color);
 
     .search-button {
-      color: $global-font-secondary-color;
-
-      [data-theme='dark'] & {
-        color: $global-font-secondary-color-dark;
-      }
+      color: var(#{$rootPrefix}global-font-secondary-color);
     }
 
     .search-clear:hover {
@@ -200,11 +188,7 @@ header {
 .theme-switch {
   i {
     @include transform(rotate(225deg));
-    @include transition(transform 0.4s ease);
-  }
-
-  &:hover i {
-    @include transform(rotate(45deg));
+    @include transition(all 0.4s ease);
   }
 }
 
@@ -235,7 +219,6 @@ header {
     }
 
     .header-title {
-      font-size: $header-title-font-size;
       height: 100%;
     }
 
@@ -245,10 +228,15 @@ header {
       flex-wrap: nowrap;
       float: right;
 
-      >.menu-item {
+      > .menu-item {
         &:hover .sub-menu {
           display: block;
           @include transform(translateX(-0.5rem));
+        }
+        &.theme-switch {
+          &:hover i {
+            @include transform(rotate(45deg));
+          }
         }
         &.language-switch:hover .sub-menu {
           @include transform(translateX(calc(1.75rem - 100%)));
@@ -330,19 +318,18 @@ header {
       @include transition(margin-top 0.3s ease);
 
       .header-title {
-        font-size: $header-title-font-size;
         max-width: 80%;
       }
 
-      .menu-toggle {
-        line-height: 4rem;
-        cursor: pointer;
-        @include transition(width 0.3s ease);
+      .theme-switch {
+        line-height: 1.25em;
+      }
 
+      .menu-toggle {
         span {
           display: block;
           background: $global-font-color;
-          width: 1.5rem;
+          width: 20px;
           height: 2px;
           @include border-radius(3px);
           @include transition(all 0.3s ease-in-out);
@@ -352,17 +339,13 @@ header {
           }
         }
 
-        span:nth-child(1) {
-          margin-bottom: 0.5rem;
-        }
-
-        span:nth-child(3) {
-          margin-top: 0.5rem;
+        span:not(:last-child) {
+          margin-bottom: 6px;
         }
 
         &.active {
           span:nth-child(1) {
-            @include transform(rotate(45deg) translate(0.4rem, 0.5rem));
+            @include transform(translateY(8px) rotate(45deg));
           }
 
           span:nth-child(2) {
@@ -370,7 +353,7 @@ header {
           }
 
           span:nth-child(3) {
-            @include transform(rotate(-45deg) translate(0.4rem, -0.5rem));
+            @include transform(translateY(-8px) rotate(-45deg));
           }
         }
       }
@@ -561,11 +544,7 @@ header {
 
   .dropdown-menu {
     right: 0 !important;
-    background-color: $global-background-color;
-
-    [data-theme='dark'] & {
-      background-color: $global-background-color-dark;
-    }
+    background-color: var(#{$rootPrefix}global-background-color);
 
     .suggestions {
       overflow-y: auto;
@@ -588,25 +567,18 @@ header {
           font-size: 0.875rem;
           float: right;
           text-align: right;
-          color: $global-font-secondary-color;
-
-          [data-theme='dark'] & {
-            color: $global-font-secondary-color-dark;
-          }
+          color: var(#{$rootPrefix}global-font-secondary-color);
         }
 
         .suggestion-context {
           line-height: 1.25rem;
           @include box(vertical);
           -webkit-line-clamp: 2;
+          line-clamp: 2;
           overflow: hidden;
           text-overflow: ellipsis;
           @include overflow-wrap(break-word);
-          color: $global-font-secondary-color;
-
-          [data-theme='dark'] & {
-            color: $global-font-secondary-color-dark;
-          }
+          color: var(#{$rootPrefix}global-font-secondary-color);
         }
 
         em {
@@ -649,11 +621,7 @@ header {
       padding: 0.5rem 1rem;
       float: right;
       font-size: 0.8rem;
-      color: $global-font-secondary-color;
-
-      [data-theme='dark'] {
-        color: $global-font-secondary-color-dark;
-      }
+      color: var(#{$rootPrefix}global-font-secondary-color);
 
       @include link(false, false);
 

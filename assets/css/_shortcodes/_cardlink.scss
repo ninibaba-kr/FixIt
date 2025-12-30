@@ -23,7 +23,7 @@
     bottom: 0.75rem;
     left: 0;
     right: 0;
-    background-image: var(--cl-bg-url);
+    background-image: var(#{$rootPrefix}logo-img);
     background-repeat: no-repeat;
     filter: blur(0.5rem);
     opacity: 0.5;
@@ -47,12 +47,13 @@
   &title {
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     overflow: hidden;
     max-height: calc(1rem * 1.25 * 2);
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.25;
-    color: $global-font-color;
+    color: var(#{$rootPrefix}global-font-color);
   }
 
   &meta {
@@ -60,7 +61,7 @@
     align-items: center;
     margin-top: 0.25rem;
     font-size: 0.825rem;
-    color: $global-font-secondary-color;
+    color: var(#{$rootPrefix}global-font-secondary-color);
   }
 
   &icon-link {
@@ -103,14 +104,6 @@
   [data-theme='dark'] & {
     &content {
       background-color: rgba(61, 62, 65, 0.88);
-    }
-
-    &title {
-      color: $global-font-color-dark;
-    }
-
-    &meta {
-      color: $global-font-secondary-color-dark;
     }
   }
 }

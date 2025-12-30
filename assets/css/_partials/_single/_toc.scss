@@ -14,6 +14,7 @@
     }
 
     ul {
+      margin: 0;
       text-indent: -0.8em;
       padding-left: 0.8em;
       list-style: none;
@@ -55,18 +56,10 @@
   }
 
   ruby {
-    background: $code-background-color;
+    background-color: var(#{$rootPrefix}code-block-background-color);
 
     rt {
-      color: $global-font-secondary-color;
-    }
-
-    [data-theme='dark'] & {
-      background: $code-background-color-dark;
-
-      rt {
-        color: $global-font-secondary-color-dark;
-      }
+      color: var(#{$rootPrefix}global-font-secondary-color);
     }
   }
 }
@@ -166,10 +159,6 @@
       display: block;
     }
 
-    > nav > ul {
-      margin: 0;
-    }
-
     // for unordered list automatically collapsed
     ul {
       ul {
@@ -207,19 +196,14 @@
     justify-content: space-between;
     line-height: 2em;
     padding: 0 0.75em;
-    background: darken($code-background-color, 3%);
-
-    [data-theme='dark'] & {
-      background: darken($code-background-color-dark, 6%);
-    }
+    background-color: var(#{$rootPrefix}code-header-background-color);
   }
 
   .toc-content {
-    background-color: $code-background-color;
+    background-color: var(#{$rootPrefix}code-block-background-color);
 
     > nav {
       > ul {
-        margin: 0;
         padding: 0.4em 1em 0.4em 1.8em;
 
         a:hover {
@@ -236,7 +220,6 @@
       }
 
       > ol {
-        margin: 0;
         padding: 0.4em 1em 0.4em 2.25em;
 
         li:has(> a:hover)::marker,
@@ -245,18 +228,14 @@
         }
       }
     }
-
-    [data-theme='dark'] & {
-      background-color: $code-background-color-dark;
-    }
   }
 
-  &.open {
+  &:not(.open) {
     .toc-title {
-      background: darken($code-background-color, 6%);
+      #{$rootPrefix}code-header-background-color: #{darken($code-background-color, 6%)};
 
       [data-theme='dark'] & {
-        background: darken($code-background-color-dark, 3%);
+        #{$rootPrefix}code-header-background-color: #{darken($code-background-color-dark, 6%)};
       }
     }
   }
@@ -270,12 +249,14 @@
     opacity 0.2s 0.4s;
   opacity: 0;
   translate: 100vw 0;
-  width: MIN(calc(100% - 4rem), 500px);
+  width: MIN(calc(100% - 4rem), 460px);
   height: 100%;
   max-width: 100%;
   max-height: 100%;
   margin-right: 0;
   border: none;
+  border-left: 1px solid var(#{$rootPrefix}global-border-color);
+  background-color: var(#{$rootPrefix}global-background-color);
 
   .toc {
     max-width: 100%;
@@ -289,10 +270,16 @@
 
     .toc-content {
       font-size: max($toc-content-font-size, 1rem);
+
+      nav {
+        max-height: calc(100vh - 5rem);
+        overflow: auto;
+      }
     }
   }
 
   &::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
     transition:
       display 0.5s allow-discrete,
       overlay 0.5s allow-discrete,
@@ -315,7 +302,6 @@
   }
 
   @starting-style {
-
     &[open],
     &[open]::backdrop {
       opacity: 0;

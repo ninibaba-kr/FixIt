@@ -2,12 +2,12 @@
 # It's recommended to use Alternate Theme Config to configure FixIt
 # Modifying this file may result in merge conflict
 # There are currently some restrictions to what a theme component can configure:
-# params, menu, outputformats and mediatypes
+# params, menu(s), outputformats and mediatypes
 # =====================================================================================
 
 # -------------------------------------------------------------------------------------
 # Hugo Configuration
-# See: https://gohugo.io/getting-started/configuration/
+# See: https://gohugo.io/configuration/all/
 # -------------------------------------------------------------------------------------
 
 # website title
@@ -38,13 +38,22 @@ enableEmoji = true
 # mainSections = ["posts"]
 
 # -------------------------------------------------------------------------------------
+# Imaging Configuration
+# See: https://gohugo.io/configuration/imaging/
+# -------------------------------------------------------------------------------------
+
+[imaging]
+_merge = "shallow"
+quality = 75
+
+# -------------------------------------------------------------------------------------
 # Menu Configuration
 # See: https://fixit.lruihao.cn/documentation/basics/#menu-configuration
 # -------------------------------------------------------------------------------------
 
-[menu]
+[menus]
 
-[[menu.main]]
+[[menus.main]]
 identifier = "archives"
 parent = ""
 # you can add extra information before the name (HTML format is supported), such as icons
@@ -58,7 +67,7 @@ title = ""
 weight = 1
 
 # FixIt 0.2.14 | NEW add user-defined content to menu items
-[menu.main.params]
+[menus.main.params]
 # add css class to a specific menu item
 class = ""
 # whether set as a draft menu item whose function is similar to a draft post/page
@@ -70,7 +79,7 @@ type = ""
 # FixIt 0.3.9 | NEW whether to show the submenu item divider line
 divided = false
 
-[[menu.main]]
+[[menus.main]]
 identifier = "categories"
 parent = ""
 pre = ""
@@ -80,10 +89,10 @@ url = "/categories/"
 title = ""
 weight = 2
 
-[menu.main.params]
+[menus.main.params]
 icon = "fa-solid fa-folder-tree"
 
-[[menu.main]]
+[[menus.main]]
 identifier = "tags"
 parent = ""
 pre = ""
@@ -93,12 +102,12 @@ url = "/tags/"
 title = ""
 weight = 3
 
-[menu.main.params]
+[menus.main.params]
 icon = "fa-solid fa-tags"
 
 # -------------------------------------------------------------------------------------
 # Related content Configuration
-# See: https://gohugo.io/content-management/related/
+# See: https://gohugo.io/content-management/related-content/
 # -------------------------------------------------------------------------------------
 
 [related]
@@ -141,7 +150,7 @@ weight = 80
 
 # -------------------------------------------------------------------------------------
 # Modules Configuration
-# See: https://gohugo.io/hugo-modules/configuration/#module-config-imports
+# See: https://gohugo.io/configuration/module/
 # -------------------------------------------------------------------------------------
 
 [module]
@@ -151,25 +160,27 @@ extended = true
 min = "0.147.7"
 
 # -------------------------------------------------------------------------------------
-# Markup related configuration in Hugo
-# See: https://gohugo.io/getting-started/configuration-markup/
+# Markup Configuration
+# See: https://gohugo.io/configuration/markup/
 # -------------------------------------------------------------------------------------
 
 [markup]
+_merge = "shallow"
 
 # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
 [markup.highlight]
-# ######### necessary configurations ##########
+# ~~~~~~~~~~ necessary configurations ~~~~~~~~~~
 # https://github.com/hugo-fixit/FixIt/issues/43
 codeFences = true
+noClasses = false
+# ~~~~~~~~~~ necessary configurations ~~~~~~~~~~
+anchorLineNos = false
+guessSyntax = true
 lineNos = true
 lineNumbersInTable = true
-noClasses = false
-# ######### necessary configurations ##########
-guessSyntax = true
 
 # Goldmark is from Hugo 0.60 the default library used for Markdown
-# https://gohugo.io/getting-started/configuration-markup/#goldmark
+# See: https://gohugo.io/configuration/markup/#goldmark
 [markup.goldmark]
 duplicateResourceFiles = false
 
@@ -183,7 +194,7 @@ table = true
 taskList = true
 typographer = true
 
-# https://gohugo.io/getting-started/configuration-markup/#extras
+# See: https://gohugo.io/configuration/markup/#extras
 [markup.goldmark.extensions.extras]
 
 [markup.goldmark.extensions.extras.delete]
@@ -258,18 +269,18 @@ priority = 0.5
 [permalinks]
 
 [permalinks.page]
-
 # posts = "/p/:slugorcontentbasename"
-[permalinks.section]
 
+[permalinks.section]
 # posts = "/posts/:slugorcontentbasename"
+
 [permalinks.taxonomy]
 
 [permalinks.term]
 
 # -------------------------------------------------------------------------------------
 # Privacy Configuration
-# See: https://gohugo.io/about/hugo-and-gdpr/
+# See: https://gohugo.io/configuration/privacy/
 # -------------------------------------------------------------------------------------
 
 [privacy]
@@ -281,17 +292,17 @@ enableDNT = true
 privacyEnhanced = true
 
 # -------------------------------------------------------------------------------------
-# Media Types
-# See: https://gohugo.io/templates/output-formats/#media-types
+# Media Types Configuration
+# See: https://gohugo.io/configuration/media-types/
 # -------------------------------------------------------------------------------------
 
 [mediaTypes]
 # [mediaTypes."application/feed+json"]
-#   suffixes = ["json"]
+# suffixes = ["json"]
 
 # -------------------------------------------------------------------------------------
-# Output Format Definitions
-# See: https://gohugo.io/templates/output-formats/#output-format-definitions
+# Output Format Configuration
+# See: https://gohugo.io/configuration/output-formats/
 # -------------------------------------------------------------------------------------
 
 [outputFormats]
@@ -342,8 +353,8 @@ isHTML = false
 permalinkable = true
 
 # -------------------------------------------------------------------------------------
-# Customizing Output Formats
-# See: https://gohugo.io/templates/output-formats/#customizing-output-formats
+# Output Configuration
+# See: https://gohugo.io/configuration/outputs/
 # -------------------------------------------------------------------------------------
 
 # Options to make hugo output files, the optional values are below:
@@ -353,6 +364,7 @@ permalinkable = true
 # taxonomy = ["html"]
 # term = ["html", "rss"]
 [outputs]
+_merge = "shallow"
 home = [
   "html",
   "rss",
@@ -376,10 +388,11 @@ term = [
 
 # -------------------------------------------------------------------------------------
 # Taxonomies Configuration
-# See: https://gohugo.io/content-management/taxonomies/#configure-taxonomies
+# See: https://gohugo.io/configuration/taxonomies/
 # -------------------------------------------------------------------------------------
 
 [taxonomies]
+_merge = "shallow"
 category = "categories"
 tag = "tags"
 collection = "collections"
@@ -391,7 +404,7 @@ collection = "collections"
 
 [params]
 # FixIt 0.2.15 | CHANGED FixIt theme version
-version = "0.3.X" # e.g. "0.2.X", "0.2.15", "v0.2.15" etc.
+version = "0.4.X" # e.g. "0.2.X", "0.2.15", "v0.2.15" etc.
 # site description
 description = ""
 # site keywords
@@ -401,7 +414,7 @@ defaultTheme = "auto"
 # which hash function used for SRI, when empty, no SRI is used
 # ["sha256", "sha384", "sha512", "md5"]
 fingerprint = ""
-# NEW date format
+# date format
 dateFormat = "2006-01-02"
 # website images for Open Graph and Twitter Cards
 images = []
@@ -489,8 +502,8 @@ index = ""
 appID = ""
 searchKey = ""
 
-[params.search.fuse]
 # FixIt 0.2.17 | NEW https://fusejs.io/api/options.html
+[params.search.fuse]
 isCaseSensitive = false
 minMatchCharLength = 2
 findAllMatches = false
@@ -588,8 +601,8 @@ animate = true
 icon = "fa-solid fa-heartbeat"
 pre = ""
 value = ""
-
 # e.g. "2021-12-18T16:15:22+08:00"
+
 # FixIt 0.2.17 | NEW footer lines order, optional values: ["first", 0, 1, 2, 3, 4, 5, "last"]
 [params.footer.order]
 powered = 0
@@ -655,9 +668,11 @@ orderby = "name" # Order of tags, optional values: ["name", "count"]
 # Home page profile
 [params.home.profile]
 enable = false
+# FixIt 0.4.0 | NEW Whether to show profile and content only in the first home page
+onlyFirstPage = false
 # Gravatar Email for preferred avatar in home page
 gravatarEmail = ""
-# URL of avatar shown in home page
+# URL of avatar shown in home page, default is author's avatar
 avatarURL = ""
 # FixIt 0.2.17 | NEW identifier of avatar menu link
 avatarMenu = ""
@@ -769,14 +784,13 @@ Bluesky = ""
 Phone = ""
 Email = ""
 RSS = true
+
 # custom social links like the following
 # [params.social.twitter]
-#   id = "lruihao"
-#   weight = 3
-#   prefix = "https://twitter.com/"
-#   Title = "Twitter"
-#   [social.twitter.icon]
-#     class = "fa-brands fa-x-twitter fa-fw"
+# id = "lruihao"
+# weight = 3
+# prefix = "https://twitter.com/"
+# Title = "Twitter"
 
 # TypeIt config
 [params.typeit]
@@ -1077,11 +1091,41 @@ feedId = ""
 userId = ""
 
 # FixIt 0.3.17 | NEW Image config
+# Combined with Hugo's image processing option `imaging` for image optimisation
 [params.image]
 # cache remote images for better optimisations
 cacheRemote = false
-# Image resizing and optimisation
+# Image resizing and optimisation (may slow builds)
 optimise = false
+# FixIt 0.4.0 | NEW A list of image file names or patterns to exclude from optimisation
+# e.g. ["no-optimize.jpg", "*.tiff", "images/exclude-*.webp"]
+blackList = []
+
+# FixIt 0.4.0 | NEW Code block wrapper config
+# you can override the global config via Markdown attributes, for example:
+# ```lang {mode="mac", maxShownLines=5}
+# code here
+# ```
+[params.codeblock]
+# whether to enable the code block wrapper
+wrapper = true
+# code block mode
+# available modes: ["classic", "mac", "simple", ...]
+# if you set to custom value, you need to create a custom CSS for data-mode attribute
+mode = "classic"
+# additional classes for the code block wrapper
+# e.g. "is-collapsed is-expanded line-nos-hidden line-wrapping"
+wrapperClass = ""
+# the maximum number of lines to show in the code block preview
+maxShownLines = 10
+# whether to enable code copy button
+copyable = true
+# [classic] whether to enable line numbers toggle button in the code block header
+lineNosToggler = true
+# [classic] whether to enable toggle line wrapping button in the code block header
+lineWrapToggler = true
+# [classic][Experimental] whether to enable code edit button in the code block header
+editable = false
 
 # FixIt 0.4.0 | NEW JSON Viewer config
 # See https://github.com/Lruihao/json-viewer-element
@@ -1093,7 +1137,7 @@ sort = false
 boxed = true
 
 # FixIt 0.3.12 | NEW Custom partials config
-# Custom partials must be stored in the /layouts/partials/ directory.
+# Custom partials must be stored in the /layouts/_partials/ directory.
 # Depends on open custom blocks https://fixit.lruihao.cn/references/blocks/
 [params.customPartials]
 head = []
@@ -1121,6 +1165,7 @@ enable = false
 c4u = false
 
 # Page config
+# TODO migrate mapping key to `params` layer in the future
 [params.page]
 # FixIt 0.2.18 | NEW whether to enable the author's avatar of the post
 authorAvatar = true
@@ -1137,6 +1182,7 @@ twemoji = false
 # FixIt 0.2.18 | CHANGED whether to enable lightgallery
 # set to true, images in the content will be shown as the gallery if the image has a title, e.g. ![alt](src "title")
 # set to "force", images in the content will be forced to shown as the gallery regardless of the image has a title or not, e.g. ![alt](src)
+# TODO change gallery engine in the future
 lightgallery = false
 # whether to enable the ruby extended syntax
 ruby = true
@@ -1244,27 +1290,27 @@ errorColor = "#ff4949"
 # custom macros map
 # syntax: <macro> = <definition>
 [params.page.math.katex.macros]
+# "\\f" = "#1f(#2)"  # usage: $\f{a}{b}$
 
-# "\\f" = "#1f(#2)"   # usage: $\f{a}{b}$
 # MathJax server-side rendering (https://www.mathjax.org)
 # MathJax config: https://docs.mathjax.org/en/latest/options/index.html
 [params.page.math.mathjax]
 cdn = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 
 [params.page.math.mathjax.packages]
-
 # "[+]" = ["configmacros"]
+
 # custom macros map
 # syntax: <macro> = <definition>
 [params.page.math.mathjax.macros]
+# bold = ["{\\bf #1}", 1]  # usage: $\bold{math}$
 
-# "bold" = ["{\\bf #1}", 1]   # usage: $\bold{math}$
 [params.page.math.mathjax.loader]
 load = [ "ui/safe" ]
 
 [params.page.math.mathjax.loader.paths]
-
 # custom = "https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/"
+
 # more loader config e.g source, dependencies, provides etc.
 [params.page.math.mathjax.options]
 enableMenu = true
@@ -1286,20 +1332,9 @@ ignoreHtmlClass = "mathjax_ignore"
 
 # HTML tags that can appear within math
 [params.page.math.mathjax.options.includeHtmlTags]
-
 # "#comment" = ""
 # br = "\n"
 # wbr = ""
-# Code wrapper config
-[params.page.code]
-# FixIt 0.3.9 | NEW whether to enable the code wrapper
-enable = true
-# whether to show the copy button of the code wrapper
-copy = true
-# FixIt 0.2.13 | NEW whether to show the edit button of the code wrapper
-edit = true
-# the maximum number of lines of displayed code by default
-maxShownLines = 10
 
 # Mapbox GL JS config (https://docs.mapbox.com/mapbox-gl-js)
 [params.page.mapbox]
@@ -1339,12 +1374,12 @@ position = "after"
 mode = "static"
 
 [params.page.reward.ways]
-
 # wechatpay = "/images/wechatpay.png"
 # alipay = "/images/alipay.png"
 # paypal = "/images/paypal.png"
 # bitcoin = "/images/bitcoin.png"
-# social share links in post page
+
+# Social share links in post page
 [params.page.share]
 enable = true
 Twitter = true
@@ -1540,17 +1575,17 @@ lazyLoad = true
 [params.page.library]
 
 [params.page.library.css]
-
 # someCSS = "some.css"
 # located in "assets/"
 # Or
 # someCSS = "https://cdn.example.com/some.css"
-[params.page.library.js]
 
+[params.page.library.js]
 # someJavascript = "some.js"
 # located in "assets/"
 # Or
 # someJavascript = "https://cdn.example.com/some.js"
+
 # Page SEO config
 [params.page.seo]
 # image URL

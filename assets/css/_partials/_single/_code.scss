@@ -4,26 +4,26 @@ code {
 }
 
 // indented code
-pre:not([data-processed]) {
+pre {
   margin: 0;
   line-height: 1.45em;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   overflow: auto;
   font-size: $code-block-font-size;
   font-family: $code-font-family;
+  background-color: var(#{$rootPrefix}code-block-background-color);
   @include border-radius($global-border-radius);
   @include tab-size(4);
 
-  background-color: $code-background-color;
-
-  [data-theme='dark'] & {
-    background-color: $code-background-color-dark;
+  + pre {
+    margin-top: 0.5rem;
   }
 
   code {
     padding: 0;
     background-color: transparent;
     font-size: inherit;
+    line-height: inherit;
     @include border-radius(0);
     @include max-content(min-width);
 
@@ -43,30 +43,121 @@ pre:not([data-processed]) {
 .gist {
   font-size: $code-block-font-size;
   font-family: $code-font-family;
+  #{$rootPrefix}scrollbar-thumb-color: inherit;
 
-  .table-wrapper {
-    #{$rootPrefix}scrollbar-thumb-color: initial;
-    > table,
-    > table thead,
-    > table tr,
-    > table td {
-      margin: 0;
-      padding: 0;
-      border: none !important;
-      white-space: nowrap;
-    }
+  table {
+    width: 100%;
+    max-width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  table,
+  table thead,
+  table tr,
+  table td {
+    margin: 0;
+    padding: 0;
+    border: none;
   }
 }
 
-// block fenced code
+// Code fences blocks or highlight shortcodes
 .highlight {
   margin: 0.5rem 0;
+  position: relative;
+  @include border-radius($global-border-radius);
 
+  // lineNumbersInTable=true
   > .chroma {
     position: relative;
+    background-color: var(#{$rootPrefix}code-block-background-color);
+    @include border-radius($global-border-radius);
 
+    &:is(pre):has(.ln) {
+      padding: 0.5rem;
+    }
+
+    .lntable {
+      overflow: auto;
+      display: block;
+      background-color: var(#{$rootPrefix}code-block-background-color);
+      @include border-radius($global-border-radius);
+
+      td {
+        vertical-align: top;
+        padding: 0;
+      }
+
+      pre {
+        outline-offset: -1px;
+        @include border-radius(0);
+      }
+
+      // line numbers
+      .lntd:first-child {
+        position: sticky;
+        left: 0;
+      }
+      // code content
+      .lntd:last-child {
+        width: 100%;
+        code {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  // line numbers (lineNumbersInTable=false)
+  .ln {
+    padding-right: 0.75rem;
+    display: inline-block;
+    text-align: right;
+    position: sticky;
+    left: 0;
+  }
+  // Line numbers
+  .lnt,
+  .ln {
+    color: var(#{$rootPrefix}global-font-secondary-color);
+    @include user-select(none);
+  }
+
+  &:not(.code-block) {
+    .lntd:last-child pre.chroma {
+      padding-left: 0;
+    }
+  }
+
+  // code fences blocks wrapped
+  &.code-block {
+    .code-wrapper {
+      overflow: hidden;
+      height: auto;
+      position: relative;
+      counter-reset: codeNos calc(var(#{$rootPrefix}line-start) - 1);
+      @include border-radius($global-border-radius);
+      @include transition(height 0.5s ease-out);
+      @include border-radius($global-border-radius);
+      // attr() for arbitrary properties is currently only supported in Chromium-based browsers (see https://caniuse.com/css3-attr);
+      // non-supporting browsers fall back to values set via Hugo templating in render-codeblock.html
+      #{$rootPrefix}max-shown-lines: attr(data-max number, 10);
+      #{$rootPrefix}line-start: attr(data-line-start number, 1);
+      #{$rootPrefix}line-digit: attr(data-line-digit number, 1);
+    }
+
+    // code preview
+    &:has(.code-expand-btn):not(.is-expanded, .is-collapsed) {
+      .code-wrapper {
+        height: calc(1.45em * var(#{$rootPrefix}max-shown-lines) + var(#{$rootPrefix}code-expand-offset, 0.5rem));
+      }
+      &[data-mode='mac'] .code-wrapper {
+        #{$rootPrefix}code-expand-offset: 1.875rem + 0.5rem;
+      }
+    }
+    
     .code-header {
-      #{$rootPrefix}bg-code-header: #{darken($code-background-color, 3%)};
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -75,36 +166,39 @@ pre:not([data-processed]) {
       font-family: $global-font-family;
       font-weight: bold;
       line-height: 1.4em;
-      color: $code-info-color;
-      background-color: var(#{$rootPrefix}bg-code-header);
-      @include border-radius($global-border-radius);
-      @include transition(border-radius 0.2s ease);
+      color: var(#{$rootPrefix}code-header-color);
+      background-color: var(#{$rootPrefix}code-header-background-color);
+      position: sticky;
+      top: var(#{$rootPrefix}breadcrumb-height);
+      @include z-index(0, 1);
+      @include border-radius($global-border-radius $global-border-radius 0 0);
+      @include transition(border-radius 0s);
 
-      // delayed loading table-wrapper
-      & + .table-wrapper {
-        height: 0;
+      + .code-wrapper {
         @include border-radius(0 0 $global-border-radius $global-border-radius);
-        @include transition(height 0.5s ease-out);
-      }
 
-      [data-theme='dark'] & {
-        color: $code-info-color-dark;
-        #{$rootPrefix}bg-code-header: #{darken($code-background-color-dark, 3%)};
+        > pre.chroma {
+          @include border-radius(0 0 $global-border-radius $global-border-radius);
+        }
       }
 
       &:hover {
         cursor: pointer;
       }
 
-      .ellipses,
-      .edit,
-      .copy {
-        @extend .print-d-none;
-      }
-
       .code-title {
         width: 100%;
         padding: 0.4rem;
+
+        &::after {
+          padding-left: 0.2rem;
+          content: attr(data-name, var(#{$rootPrefix}code-type, 'Code'));
+        }
+
+        // filename for code block
+        &[data-name]::after {
+          @include overflow-wrap(break-word);
+        }
 
         .arrow {
           padding: 0 0.2rem;
@@ -115,218 +209,265 @@ pre:not([data-processed]) {
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          background-color: var(#{$rootPrefix}bg-code-header);
+          background-color: var(#{$rootPrefix}code-header-background-color);
           padding-inline: 1em;
           max-width: 80%;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          @include z-index(0, 1);
+          @include z-index(0, 2);
         }
       }
 
-      .code-title::after {
-        padding-left: 0.2rem;
-        content: 'Code';
-      }
-
-      .ellipses {
-        padding: 0.4rem;
-      }
-
-      .edit,
-      .copy {
+      .ellipses-btn {
         display: none;
         padding: 0.4rem;
+      }
 
-        &:hover {
-          cursor: pointer;
-          color: $global-link-hover-color;
+      [role='button'] {
+        padding: 0.4rem;
+        @extend .print-d-none;
+      }
 
-          [data-theme='dark'] & {
-            color: $global-link-hover-color-dark;
-          }
-        }
+      .copy-btn[data-copied] .fa-clone {
+        --fa: "\f00c";
+        font-weight: 900;
+        color: var(#{$rootPrefix}global-link-hover-color);
       }
 
       @each $type, $text in $code-type-map {
-        &.language-#{to-lower-case($type)} .code-title::after {
-          content: $text;
+        &.language-#{to-lower-case($type)} {
+          #{$rootPrefix}code-type: $text;
         }
       }
     }
 
-    // delayed loading table-wrapper
-    .table-wrapper {
-      overflow: hidden;
-      @include border-radius($global-border-radius);
+    &.line-wrapping .line-wrap-btn,
+    &:not(.line-nos-hidden) .line-nos-btn,
+    .code-header [role='button']:hover,
+    &:has([contenteditable='true']) .edit-btn {
+      color: var(#{$rootPrefix}global-link-hover-color);
     }
 
-    table {
-      border-spacing: 0;
-      width: auto;
-      overflow: auto;
-      display: block;
-      background-color: $code-background-color;
+    .code-expand-btn {
+      width: 100%;
+      padding-block: 1rem;
+      text-align: center;
+      position: absolute;
+      bottom: 0;
+      background: linear-gradient(
+        180deg,
+        rgba($code-background-color, 0) 0%,
+        rgba($code-background-color, 0.9) 60%,
+        $code-background-color 100%
+      );
+      @include z-index(0, 1);
+      @include border-radius(0 0 $global-border-radius $global-border-radius);
 
       [data-theme='dark'] & {
-        background-color: $code-background-color-dark;
+        background: linear-gradient(
+          180deg,
+          rgba($code-background-color-dark, 0) 0%,
+          rgba($code-background-color-dark, 0.9) 60%,
+          $code-background-color-dark 100%
+        );
       }
 
-      td {
-        vertical-align: top;
-        padding: 0;
+      .fa-angles-down {
+        opacity: 0;
+        animation-name: fadeOutDown;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+        animation-delay: 0.3s;
+        @include transition(transform 0.2s ease);
       }
-
-      pre {
-        padding: 0.25rem;
-        outline-offset: -1px;
-        @include border-radius(0);
-      }
-
-      /* lineNumbersInTable=false */
-      .ln {
-        min-width: 1.25rem;
-      }
-
-      // ========== lineNumbersInTable ========== //
-      // line numbers
-      .lntd:first-child {
-        min-width: 1.6rem;
-        text-align: right;
-        position: sticky;
-        left: 0;
-
-        pre {
-          @include user-select(none);
-        }
-      }
-      // code content
-      .lntd:last-child {
-        width: 100%;
-
-        pre {
-          padding-left: 0.5rem;
-          padding-right: 0.5rem;
-        }
-        code {
-          width: 100%;
-        }
-      }
-      // ========== lineNumbersInTable ========== //
     }
 
-    &.open {
+    .code-copy-btn {
+      @extend .diagram-copy-btn;
+    }
+
+    // classic mode code block collapsed
+    &.is-collapsed {
       .code-header {
-        #{$rootPrefix}bg-code-header: #{darken($code-background-color, 6%)};
-        @include border-radius($global-border-radius $global-border-radius 0 0);
+        #{$rootPrefix}code-header-background-color: #{darken($code-background-color, 6%)};
+        @include border-radius($global-border-radius);
+        @include transition(border-radius 0.2s ease 0.2s);
 
         [data-theme='dark'] & {
-          #{$rootPrefix}bg-code-header: #{darken($code-background-color-dark, 6%)};
+          #{$rootPrefix}code-header-background-color: #{darken($code-background-color-dark, 6%)};
         }
-      }
 
-      .table-wrapper {
-        height: auto;
+        + .code-wrapper {
+          height: 0;
+        }
       }
 
       .arrow {
-        @include transform(rotate(90deg));
+        @include transform(rotate(-90deg));
       }
 
-      .ellipses {
-        display: none;
-      }
-
-      .edit,
-      .copy {
+      .ellipses-btn {
         display: inline;
       }
+
+      .code-header [role='button']:not(.ellipses-btn),
+      .code-expand-btn {
+        display: none;
+      }
     }
-  }
 
-  /* LineHighlight */
-  .hl {
-    display: block;
-    background-color: $code-hightlight-color;
-    box-shadow: -0.5rem 0 0 $code-hightlight-color, 0.5rem 0 0 $code-hightlight-color;
+    // code preview expanded
+    &.is-expanded {
+      margin-bottom: 1rem;
+      &:has([contenteditable='true']) .code-expand-btn {
+        display: none;
+      }
+      .code-expand-btn {
+        background: transparent;
+        padding-block: 0;
+        transform: translateY(1rem);
 
-    [data-theme='dark'] & {
-      background-color: $code-hightlight-color-dark;
-      box-shadow: -0.5rem 0 0 $code-hightlight-color-dark, 0.5rem 0 0 $code-hightlight-color-dark;
+        .fa-angles-down {
+          animation-name: fadeOutRotate;
+
+          @keyframes fadeOutRotate {
+            0% {
+              opacity: 1;
+              transform: rotate(180deg);
+            }
+            100% {
+              opacity: 0;
+              transform: rotate(180deg) translate3d(0, 100%, 0);
+            }
+          }
+        }
+      }
     }
-  }
-  /* GenericUnderline */
-  .gl {
-    text-decoration: underline;
-  }
-  /* GenericStrong */
-  .gs {
-    font-weight: bold;
-  }
-  /* GenericEmph */
-  .ge {
-    font-style: italic;
-  }
-  /* lineNumbersInTable=false */
-  .ln {
-    padding-right: 0.5rem;
-    display: inline-block;
-    min-width: 1.1rem;
-    text-align: right;
-  }
-  /* LineNumbers */
-  .lnt,
-  .ln {
-    color: $global-font-secondary-color;
 
-    [data-theme='dark'] & {
-      color: $global-font-secondary-color-dark;
+    // hide original line numbers
+    &.line-nos-hidden {
+      > .chroma .lntable {
+        width: 100%;
+        display: table;
+      }
+      .lntd:first-child,
+      .ln {
+        display: none;
+      }
     }
-  }
 
-  // ========== Higtlight Color ========== //
+    // line wrapping
+    &.line-wrapping {
+      > .chroma .lntable {
+        width: 100%;
+        display: table;
 
-  /* Error */
-  .err {
-    font-style: italic;
-    border-bottom: 1px dotted $code-error-color;
-  }
-  /* GenericDeleted */
-  .gd {
-    background-color: #ffebe9;
+        // hide original line numbers
+        .lntd:first-child {
+          display: none;
+        }
+      }
+      .lntd:last-child pre.chroma,
+      .code-wrapper > pre.chroma {
+        max-width: 100%;
+        box-sizing: border-box;
 
-    [data-theme='dark'] & {
-      background-color: #78191b;
+        code {
+          text-wrap: wrap;
+          word-break: break-all;
+          overflow-wrap: break-word;
+        }
+      }
     }
-  }
-  /* GenericInserted */
-  .gi {
-    background-color: #dafbe1;
 
-    [data-theme='dark'] & {
-      background-color: #1b4721;
+    // line numbers (pseudo-elements) for code blocks
+    &.line-wrapping:not(.line-nos-hidden) .lntd:last-child pre.chroma,
+    &:not(.line-nos-hidden) .code-wrapper > pre.chroma:not(:has(.ln)) {
+      > code > .line {
+        display: flex;
+
+        &::before {
+          counter-increment: codeNos;
+          content: counter(codeNos);
+          white-space: nowrap;
+          text-align: right;
+          min-width: calc(var(#{$rootPrefix}line-digit) * 1ch);
+          padding-inline: 0.75rem;
+          flex-shrink: 0;
+          color: var(#{$rootPrefix}global-font-secondary-color);
+          background-color: var(#{$rootPrefix}code-block-background-color);
+        }
+
+        // highlight for line numbers
+        &.hl::before {
+          background-color: transparent;
+        }
+      }
     }
-  }
 
-  @each $class, $color in $code-highlight-color-map {
-    .#{$class} {
-      color: $color;
+    // add sticky effect for line numbers when lineNos=false
+    &:not(.line-nos-hidden) .code-wrapper > pre.chroma > code > .line::before {
+      position: sticky;
+      left: 0;
     }
-  }
 
-  [data-theme='dark'] & {
-    @each $class, $color in $code-highlight-color-map-dark {
-      .#{$class} {
-        color: $color;
+    // when line numbers shown
+    &:not(.line-nos-hidden) {
+      .lntd:last-child pre.chroma,
+      .code-wrapper > pre.chroma:not(:has(.ln)) {
+        padding-left: 0;
+      }
+    }
+
+    // add border for non-classic mode
+    &:not([data-mode='classic']) {
+      border: 1px solid darken($code-background-color, 3%);
+
+      [data-theme='dark'] & {
+        border-color: darken($code-background-color-dark, 3%);
+      }
+    }
+
+    &[data-mode='mac'] {
+      pre.chroma {
+        padding-top: 1.875rem;
+
+        &::after {
+          background: var(#{$rootPrefix}mac-red, #fc625d);
+          box-shadow: 20px 0 var(#{$rootPrefix}mac-yellow, #fdbc40), 40px 0 var(#{$rootPrefix}mac-green, #35cd4b);
+          left: 8px;
+          top: 8px;
+          position: absolute;
+          border-radius: 50%;
+          content: ' ';
+          height: 12px;
+          width: 12px;
+
+          [data-theme='dark'] & {
+            #{$rootPrefix}mac-red-dark: #ff5f56;
+            #{$rootPrefix}mac-yellow-dark: #febc2e;
+            #{$rootPrefix}mac-green-dark: #28c840;
+          }
+        }
+      }
+    }
+
+    &[data-mode='simple'] {
+      pre.chroma {
+        padding-block: 0.875rem;
       }
     }
   }
-  // ========== Higtlight Color ========== //
 }
+
+@import '../_code-syntax/index';
 
 // gist shortcode
 .gist {
+  background-color: var(#{$rootPrefix}code-block-background-color);
+  @include border-radius($global-border-radius $global-border-radius 0 0);
+  
   .gist-file,
   .gist-data,
   .gist-meta {
@@ -334,34 +475,37 @@ pre:not([data-processed]) {
   }
 
   .gist-data {
-    background-color: transparent;
+    background-color: inherit;
+
+    .blob-wrapper {
+      padding-block: 0.5rem;
+
+      table.highlight {
+        background-color: inherit;
+        overflow: initial;
+
+        td.blob-num {
+          position: sticky;
+          left: 0;
+          background-color: var(#{$rootPrefix}code-block-background-color);
+          @include z-index(0, 1);
+        }
+
+        td.blob-code {
+          padding-left: 2px !important;
+        }
+      }
+    }
   }
 
   .gist-meta {
     padding: 0.4rem 0.8rem;
     @include link(false, false);
     @include border-radius(0 0 $global-border-radius $global-border-radius);
-    background-color: darken($code-background-color, 5%);
-
-    [data-theme='dark'] & {
-      background-color: darken($code-background-color-dark, 5%);
-    }
-  }
-
-  .table-wrapper {
-    padding-block: 0.25rem;
-    @include border-radius($global-border-radius $global-border-radius 0 0);
-    background-color: $code-background-color;
-
-    [data-theme='dark'] & {
-      background-color: $code-background-color-dark;
-    }
-    .highlight {
-      background-color: transparent;
-    }
+    background-color: var(#{$rootPrefix}gist-meta-background-color);
   }
 
   [data-theme='dark'] & {
-    @import './github-dark-dimmed';
+    @import '../_code-syntax/github-dark-dimmed';
   }
 }

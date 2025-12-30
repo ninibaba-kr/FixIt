@@ -1,12 +1,21 @@
 .breadcrumb-container {
   padding-inline: 1rem;
   font-size: 0.75rem;
-  background-color: $global-background-color;
+  background-color: var(#{$rootPrefix}global-background-color);
+  display: flex;
+  gap: 0.5rem;
   @include z-index(1);
   @extend .print-d-none;
 
-  [data-theme='dark'] & {
-    background-color: $global-background-color-dark;
+  &:has(~ main[data-reverse]) {
+    flex-direction: row-reverse;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    padding-inline: 0.5rem;
   }
 
   &.sticky {
@@ -34,11 +43,7 @@
         content: attr(data-separator);
         display: inline-block;
         padding-inline: 0.5rem;
-        color: $global-font-secondary-color;
-
-        [data-theme='dark'] & {
-          color: $global-font-secondary-color-dark;
-        }
+        color: var(#{$rootPrefix}global-font-secondary-color);
       }
 
       &.active {

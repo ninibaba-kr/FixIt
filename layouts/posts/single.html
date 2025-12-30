@@ -9,6 +9,7 @@
   {{- $toc := .Store.Get "toc" -}}
   {{- $tableOfContents := .Fragments.ToHTML ($toc.startlevel | int) ($toc.endlevel | int) ($toc.ordered | default false) -}}
   {{- $showToc := $toc.enable | and (ne $tableOfContents `<nav id="TableOfContents"></nav>`) -}}
+  {{- .Store.Set "showToc" $showToc -}}
   {{- $tableOfContents = dict "Content" $tableOfContents "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
 
   <aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="{{ T "collections" }}">
@@ -138,20 +139,18 @@
 
     {{- /* Featured image */ -}}
     {{- $image := $params.featuredimage -}}
-    {{- with dict "Path" $image "Resources" .Resources | partial "function/resource.html" }}
-      {{- $image = .RelPermalink }}
-    {{- end }}
-    {{- with .Resources.GetMatch "featured-image" -}}
-      {{- $image = .RelPermalink -}}
+    {{- $matches := slice -}}
+    {{- if .Resources.GetMatch "featured-image" -}}
+      {{- $matches = $matches | append "featured-image" -}}
     {{- end -}}
-    {{- with $image -}}
+    {{- if $image | or (gt (len $matches) 0) -}}
       <div class="featured-image">
         {{- $optim := slice 
-          (dict "Process" "resize 800x webp q75" "descriptor" "800w")
-          (dict "Process" "resize 1200x webp q75" "descriptor" "1200w")
-          (dict "Process" "resize 1600x webp q75" "descriptor" "1600w") 
+          (dict "Process" "resize 800x webp" "descriptor" "800w")
+          (dict "Process" "resize 1200x webp" "descriptor" "1200w")
+          (dict "Process" "resize 1600x webp" "descriptor" "1600w") 
         -}}
-        {{- dict "Src" . "Title" $.Description "OptimConfig" $optim | partial "plugin/image.html" -}}
+        {{- dict "Src" $image "Title" $.Description "Resources" .Resources "Matches" $matches "Loading" "eager" "Sizes" "(max-width: 680px) 100vw, (max-width: 960px) 80vw, (max-width: 1440px) 56vw, 800px" "OptimConfig" $optim | partial "plugin/image.html" -}}
       </div>
     {{- end -}}
 
@@ -236,7 +235,6 @@
 
   {{- /* TOC Dialog */ -}}
   {{- if $showToc -}}
-    {{- .Page.Store.Set "enableTocDialog" true -}}
     <dialog id="toc-dialog" aria-labelledby="toc-dialog-title" role="dialog">
       <div class="toc">
         <h2 class="toc-title">{{ T "single.contents" }}</h2>

@@ -1,8 +1,6 @@
 .tag-cloud-tags {
   margin: 10px 0;
 
-  @include link(true, true);
-
   a {
     display: inline-block;
     position: relative;
@@ -16,21 +14,13 @@
       @include transform(scale(1.2));
 
       sup {
-        color: $global-font-color;
+        color: var(#{$rootPrefix}global-font-color);
         @include transition(all ease-out 0.3s);
-
-        [data-theme='dark'] & {
-          color: $global-font-color-dark;
-        }
       }
     }
 
     sup {
-      color: $global-font-secondary-color;
-
-      [data-theme='dark'] & {
-        color: $global-font-secondary-color-dark;
-      }
+      color: var(#{$rootPrefix}global-font-secondary-color);
     }
   }
 }
@@ -40,18 +30,14 @@
   $tag-cloud-color-dark: mix($tag-cloud-end-dark, $tag-cloud-start-dark, $grade * 10);
 
   .tag-cloud-#{$grade} {
-    color: $tag-cloud-color!important;
+    color: $tag-cloud-color;
     font-size: var(--tag-font);
-    margin: 10px!important;
+    margin: 10px !important;
 
     &:active,
     &:focus,
     &:hover {
-      color: $global-link-hover-color!important;
-
-      [data-theme='dark'] & {
-        color: $global-link-hover-color-dark;
-      }
+      color: var(#{$rootPrefix}global-link-hover-color) !important;
 
       sup {
         opacity: 1;
@@ -59,7 +45,7 @@
     }
 
     [data-theme='dark'] & {
-      color: $tag-cloud-color-dark!important;
+      color: $tag-cloud-color-dark;
     }
 
     sup {

@@ -1,7 +1,7 @@
 {
   "name": "@hugo-fixit/core",
   "type": "module",
-  "version": "0.4.0-alpha.2",
+  "version": "0.4.0-alpha.3",
   "private": true,
   "packageManager": "pnpm@10.22.0",
   "description": "Hugo FixIt core theme component source files",
@@ -46,10 +46,10 @@
     "@types/node": "^24.10.1",
     "auto-changelog-plus": "^1.2.3",
     "eslint": "^9.39.1",
-    "lint-staged": "^16.2.6",
+    "lint-staged": "^16.2.7",
     "serve": "^14.2.5",
     "simple-git-hooks": "^2.13.1",
-    "tsx": "^4.20.6",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "simple-git-hooks": {
