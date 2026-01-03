@@ -496,6 +496,8 @@ snippetLength = 30
 highlightTag = "em"
 # whether to use the absolute URL based on the baseURL in search index
 absoluteURL = false
+# FixIt 0.4.0 | NEW whether to enable anchorify for headings in search results
+anchorify = true
 
 [params.search.algolia]
 index = ""
@@ -792,6 +794,9 @@ RSS = true
 # prefix = "https://twitter.com/"
 # Title = "Twitter"
 
+# [params.social.twitter.icon]
+# class = "fa-brands fa-x-twitter fa-fw"
+
 # TypeIt config
 [params.typeit]
 # typing speed between each step (measured in milliseconds)
@@ -1065,11 +1070,11 @@ hotWords = true
 # FixIt 0.3.17 | NEW Summary AI config
 # See https://ai.zhheo.com/docs/summary.html
 [params.postSummary]
-enable = false
+enable = true
 # If you set `params.postChat.key`, you don't need to set `params.postSummary.key`
 key = ""
 title = ""
-# themes options: ["", "simple", "yanzhi"]
+# themes options: ["", "simple", "yanzhi", "menghuan"]
 theme = ""
 postURL = ""
 blacklist = ""
@@ -1077,6 +1082,11 @@ wordLimit = 1000
 typingAnimate = true
 beginningText = ""
 loadingText = true
+
+# FixIt 0.4.0 | NEW Podcast AI config
+# See https://ai.zhheo.com/docs/podcast.html
+[params.podcast]
+enable = false
 
 # FixIt 0.3.10 | NEW Global Feed config for RSS, Atom and JSON feed.
 [params.feed]
@@ -1290,7 +1300,7 @@ errorColor = "#ff4949"
 # custom macros map
 # syntax: <macro> = <definition>
 [params.page.math.katex.macros]
-# "\\f" = "#1f(#2)"  # usage: $\f{a}{b}$
+# "\\f" = "#1f(#2)" # usage: $\f{a}{b}$
 
 # MathJax server-side rendering (https://www.mathjax.org)
 # MathJax config: https://docs.mathjax.org/en/latest/options/index.html
@@ -1303,7 +1313,7 @@ cdn = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 # custom macros map
 # syntax: <macro> = <definition>
 [params.page.math.mathjax.macros]
-# bold = ["{\\bf #1}", 1]  # usage: $\bold{math}$
+# bold = ["{\\bf #1}", 1] # usage: $\bold{math}$
 
 [params.page.math.mathjax.loader]
 load = [ "ui/safe" ]
@@ -1312,6 +1322,7 @@ load = [ "ui/safe" ]
 # custom = "https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/"
 
 # more loader config e.g source, dependencies, provides etc.
+
 [params.page.math.mathjax.options]
 enableMenu = true
 # HTML tags that won't be searched for math
