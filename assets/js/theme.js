@@ -1,11 +1,14 @@
 // TODO use ESLint to check the code style
+// 按需加载主题内部库和功能模块
 import Util from './util';
+import FileTree from './lib/file-tree.js'
 
 class FixIt {
   constructor() {
     this.config = window.config;
     this.isDark = document.documentElement.dataset.theme === 'dark';
     this.util = new Util();
+    this.fileTree = new FileTree();
     this.newScrollTop = this.util.getScrollTop();
     this.oldScrollTop = this.newScrollTop;
     this.scrollEventSet = new Set();
@@ -279,7 +282,7 @@ class FixIt {
                 const results = {};
                 window._index.search(query).forEach(({ item, refIndex, matches }) => {
                   let title = item.title;
-                  let content = item.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                  let content = item.content;
                   matches.forEach(({ indices, value, key }) => {
                     if (key === 'content') {
                       content = this._applyHighlightToText(content, indices, highlightTag);
@@ -340,13 +343,13 @@ class FixIt {
           templates: {
             suggestion: ({ title, uri, date, context }) =>
               `<div><a href="${uri}"><span class="suggestion-title">${title}</span></a><span class="suggestion-date">${date}</span></div><div class="suggestion-context">${context}</div>`,
-            empty: ({ query }) => `<div class="search-empty">${searchConfig.noResultsFound}: <span class="search-query">"${query}"</span></div>`,
+            empty: ({ query }) => `<div class="search-empty">${searchConfig.noResultsFound}: <span class="search-query">"${this.util.HTMLEscape(query)}"</span></div>`,
             footer: ({ }) => {
               let searchType, icon, href;
               switch (searchConfig.type) {
                 case 'algolia':
                   searchType = 'algolia';
-                  icon = '<i class="fa-brands fa-algolia fa-fw" aria-hidden="true"></i>';
+                  icon = '<i class="fa-brands fa-algolia" aria-hidden="true"></i>';
                   href = 'https://www.algolia.com/';
                   break;
                 case 'fuse':
@@ -357,7 +360,7 @@ class FixIt {
                 case 'cse':
                   if (this.config.cse.engine === 'google') {
                     searchType = 'Google CSE';
-                    icon = '<i class="fa-brands fa-google fa-fw" aria-hidden="true"></i>';
+                    icon = '<i class="fa-brands fa-google" aria-hidden="true"></i>';
                     href = 'https://programmablesearchengine.google.com/';
                   }
                   break;
@@ -1122,6 +1125,7 @@ class FixIt {
 
   initTabEvents(target = document) {
     target.addEventListener('tab-container-changed', () => {
+      this.fileTree.updateLineHeight(target);
       window.FixItMermaid?.init?.();
     }, false);
   }
@@ -1150,6 +1154,7 @@ class FixIt {
     this.initMathJax();
     this.initJsonViewer();
     this.initTabEvents(target);
+    this.fileTree.init(target);
     window.FixItMermaid?.init?.();
     window.FixItAPlayer?.init?.();
   }

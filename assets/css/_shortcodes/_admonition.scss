@@ -4,13 +4,16 @@
   padding: 0 0.75rem;
   border-left: .25rem solid;
   overflow: hidden;
+  background-color: var(#{$rootPrefix}admonition-bg-color);
+  border-left-color: var(#{$rootPrefix}admonition-color);
   @include border-radius($global-border-radius);
 
   .admonition-title {
-    font-weight: var(--admonition-title-font-weight, bold);
+    font-weight: var(#{$rootPrefix}admonition-title-font-weight, bold);
     margin: 0 -0.75rem;
     padding: 0.25rem 1.8rem;
     border-bottom: 1px solid;
+    position: relative;
     @include border-radius(0);
 
     strong {
@@ -22,9 +25,31 @@
       }
     }
 
-    &:has(+ .details-content > .admonition-content:empty) {
-      --admonition-title-font-weight: normal;
+    // title-only admonition without content
+    &:not(:has(+ .details-content)) {
+      #{$rootPrefix}admonition-title-font-weight: normal;
+      padding: 0.75rem 1rem 0.75rem 2.2rem;
+      border: 0;
+
+      i.icon {
+        left: 1.1rem;
+        font-size: 1rem;
+      }
     }
+  }
+
+  > .admonition-title {
+    border-bottom-color: var(#{$rootPrefix}admonition-bg-color);
+    background-color: var(#{$rootPrefix}admonition-bg-color-collapsed);
+    @include transition(all 0.2s ease);
+
+    i.icon {
+      color: var(#{$rootPrefix}admonition-color);
+    }
+  }
+
+  &.open > .admonition-title {
+    background-color: var(#{$rootPrefix}admonition-bg-color);
   }
 
   .admonition-content {
@@ -33,10 +58,6 @@
     // for extended alert syntax
     > p {
       margin: 0;
-    }
-    // title-only alert
-    &:empty {
-      display: none;
     }
 
     .code-block .code-header {
@@ -47,30 +68,16 @@
   i.icon {
     font-size: 0.85rem;
     position: absolute;
-    top: 0.6rem;
-    left: 0.4rem;
+    top: 50%;
+    left: 0.9rem;
+    translate: -50% -50%;
   }
 
   i.details-icon {
     position: absolute;
-    top: 0.6rem;
-    right: 0.3rem;
-  }
-  
-  background-color: var(#{$rootPrefix}admonition-bg-color);
-  border-left-color: var(#{$rootPrefix}admonition-color);
-
-  > .admonition-title {
-    border-bottom-color: var(#{$rootPrefix}admonition-bg-color);
-    background-color: var(#{$rootPrefix}admonition-bg-color-collapsed);
-
-    i.icon {
-      color: var(#{$rootPrefix}admonition-color);
-    }
-  }
-
-  &.open > .admonition-title {
-    background-color: var(#{$rootPrefix}admonition-bg-color);
+    top: 50%;
+    right: 0.9rem;
+    translate: 50% -50%;
   }
 
   // default admonition type is note
@@ -91,5 +98,14 @@
 
   &:last-child {
     margin-bottom: 0.75rem;
+  }
+
+  // content-only admonition without title
+  &:not(:has(.admonition-title)) {
+    border: 1px solid var(#{$rootPrefix}admonition-bg-color);
+
+    .admonition-content {
+      padding: 0.75rem 0.25rem;
+    }
   }
 }
