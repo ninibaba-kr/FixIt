@@ -459,6 +459,85 @@ class FixIt {
     }, false);
   }
 
+  initDownloadCode(codeBlock, codePreEl) {
+    const downloadBtn = codeBlock.querySelector('.code-header .download-btn');
+    if (!downloadBtn) return;
+    downloadBtn.addEventListener('click', () => {
+      const $codeHeader = codeBlock.querySelector('.code-header');
+      const fileNameFromTitle = $codeHeader?.querySelector('.code-title')?.dataset.name?.trim();
+      const language = Array.from($codeHeader?.classList || []).find((className) => className.startsWith('language-'))?.replace('language-', '');
+      const fallbackName = language && language !== 'fallback' ? `code.${language}` : 'code.txt';
+      const fileName = (fileNameFromTitle || fallbackName).replace(/[\\/:*?"<>|\r\n]+/g, '-');
+      const blob = new Blob([codePreEl.innerText], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName || fallbackName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      downloadBtn.toggleAttribute('data-downloaded', true);
+      downloadBtn.classList.toggle('fa-spin', true);
+      setTimeout(() => {
+        downloadBtn.toggleAttribute('data-downloaded', false);
+        downloadBtn.classList.toggle('fa-spin', false);
+      }, 300);
+    }, false);
+  }
+
+  _setCodeFullscreenState(codeBlock, show) {
+    const fullscreenBtn = codeBlock.querySelector('.code-header .fullscreen-btn');
+    const hasExpandBtn = !!codeBlock.querySelector('.code-expand-btn');
+    if (show && hasExpandBtn) {
+      codeBlock.dataset.fullscreenExpanded = codeBlock.classList.contains('is-expanded') ? 'true' : 'false';
+      codeBlock.classList.add('is-expanded');
+    }
+    if (!show && codeBlock.classList.contains('is-fullscreen')) {
+      codeBlock.classList.add('instant-height');
+      if (hasExpandBtn && codeBlock.dataset.fullscreenExpanded === 'false') {
+        codeBlock.classList.remove('is-expanded');
+      }
+      delete codeBlock.dataset.fullscreenExpanded;
+      window.requestAnimationFrame(() => {
+        codeBlock.classList.remove('instant-height');
+      });
+    }
+    codeBlock.classList.toggle('is-fullscreen', show);
+    fullscreenBtn?.toggleAttribute('data-fullscreen', show);
+    const hasFullscreenCode = !!document.querySelector('.code-block.highlight.is-fullscreen');
+    document.documentElement.style.overflow = hasFullscreenCode ? 'hidden' : '';
+  }
+
+  closeCodeFullscreen() {
+    const $activeCodeBlock = document.querySelector('.code-block.highlight.is-fullscreen');
+    if (!$activeCodeBlock) return;
+    this._setCodeFullscreenState($activeCodeBlock, false);
+  }
+
+  initFullscreenCode(codeBlock) {
+    const fullscreenBtn = codeBlock.querySelector('.code-header .fullscreen-btn');
+    if (!fullscreenBtn) return;
+    fullscreenBtn.addEventListener('click', () => {
+      const isFullscreen = codeBlock.classList.contains('is-fullscreen');
+      if (isFullscreen) {
+        this._setCodeFullscreenState(codeBlock, false);
+        return;
+      }
+      this.closeCodeFullscreen();
+      codeBlock.classList.remove('is-collapsed');
+      this._setCodeFullscreenState(codeBlock, true);
+    }, false);
+    if (!this._codeFullscreenOnEsc) {
+      this._codeFullscreenOnEsc = (event) => {
+        if (event.key === 'Escape') {
+          this.closeCodeFullscreen();
+        }
+      };
+      document.addEventListener('keydown', this._codeFullscreenOnEsc, false);
+    }
+  }
+
   /**
    * init code wrapper
    */
@@ -477,8 +556,11 @@ class FixIt {
       if ($codeBlock.dataset.mode === 'classic') {
         const $codeHeader = $codeBlock.querySelector('.code-header');
         if (!$codeHeader) return;
+        this.initDownloadCode($codeBlock, $codePreEl);
+        this.initFullscreenCode($codeBlock);
         // code title
         $codeHeader.querySelector('.code-title').addEventListener('click', () => {
+          if ($codeBlock.classList.contains('is-fullscreen')) return;
           $codeBlock.classList.toggle('is-collapsed');
         }, false);
         // ellipses icon
@@ -1282,7 +1364,7 @@ class FixIt {
       const contentHeight = document.body.scrollHeight - window.innerHeight;
       const scrollPercent = Math.max(Math.min(100 * Math.max(this.newScrollTop, 0) / contentHeight, 100), 0);
       if ($readingProgressBar) {
-        $readingProgressBar.style.setProperty('--progress', `${scrollPercent.toFixed(2)}%`);
+        $readingProgressBar.style.setProperty('--fi-progress', `${scrollPercent.toFixed(2)}%`);
       }
       // whether to show back to top button
       if ($backToTop) {
