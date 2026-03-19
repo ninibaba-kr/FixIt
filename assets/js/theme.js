@@ -1,5 +1,4 @@
 // TODO use ESLint to check the code style
-// 按需加载主题内部库和功能模块
 import Util from './util';
 import FileTree from './lib/file-tree.js'
 
@@ -7,15 +6,14 @@ class FixIt {
   constructor() {
     this.config = window.config;
     this.isDark = document.documentElement.dataset.theme === 'dark';
-    this.util = new Util();
-    this.fileTree = new FileTree();
-    this.newScrollTop = this.util.getScrollTop();
+    this.newScrollTop = Util.getScrollTop();
     this.oldScrollTop = this.newScrollTop;
     this.scrollEventSet = new Set();
     this.resizeEventSet = new Set();
     this.switchThemeEventSet = new Set();
     this.clickMaskEventSet = new Set();
     this.beforeprintEventSet = new Set();
+    this.afterprintEventSet = new Set();
     this.disableScrollEvent = false;
     window.objectFitImages && objectFitImages();
   }
@@ -31,7 +29,7 @@ class FixIt {
   }
 
   initSVGIcon() {
-    this.util.forEach(document.querySelectorAll('[data-svg-src]'), ($icon) => {
+    Util.forEach(document.querySelectorAll('[data-svg-src]'), ($icon) => {
       fetch($icon.dataset.svgSrc)
         .then((response) => response.text())
         .then((svg) => {
@@ -60,7 +58,7 @@ class FixIt {
   }
 
   initMenuDesktop() {
-    this.util.forEach(document.querySelectorAll('.has-children'), ($item) => {
+    Util.forEach(document.querySelectorAll('.has-children'), ($item) => {
       $item.querySelector('.sub-menu').style.minWidth = `${$item.offsetWidth - 8}px`;
     });
   }
@@ -80,7 +78,7 @@ class FixIt {
     });
     this.clickMaskEventSet.add(this._menuMobileOnClickMask);
     // add nested menu toggler
-    this.util.forEach(document.querySelectorAll('.menu-item>.nested-item'), ($nestedItem) => {
+    Util.forEach(document.querySelectorAll('.menu-item>.nested-item'), ($nestedItem) => {
       $nestedItem.addEventListener('click', function () {
         this.parentNode.querySelector('.sub-menu').classList.toggle('open');
         this.querySelector('.dropdown-icon').classList.toggle('open');
@@ -89,7 +87,7 @@ class FixIt {
   }
 
   initSwitchTheme() {
-    this.util.forEach(document.getElementsByClassName('theme-switch'), ($themeSwitch) => {
+    Util.forEach(document.getElementsByClassName('theme-switch'), ($themeSwitch) => {
       $themeSwitch.addEventListener('click', () => {
         document.documentElement.dataset.theme = this.isDark ? 'light' : 'dark';
         document.documentElement.style.setProperty('color-scheme', this.isDark ? 'light' : 'dark');
@@ -136,7 +134,7 @@ class FixIt {
 
   initSearch() {
     const searchConfig = this.config.search;
-    const isMobile = this.util.isMobile();
+    const isMobile = Util.isMobile();
     if (
       !searchConfig ||
       (isMobile && this._searchMobileOnce) ||
@@ -343,7 +341,7 @@ class FixIt {
           templates: {
             suggestion: ({ title, uri, date, context }) =>
               `<div><a href="${uri}"><span class="suggestion-title">${title}</span></a><span class="suggestion-date">${date}</span></div><div class="suggestion-context">${context}</div>`,
-            empty: ({ query }) => `<div class="search-empty">${searchConfig.noResultsFound}: <span class="search-query">"${this.util.HTMLEscape(query)}"</span></div>`,
+            empty: ({ query }) => `<div class="search-empty">${searchConfig.noResultsFound}: <span class="search-query">"${Util.HTMLEscape(query)}"</span></div>`,
             footer: ({ }) => {
               let searchType, icon, href;
               switch (searchConfig.type) {
@@ -396,7 +394,7 @@ class FixIt {
   }
 
   initDetails(target = document) {
-    this.util.forEach(target.querySelectorAll('.details:not(.disabled)'), ($details) => {
+    Util.forEach(target.querySelectorAll('.details:not(.disabled)'), ($details) => {
       const $summary = $details.querySelector('.details-summary');
       $summary.addEventListener('click', () => {
         $details.classList.toggle('open');
@@ -438,11 +436,11 @@ class FixIt {
       const iswWrap = codeBlock.classList.contains('line-wrapping');
       const highlightLines = codeBlock.querySelectorAll('.hl');
       iswWrap && codeBlock.classList.toggle('line-wrapping');
-      this.util.forEach(highlightLines, $hl => $hl.classList.toggle('hl'));
-      this.util.copyText(codePreEl.innerText.trim()).then(() => {
-        this.util.animateCSS(codePreEl, 'animate__flash');
+      Util.forEach(highlightLines, $hl => $hl.classList.toggle('hl'));
+      Util.copyText(codePreEl.innerText.trim()).then(() => {
+        Util.animateCSS(codePreEl, 'animate__flash');
         iswWrap && codeBlock.classList.toggle('line-wrapping');
-        this.util.forEach(highlightLines, $hl => $hl.classList.toggle('hl'));
+        Util.forEach(highlightLines, $hl => $hl.classList.toggle('hl'));
         copyBtn.toggleAttribute('data-copied', true);
         setTimeout(() => {
           copyBtn.toggleAttribute('data-copied', false);
@@ -543,7 +541,7 @@ class FixIt {
    */
   initCodeWrapper() {
     const $codeBlocks = document.querySelectorAll('.code-block.highlight:not([data-init])');
-    this.util.forEach($codeBlocks, ($codeBlock) => {
+    Util.forEach($codeBlocks, ($codeBlock) => {
       const $preElements = $codeBlock.querySelectorAll('pre.chroma');
       if (!$preElements.length) return;
       const $codePreEl = $preElements[$preElements.length - 1];
@@ -583,7 +581,7 @@ class FixIt {
               $codePreEl.setAttribute('contenteditable', false);
               $codePreEl.blur();
             } else {
-              this.util.forEach($codeBlock.querySelectorAll('.hl'), ($hl) => {
+              Util.forEach($codeBlock.querySelectorAll('.hl'), ($hl) => {
                 $hl.classList.remove('hl');
               });
               $codeBlock.classList.add('is-expanded');
@@ -597,18 +595,130 @@ class FixIt {
   }
 
   /**
+   * init code tabs
+   */
+  initCodeTabs() {
+    const $codeBlocks = document.querySelectorAll('.code-block[data-tab-group]');
+    const processed = new Set();
+    
+    Util.forEach($codeBlocks, ($block) => {
+      if (processed.has($block)) return;
+      
+      const groupName = $block.dataset.tabGroup;
+      const $tabs = [];
+      let $curr = $block;
+      
+      // collect consecutive blocks with same group
+      while ($curr && $curr.classList?.contains('code-block') && $curr.dataset.tabGroup === groupName) {
+        $tabs.push($curr);
+        processed.add($curr);
+        $curr = $curr.nextElementSibling;
+      }
+      
+      if ($tabs.length < 2) return;
+      
+      // create DOM structure
+      const $container = document.createElement('div');
+      $container.className = 'code-tabs';
+      
+      const $header = document.createElement('div');
+      $header.className = 'tabs-header';
+      
+      const $items = document.createElement('div');
+      $items.className = 'tabs-items';
+
+      const $actions = document.createElement('div');
+      $actions.className = 'tabs-actions';
+
+      $header.appendChild($items);
+      $header.appendChild($actions);
+      
+      const $content = document.createElement('div');
+      $content.className = 'tabs-content';
+
+      // insert container before the first block
+      const $firstBlock = $tabs[0];
+      $firstBlock.parentNode.insertBefore($container, $firstBlock);
+
+      const activeTabIndex = $tabs.findIndex(tab => tab.classList.contains('active'));
+      $tabs.forEach(($tab, index) => {
+        const title = $tab.dataset.tabTitle || 'Code';
+        const defaultActiveTab = activeTabIndex === -1 && index === 0;
+        
+        // tab button
+        const $btn = document.createElement('span');
+        $btn.className = 'tab-item';
+        if (defaultActiveTab) $btn.classList.add('active');
+        $btn.textContent = title;
+        $btn.dataset.index = index;
+        $btn.title = title;
+
+        $btn.addEventListener('click', () => {
+          // 1. restore buttons to the currently active tab
+          const $activeTab = $tabs.find(t => t.classList.contains('active'));
+          if ($activeTab) {
+            const $activeHeader = $activeTab.querySelector('.code-header');
+            if ($activeHeader) {
+              Array.from($actions.children).forEach(btn => $activeHeader.appendChild(btn));
+            }
+          }
+
+          // 2. switch active tab UI
+          $items.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
+          $btn.classList.add('active');
+          
+          // 3. switch content
+          $tabs.forEach(b => b.classList.remove('active'));
+          $tab.classList.add('active');
+
+          // 4. sync shadow mode data attribute
+          const shadowMode = $tab?.dataset.shadow;
+          if (shadowMode) {
+            $container.dataset.shadow = shadowMode;
+          } else {
+            delete $container.dataset.shadow;
+          }
+
+          // 5. move new buttons to actions
+          const $codeHeader = $tab.querySelector('.code-header');
+          if ($codeHeader) {
+            $codeHeader.querySelectorAll('.action-btn').forEach(btn => $actions.appendChild(btn));
+          }
+        });
+        $items.appendChild($btn);
+        
+        // move block to content
+        $tab.classList.toggle('active', activeTabIndex === index || defaultActiveTab);
+        $tab.classList.remove('is-collapsed');
+        $content.appendChild($tab);
+      });
+      
+      $container.appendChild($header);
+      $container.appendChild($content);
+
+      // initialize actions for the active tab
+      if (activeTabIndex !== -1) {
+        const $activeBtn = $items.querySelector(`.tab-item[data-index="${activeTabIndex}"]`);
+        if ($activeBtn) $activeBtn.click();
+      } else {
+        $items.firstElementChild.click();
+      }
+    });
+  }
+
+  /**
    * init diagram copy button
    */
   initDiagramCopyBtn() {
-    const stagingDOM = this.util.getStagingDOM()
-    this.util.forEach(document.querySelectorAll('.diagram-copy-btn'), ($btn) => {
+    const stagingDOM = Util.getStagingDOM()
+    Util.forEach(document.querySelectorAll('.diagram-copy-btn'), ($btn) => {
       $btn.addEventListener('click', () => {
         stagingDOM.stage($btn.parentElement.querySelector('template').content.cloneNode(true))
         let code = stagingDOM.contentAsText();
         try {
           code = JSON.stringify(JSON.parse(code), null, 2);
         } catch { }
-        this.util.copyText(code).then(() => {
+        Util.copyText(code).then(() => {
           $btn.toggleAttribute('data-copied', true);
           setTimeout(() => {
             $btn.toggleAttribute('data-copied', false);
@@ -632,10 +742,10 @@ class FixIt {
     const $tocLiElements = $tocContainer.getElementsByTagName('li');
 
     // Remove all active classes
-    this.util.forEach($tocLinkElements, ($tocLink) => {
+    Util.forEach($tocLinkElements, ($tocLink) => {
       $tocLink.classList.remove('active');
     });
-    this.util.forEach($tocLiElements, ($tocLi) => {
+    Util.forEach($tocLiElements, ($tocLi) => {
       $tocLi.classList.remove('has-active');
     });
 
@@ -674,10 +784,10 @@ class FixIt {
     // TOC Drawer Button Visibility
     const openButton = document.querySelector("#toc-drawer-button");
     if (openButton) {
-      openButton.classList.toggle('d-none', !this.util.isTocStatic());
+      openButton.classList.toggle('d-none', !Util.isTocStatic());
     }
     // TOC Static and TOC Dialog
-    if (this.util.isTocStatic()) {
+    if (Util.isTocStatic()) {
       const $tocContentStatic = document.getElementById('toc-content-static');
       if ($tocCore.parentElement !== $tocContentStatic) {
         $tocCore.parentElement.removeChild($tocCore);
@@ -704,7 +814,7 @@ class FixIt {
     }
     const $toc = document.getElementById('toc-auto');
     $toc.style.visibility = 'visible';
-    this.util.animateCSS($toc, ['animate__fadeIn', 'animate__faster'], true);
+    Util.animateCSS($toc, ['animate__fadeIn', 'animate__faster'], true);
     const $postMeta = document.querySelector('.post-meta');
     $toc.style.marginTop = `${$postMeta.offsetTop + $postMeta.clientHeight}px`;
 
@@ -733,7 +843,7 @@ class FixIt {
       } else {
         $tocContentAuto.classList.remove('animate__fadeIn');
       }
-      this.util.animateCSS($tocContentAuto, animation, true, () => {
+      Util.animateCSS($tocContentAuto, animation, true, () => {
         $tocContentAuto.classList.contains('animate__fadeOut') && $tocContentAuto.classList.add('d-none');
       });
       $toc.classList.toggle('toc-hidden');
@@ -768,7 +878,7 @@ class FixIt {
         $tocCore = $newTocCore;
       }
       // remove APlayer click event listener of the heading mark
-      this.util.forEach(document.querySelectorAll('.heading-mark'), ($headingMark) => {
+      Util.forEach(document.querySelectorAll('.heading-mark'), ($headingMark) => {
         const $newHeadingMark = $headingMark.cloneNode(true);
         $headingMark.parentElement.replaceChild($newHeadingMark, $headingMark);
       });
@@ -785,8 +895,8 @@ class FixIt {
         this._echartsArr[i].dispose();
       }
       this._echartsArr = [];
-      const stagingDOM = this.util.getStagingDOM()
-      this.util.forEach(document.getElementsByClassName('echarts'), ($echarts) => {
+      const stagingDOM = Util.getStagingDOM()
+      Util.forEach(document.getElementsByClassName('echarts'), ($echarts) => {
         const $dataEl = $echarts.nextElementSibling;
         if ($dataEl.tagName !== 'TEMPLATE') return;
         const chart = echarts.init($echarts, this.isDark ? 'dark' : 'light', { renderer: 'svg' });
@@ -818,7 +928,7 @@ class FixIt {
              * @returns {Object|Promise} ECharts option or Promise
              */
             const _getOption = new Function('fixit', 'chart',
-              this.util.isObjectLiteral(jsCodes) ? `return ${jsCodes}` : jsCodes
+              Util.isObjectLiteral(jsCodes) ? `return ${jsCodes}` : jsCodes
             );
             if ($dataEl.dataset.async === 'true') {
               return Promise.resolve(_getOption(this, chart)).then(option => {
@@ -852,7 +962,7 @@ class FixIt {
         mapboxgl.setRTLTextPlugin(this.config.mapbox.RTLTextPlugin);
         this._mapboxArr = this._mapboxArr || [];
       }
-      this.util.forEach(document.querySelectorAll('.mapbox:empty'), ($mapbox) => {
+      Util.forEach(document.querySelectorAll('.mapbox:empty'), ($mapbox) => {
         const { lng, lat, zoom, lightStyle, darkStyle, marked, markers, navigation, geolocate, scale, fullscreen } = JSON.parse($mapbox.dataset.options);
         const mapbox = new mapboxgl.Map({
           container: $mapbox,
@@ -901,7 +1011,7 @@ class FixIt {
         this._mapboxArr.push(mapbox);
       });
       this._mapboxOnSwitchTheme = this._mapboxOnSwitchTheme || (() => {
-        this.util.forEach(this._mapboxArr, (mapbox) => {
+        Util.forEach(this._mapboxArr, (mapbox) => {
           const $mapbox = mapbox.getContainer();
           const { lightStyle, darkStyle } = JSON.parse($mapbox.dataset.options);
           mapbox.setStyle(this.isDark ? darkStyle : lightStyle);
@@ -928,7 +1038,7 @@ class FixIt {
         acc[group].push(ele);
         return acc;
       }, {});
-      const stagingDOM = this.util.getStagingDOM()
+      const stagingDOM = Util.getStagingDOM()
 
       Object.values(groupMap).forEach((group) => {
         const typeone = (i) => {
@@ -1002,7 +1112,7 @@ class FixIt {
       $viewCommentsBtn.classList.remove('d-none');
       // view comments button click event
       $viewCommentsBtn.addEventListener('click', () => {
-        this.util.scrollIntoView('#comments');
+        Util.scrollIntoView('#comments');
       }, false);
     }
     this.config.comment.expired && document.querySelector('#comments').remove();
@@ -1119,7 +1229,7 @@ class FixIt {
     let now = new Date();
     let run = new Date(this.config.siteTime);
     let $runTimes = document.querySelector('.run-times');
-    if (!this.util.isValidDate(run) || !$runTimes) {
+    if (!Util.isValidDate(run) || !$runTimes) {
       clearInterval(this.siteTime);
       $runTimes && $runTimes.parentNode.remove();
       return;
@@ -1197,7 +1307,7 @@ class FixIt {
   initJsonViewer() {
     if (!window.JsonViewerElement) return;
     this._jsonViewerOnSwitchTheme = this._jsonViewerOnSwitchTheme || (() => {
-      this.util.forEach(document.getElementsByTagName('json-viewer'), ($el) => {
+      Util.forEach(document.getElementsByTagName('json-viewer'), ($el) => {
         $el.setAttribute('theme', this.isDark ? 'dark' : 'light');
       });
     });
@@ -1207,9 +1317,50 @@ class FixIt {
 
   initTabEvents(target = document) {
     target.addEventListener('tab-container-changed', () => {
-      this.fileTree.updateLineHeight(target);
+      FileTree.updateLineHeight(target);
       window.FixItMermaid?.init?.();
     }, false);
+  }
+
+  initFootnotes() {
+    const $footnoteRefs = document.querySelectorAll('#content sup[id^="fnref:"]');
+    const $footnotes = document.querySelector('.footnotes[role="doc-endnotes"]');
+    if (!$footnoteRefs.length || !$footnotes) return;
+    const footnoteMap = new Map();
+    $footnoteRefs.forEach(($ref) => {
+      if (this.config.tooltip) {
+        const $link = $ref.querySelector('a.footnote-ref');
+        if ($link) {
+          $link.addEventListener('click', (e) => {
+            e.preventDefault();
+          }, false);
+        }
+      }
+      const id = $ref.id.replace('fnref:', '');
+      const $footnoteContent = $footnotes.querySelector(`[id="fn:${id}"]`);
+      if ($footnoteContent) {
+        const $clonedContent = $footnoteContent.cloneNode(true);
+        const $backref = $clonedContent.querySelector('.footnote-backref');
+        if ($backref) {
+          $backref.remove();
+        }
+        footnoteMap.set($ref, $clonedContent);
+      }
+    });
+    footnoteMap.forEach(($content, $ref) => {
+      if ($ref.hasAttribute('title')) return;
+      $ref.setAttribute('title', $content.textContent.trim());
+      if (this.config.tooltip) {
+        const { Tooltip } = window.CellTooltip;
+        Tooltip.getOrCreateInstance($ref);
+      }
+    });
+  }
+
+  initTooltip() {
+    if (!this.config.tooltip) return;
+    const { Tooltip } = window.CellTooltip;
+    Tooltip.initAll('[data-ct-tooltip]');
   }
 
   /**
@@ -1222,21 +1373,26 @@ class FixIt {
     this.initDetails(target);
     this.initLightGallery();
     this.initCodeWrapper();
+    this.initCodeTabs();
     this.initDiagramCopyBtn();
     this.initEcharts();
     this.initTypeit(target);
     this.initMapbox();
+    this.initFootnotes();
+    this.initTooltip();
     if (includeToc) {
-      this.fixTocScroll();
-      this.initToc();
-      this.initTocListener();
-      this.initTocDialog();
+       window.setTimeout(() => {
+        this.fixTocScroll();
+        this.initToc();
+        this.initTocListener();
+        this.initTocDialog();
+      }, 100);
     }
     this.initPangu();
     this.initMathJax();
     this.initJsonViewer();
     this.initTabEvents(target);
-    this.fileTree.init(target);
+    FileTree.init(target);
     window.FixItMermaid?.init?.();
     window.FixItAPlayer?.init?.();
   }
@@ -1249,7 +1405,7 @@ class FixIt {
   _toggleEncryptedClass(container, show) {
     const fromClass = show ? 'encrypted-hidden' : 'decrypted-shown';
     const toClass = show ? 'decrypted-shown' : 'encrypted-hidden';
-    this.util.forEach(container.querySelectorAll(`.${fromClass}`), ($element) => {
+    Util.forEach(container.querySelectorAll(`.${fromClass}`), ($element) => {
       $element.classList.replace(fromClass, toClass);
     });
   }
@@ -1274,7 +1430,7 @@ class FixIt {
   initAutoMark() {
     if (!this.config.autoBookmark) return;
     window.addEventListener('beforeunload', () => {
-      window.sessionStorage?.setItem(`fixit-bookmark/#${location.pathname}`, this.util.getScrollTop());
+      window.sessionStorage?.setItem(`fixit-bookmark/#${location.pathname}`, Util.getScrollTop());
     });
     const scrollTop = Number(window.sessionStorage?.getItem(`fixit-bookmark/#${location.pathname}`));
     // If the page opens with a specific hash, just jump out
@@ -1290,15 +1446,15 @@ class FixIt {
     const $rewards = document.querySelectorAll('.post-reward [data-mode="fixed"]');
     if (!$rewards.length) return;
     // `fixed` mode only supports desktop
-    if (this.util.isMobile()) {
-      this.util.forEach($rewards, ($reward) => {
+    if (Util.isMobile()) {
+      Util.forEach($rewards, ($reward) => {
         $reward.removeAttribute('data-mode');
       });
       return;
     }
     // Close post reward images exclude special id
     const _closeRewardExclude = (id) => {
-      this.util.forEach($rewards, ($reward) => {
+      Util.forEach($rewards, ($reward) => {
         const $rewardInput = $reward.parentElement.querySelector('.reward-input');
         if ($rewardInput.id !== id) {
           $rewardInput.checked = false;
@@ -1306,7 +1462,7 @@ class FixIt {
       });
     };
     // Add additional click event to reward buttons
-    this.util.forEach($rewards, ($reward) => {
+    Util.forEach($rewards, ($reward) => {
       $reward.previousElementSibling.addEventListener('click', function () {
         _closeRewardExclude(this.getAttribute('for'));
       }, false)
@@ -1339,7 +1495,7 @@ class FixIt {
       $headers.push(document.getElementById('header-mobile'));
     }
     $backToTop?.addEventListener('click', () => {
-      this.util.scrollIntoView('body');
+      Util.scrollIntoView('body');
     });
     window.addEventListener('scroll', (event) => {
       if (this.disableScrollEvent) {
@@ -1347,17 +1503,17 @@ class FixIt {
         return;
       }
       const $mask = document.getElementById('mask');
-      this.newScrollTop = this.util.getScrollTop();
+      this.newScrollTop = Util.getScrollTop();
       const scroll = this.newScrollTop - this.oldScrollTop;
       // header animation
-      this.util.forEach($headers, ($header) => {
+      Util.forEach($headers, ($header) => {
         if (scroll > ACCURACY) {
           $header.classList.remove('animate__fadeInDown');
-          this.util.animateCSS($header, ['animate__fadeOutUp'], true);
+          Util.animateCSS($header, ['animate__fadeOutUp'], true);
           $mask.click();
         } else if (scroll < -ACCURACY) {
           $header.classList.remove('animate__fadeOutUp');
-          this.util.animateCSS($header, ['animate__fadeInDown'], true);
+          Util.animateCSS($header, ['animate__fadeInDown'], true);
           $mask.click();
         }
       });
@@ -1370,10 +1526,10 @@ class FixIt {
       if ($backToTop) {
         if (scrollPercent > 1) {
           $backToTop.classList.remove('d-none', 'animate__fadeOut');
-          this.util.animateCSS($backToTop, ['animate__fadeIn'], true);
+          Util.animateCSS($backToTop, ['animate__fadeIn'], true);
         } else {
           $backToTop.classList.remove('animate__fadeIn');
-          this.util.animateCSS($backToTop, ['animate__fadeOut'], true, () => {
+          Util.animateCSS($backToTop, ['animate__fadeOut'], true, () => {
             $backToTop.classList.contains('animate__fadeOut') && $backToTop.classList.add('d-none');
           });
         }
@@ -1393,7 +1549,7 @@ class FixIt {
   }
 
   onResize() {
-    let resizeBefore = this.util.isMobile();
+    let resizeBefore = Util.isMobile();
     window.addEventListener('resize', () => {
       if (!this._resizeTimeout) {
         this._resizeTimeout = window.setTimeout(() => {
@@ -1404,7 +1560,7 @@ class FixIt {
           this.initToc();
           this.initSearch();
 
-          const isMobile = this.util.isMobile()
+          const isMobile = Util.isMobile()
           if (isMobile !== resizeBefore) {
             document.getElementById('mask').click();
             resizeBefore = isMobile;
@@ -1425,12 +1581,51 @@ class FixIt {
     }, false);
   }
 
-  beforeprint() {
+  initPrint() {
     window.addEventListener('beforeprint', () => {
-      this.util.forEach(document.querySelectorAll('.chroma'), ($el) => {
-        $el.classList.toggle('open', true)
+      const $content = document.getElementById('content');
+      // revert code tabs to code blocks for better printing support
+      Util.forEach($content.querySelectorAll('.code-tabs'), ($codeTabs) => {
+        // restore action buttons to the active tab's code-header before reverting
+        const $actions = $codeTabs.querySelector('.tabs-actions');
+        const $activeBlock = $codeTabs.querySelector('.code-block.active');
+        if ($actions && $activeBlock) {
+          const $codeHeader = $activeBlock.querySelector('.code-header');
+          if ($codeHeader) {
+            Array.from($actions.children).forEach(btn => $codeHeader.appendChild(btn));
+          }
+        }
+        const $codeBlocks = $codeTabs.querySelectorAll('.code-block');
+        $codeBlocks.forEach(($codeBlock) => {
+          $codeTabs.parentElement.insertBefore($codeBlock, $codeTabs);
+        });
+        $codeTabs.parentElement.removeChild($codeTabs);
+      });
+      Util.forEach($content.querySelectorAll('.code-block'), ($el) => {
+        // line wrapping
+        $el.classList.add('line-wrapping');
+        // expand all code blocks
+        $el.classList.remove('is-collapsed');
+        // expand code preview
+        if ($el.querySelector('.code-expand-btn')) {
+          $el.classList.add('is-expanded');
+        }
+      });
+      FileTree.expandAll($content);
+      Util.forEach($content.querySelectorAll('.details'), ($el) => {
+        $el.classList.add('open');
+      });
+      Util.forEach($content.querySelectorAll('details'), ($el) => {
+        $el.setAttribute('open', '');
       });
       for (let event of this.beforeprintEventSet) {
+        event();
+      }
+    }, false);
+
+    window.addEventListener('afterprint', () => {
+      this.initCodeTabs();
+      for (let event of this.afterprintEventSet) {
         event();
       }
     }, false);
@@ -1458,7 +1653,6 @@ class FixIt {
       this.initReward();
       this.initPostChatUser();
 
-      // [todo] refactor async init toc
       window.setTimeout(() => {
         this.initComment();
         if (!this.config.encryption?.all) {
@@ -1470,7 +1664,7 @@ class FixIt {
         this.onScroll();
         this.onResize();
         this.onClickMask();
-        this.beforeprint();
+        this.initPrint();
       }, 100);
     } catch (err) {
       console.error(err);
