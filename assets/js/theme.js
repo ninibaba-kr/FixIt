@@ -441,9 +441,16 @@ class FixIt {
         Util.animateCSS(codePreEl, 'animate__flash');
         iswWrap && codeBlock.classList.toggle('line-wrapping');
         Util.forEach(highlightLines, $hl => $hl.classList.toggle('hl'));
+        const copiedText = copyBtn.dataset.copiedText;
+        const originalTitle = copyBtn.dataset.ctOriginalTitle;
         copyBtn.toggleAttribute('data-copied', true);
+        copyBtn.dataset.ctTitle = copiedText;
+        const instance = window.CellTooltip.getOrCreateInstance(copyBtn);
+        instance.refresh();
         setTimeout(() => {
           copyBtn.toggleAttribute('data-copied', false);
+          copyBtn.dataset.ctTitle = originalTitle;
+          instance.hide();
         }, 2000);
       }, () => {
         console.error('Clipboard write failed!', 'Your browser does not support clipboard API!');
@@ -462,15 +469,18 @@ class FixIt {
     if (!downloadBtn) return;
     downloadBtn.addEventListener('click', () => {
       const $codeHeader = codeBlock.querySelector('.code-header');
-      const fileNameFromTitle = $codeHeader?.querySelector('.code-title')?.dataset.name?.trim();
+      const name = codeBlock.dataset.name?.trim();
       const language = Array.from($codeHeader?.classList || []).find((className) => className.startsWith('language-'))?.replace('language-', '');
-      const fallbackName = language && language !== 'fallback' ? `code.${language}` : 'code.txt';
-      const fileName = (fileNameFromTitle || fallbackName).replace(/[\\/:*?"<>|\r\n]+/g, '-');
+      const ext = language && language !== 'fallback' ? language : 'txt';
+      const fallbackName = name
+        ? (name.includes('.') ? name : `${name}.${ext}`)
+        : `code.${ext}`;
+      const fileName = codeBlock.getAttribute('filename')?.trim();
       const blob = new Blob([codePreEl.innerText], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = fileName || fallbackName;
+      link.download = (fileName || fallbackName).replace(/[\\/:*?"<>|\r\n]+/g, '-');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -598,18 +608,18 @@ class FixIt {
    * init code tabs
    */
   initCodeTabs() {
-    const $codeBlocks = document.querySelectorAll('.code-block[data-tab-group]');
+    const $codeBlocks = document.querySelectorAll('.code-block[group]:not([data-tab-init])');
     const processed = new Set();
     
     Util.forEach($codeBlocks, ($block) => {
       if (processed.has($block)) return;
       
-      const groupName = $block.dataset.tabGroup;
+      const groupName = $block.getAttribute('group');
       const $tabs = [];
       let $curr = $block;
       
       // collect consecutive blocks with same group
-      while ($curr && $curr.classList?.contains('code-block') && $curr.dataset.tabGroup === groupName) {
+      while ($curr && $curr.classList?.contains('code-block') && $curr.getAttribute('group') === groupName) {
         $tabs.push($curr);
         processed.add($curr);
         $curr = $curr.nextElementSibling;
@@ -641,9 +651,20 @@ class FixIt {
       $firstBlock.parentNode.insertBefore($container, $firstBlock);
 
       const activeTabIndex = $tabs.findIndex(tab => tab.classList.contains('active'));
+      const langPref = window.localStorage.getItem('config_lang_perf');
+      const hasCodeToggle = $tabs.some(tab => tab.dataset.codeToggle === 'true');
+      const langPrefIndex = (langPref && hasCodeToggle) ? $tabs.findIndex(tab => tab.dataset.tabTitle.toLowerCase() === langPref) : -1;
+      const resolvedIndex = langPrefIndex !== -1 ? langPrefIndex : activeTabIndex;
+      const beforeTabs = $tabs[0]?.getAttribute('before_tabs');
+      if (beforeTabs) {
+        const $before = document.createElement('span');
+        $before.className = 'before-tabs';
+        $before.textContent = beforeTabs;
+        $items.appendChild($before);
+      }
       $tabs.forEach(($tab, index) => {
         const title = $tab.dataset.tabTitle || 'Code';
-        const defaultActiveTab = activeTabIndex === -1 && index === 0;
+        const defaultActiveTab = resolvedIndex === -1 && index === 0;
         
         // tab button
         const $btn = document.createElement('span');
@@ -666,6 +687,14 @@ class FixIt {
           // 2. switch active tab UI
           $items.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
           $btn.classList.add('active');
+          if ($tab.dataset.codeToggle === 'true') {
+            window.localStorage.setItem('config_lang_perf', $tab.dataset.tabTitle.toLowerCase());
+            const activeItems = document.querySelectorAll(`
+              .tab-item[title="${$tab.dataset.tabTitle.toLowerCase()}"]:not(.active),
+              .tab-item[title="${$tab.dataset.tabTitle.toUpperCase()}"]:not(.active)`
+            );
+            Util.forEach(activeItems, t => t.click());
+          }
           
           // 3. switch content
           $tabs.forEach(b => b.classList.remove('active'));
@@ -688,8 +717,10 @@ class FixIt {
         $items.appendChild($btn);
         
         // move block to content
-        $tab.classList.toggle('active', activeTabIndex === index || defaultActiveTab);
+        $tab.classList.toggle('active', resolvedIndex === index || defaultActiveTab);
         $tab.classList.remove('is-collapsed');
+        $tab.classList.remove('d-none');
+        $tab.dataset.tabInit = 'true';
         $content.appendChild($tab);
       });
       
@@ -697,8 +728,8 @@ class FixIt {
       $container.appendChild($content);
 
       // initialize actions for the active tab
-      if (activeTabIndex !== -1) {
-        const $activeBtn = $items.querySelector(`.tab-item[data-index="${activeTabIndex}"]`);
+      if (resolvedIndex !== -1) {
+        const $activeBtn = $items.querySelector(`.tab-item[data-index="${resolvedIndex}"]`);
         if ($activeBtn) $activeBtn.click();
       } else {
         $items.firstElementChild.click();
@@ -1595,6 +1626,7 @@ class FixIt {
         }
         const $codeBlocks = $codeTabs.querySelectorAll('.code-block');
         $codeBlocks.forEach(($codeBlock) => {
+          delete $codeBlock.dataset.tabInit;
           $codeTabs.parentElement.insertBefore($codeBlock, $codeTabs);
         });
         $codeTabs.parentElement.removeChild($codeTabs);
