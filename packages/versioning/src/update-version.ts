@@ -1,16 +1,17 @@
-/* eslint-disable no-console */
-import { execFileSync, execSync } from 'node:child_process'
+import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
-import { join } from 'node:path'
 import process from 'node:process'
-import { workspaceRoot } from '@hugo-fixit/shared'
+import { consola, fromRoot, runCommand } from '@hugo-fixit/shared'
+
+const VERSION_PATCH_RE = /(\d+)$/
+const VERSION_RE = /v\d+\.\d+\.\d+(-[\w.-]+)?/
 
 /**
  * Update the version of the FixIt
  * @param type version type
  */
 export function updateVersion(type: 'dev' | 'prod') {
-  const branch: string = execSync('git rev-parse --abbrev-ref HEAD').toString().trim()
+  const branch: string = runCommand('git rev-parse --abbrev-ref HEAD')
   const match: string[] = [
     'archetypes/',
     'assets/',
@@ -24,55 +25,77 @@ export function updateVersion(type: 'dev' | 'prod') {
     'pnpm-lock.yaml',
     'theme.toml',
   ]
-  const gitDiff: string = execSync('git diff --cached --name-only').toString().trim()
+  const stagedFiles: string[] = runCommand('git diff --cached --name-only')
+    .split('\n')
+    .map(file => file.trim())
+    .filter(Boolean)
+
+  // consola.info(
+  //   'Node.js:',
+  //   runCommand('which node'),
+  //   process.version,
+  // )
 
   if (type !== 'prod') {
     // Avoid conflicts when creating a Pull Request
     if (!['dev', 'main'].includes(branch)) {
-      console.log(`The current branch is ${branch}, no need to update the FixIt version.`)
+      consola.info(`The current branch is ${branch}, no need to update the FixIt version.`)
       process.exit(0)
     }
-    if (!match.some(item => gitDiff.includes(item))) {
-      console.log('No need to update the FixIt version.')
+    if (!match.some(item => item.endsWith('/')
+      ? stagedFiles.some(file => file.startsWith(item))
+      : stagedFiles.includes(item))) {
+      consola.info('No need to update the FixIt version.')
       process.exit(0)
     }
   }
-  const initHtmlPath: string = join(workspaceRoot, 'layouts/_partials/init/index.html')
-  const packageJsonPath: string = join(workspaceRoot, 'package.json')
+  const initHtmlPath: string = fromRoot('layouts/_partials/init/index.html')
+  const packageJsonPath: string = fromRoot('package.json')
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
   const version: string = packageJson.version
-  // Get the short hash of the last commit (can not get this commit hash at pre-commit hook)
-  const shortHash: string = execSync('git rev-parse --short HEAD').toString().trim()
-  // Build the development version v{major}.{minor}.{patch+1}-{timestamp}-{shortHash}
-  // e.g. v0.3.21-20250702061540-abcdefg
-  const timestamp: string = new Date().toISOString().replace(/[-:TZ]/g, '').slice(0, -4)
-  const devVersion: string = `${version.replace(/(\d+)$/, (match, part) => (Number.parseInt(part) + 1).toString())}-${timestamp}-${shortHash}`
+  const timestamp: string = Date.now().toString(36)
+  const nextVersion: string | undefined = packageJson.nextVersion
+  // If `nextVersion` is set in package.json, use it as the base instead of auto-incrementing patch.
+  const devBaseVersion: string = nextVersion ?? version.replace(VERSION_PATCH_RE, (_versionPatchMatch, part) => (Number.parseInt(part, 10) + 1).toString())
+  // Development version syntax: v{major}.{minor}.{patch+1}-{timestamp(36)}
+  // e.g. v0.3.21-mq7veaoa
+  const devVersion: string = `${devBaseVersion}-${timestamp}`
   const initHtml: string = fs.readFileSync(initHtmlPath, 'utf8')
   const latestVersion: string = type === 'prod' ? version : devVersion
-  const versionRegex: RegExp = /v\d+\.\d+\.\d+(-[\w.\-]+)?/
-  const lastVersion: string = initHtml.match(versionRegex)![0].slice(1)
-  const newInitHtml: string = initHtml.replace(versionRegex, `v${latestVersion}`)
+  const versionMatch = initHtml.match(VERSION_RE)
+  if (!versionMatch) {
+    throw new Error('Unable to find current version in layouts/_partials/init/index.html.')
+  }
+  const lastVersion: string = versionMatch[0].slice(1)
+  const newInitHtml: string = initHtml.replace(VERSION_RE, `v${latestVersion}`)
 
-  if (lastVersion === version && gitDiff.includes('layouts/_partials/init/index.html')) {
+  if (lastVersion === version && stagedFiles.includes('layouts/_partials/init/index.html')) {
     // After running `npm version` or manually modifying the version number, skip the update
-    console.log(`The FixIt version has been updated to v${lastVersion}.`)
+    consola.info(`The FixIt version has been updated to v${lastVersion}.`)
     process.exit(0)
   }
 
   // Update the version number in layouts/_partials/init/index.html
   fs.writeFileSync(initHtmlPath, newInitHtml)
+  // In prod mode, remove the `nextVersion` field from package.json if present
+  if (type === 'prod' && nextVersion) {
+    delete packageJson.nextVersion
+    fs.writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`)
+    consola.info('Removed nextVersion field from package.json.')
+  }
   // Add the updated files to the git stage
   const toStageFiles: string[] = [
     'layouts/_partials/init/index.html',
     'package.json',
-    'package-lock.json',
     'pnpm-lock.yaml',
   ]
   toStageFiles.forEach((file) => {
-    const stageFile = join(workspaceRoot, file)
+    const stageFile = fromRoot(file)
     if (fs.existsSync(stageFile)) {
       execFileSync('git', ['add', stageFile])
     }
   })
-  console.log(`Update the FixIt version from v${lastVersion} to v${latestVersion}.`)
+  if (lastVersion !== latestVersion) {
+    consola.info(`Update the FixIt version from v${lastVersion} to v${latestVersion}.`)
+  }
 }

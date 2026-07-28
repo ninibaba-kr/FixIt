@@ -13,7 +13,18 @@ tags:
 Testing various configurations and nested scenarios for the Tabs shortcode.
 
 {{< tabs >}}
-{{% tab title="Test Cases" %}}See Types section for various test cases.{{% /tab %}}
+{{% tab title="Test Cases" %}}
+See Types section for various test cases.
+
+```go-template {name="Shortcode"}
+{{</* tabs */>}}
+{{%/* tab title="Test Cases" */%}}
+{{%/* tab title="Test Cases" */%}}See Types section for various test cases.{{%/* /tab */%}}
+{{%/* tab title="Nested Tabs" */%}}See Nested Tabs section for examples.{{%/* /tab */%}}
+{{</* /tabs */>}}
+```
+
+{{% /tab %}}
 {{% tab title="Nested Tabs" %}}See Nested Tabs section for examples.{{% /tab %}}
 {{< /tabs >}}
 
@@ -115,7 +126,7 @@ Nested tab C with a table:
 {{% tab title="Outer Tab 3" %}}
 This tab contains vertical nested tabs:
 
-{{< tabs type="card" vertical=true >}}
+{{< tabs type="card" placement="left" >}}
 
 {{% tab title="Vertical A" %}}
 Content for vertical nested tab A.

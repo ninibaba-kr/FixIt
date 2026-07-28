@@ -2,21 +2,23 @@
 # Übersetzung auf Deutsch
 # https://gohugo.io/content-management/multilingual/#translation-of-strings
 
-# === init ===
+# === Init ===
 [init]
-configurationError = "Konfigurationsfehler\nSie haben den FixIt-Versionsparameter noch nicht korrekt konfiguriert. Siehe https://fixit.lruihao.cn/documentation/basics/#theme-configuration"
+hugoVersionError = "Hugo-Version ist zu niedrig.\n\nAktuelle Hugo-Version ist {{ .Current }}, die minimal unterstützte Version für FixIt ist {{ .Minimal }}.\n\nWenn Sie Hugo auf Ihrem eigenen Computer ausführen, schauen Sie sich https://gohugo.io/getting-started/installing/#upgrade-hugo für eine Upgrade-Anleitung an.\n\nWenn Sie auf einer Drittanbieterplattform bereitstellen, konfigurieren Sie bitte die Hugo-Version entsprechend."
+hugoExtendedWarn = "Die Hugo Extended-Version ist für die Unterstützung von SCSS erforderlich."
+configurationError = "Konfigurationsfehler\nSie haben den FixIt-Versionsparameter noch nicht korrekt konfiguriert. Siehe https://fixit.lruihao.cn/docs/getting-started/configuration/params/?lang=deutsch"
 compatibilityError = "Kompatibilitätsfehler ({{ .From }} -> {{ .To }}):\nSie haben ein inkompatibles Update. Siehe https://github.com/hugo-fixit/FixIt/releases"
 devVersionWarn = "Sie verwenden eine Entwicklungsversion von FixIt. Bitte erwägen Sie die Verwendung einer stabilen Version.\nSiehe https://github.com/hugo-fixit/FixIt/releases"
 devEnvWarn = "Die aktuelle Umgebung ist \"Entwicklung\". Das \"Kommentarsystem\", \"PWA\", \"CDN\", \"Fingerprint\" und \"Analytics\" werden deaktiviert."
 quicklyUpgrade = "Schnelles Upgrade verwenden Sie den Befehl: "
-# === init ===
+# === Init ===
 
-# === baseof ===
+# === Base Layout ===
 [baseof]
 backToTop = "Nach oben"
 viewComments = "Kommentare anzeigen"
 noscript = "Diese Website funktioniert am besten mit aktiviertem JavaScript."
-# === baseof ===
+# === Base Layout ===
 
 # === Taxonomy ===
 [archives]
@@ -65,36 +67,39 @@ other = "Insgesamt {{ .Count }} Artikel"
 more = "Mehr"
 # === Pagination ===
 
-# === partials/header.html ===
+# === Header ===
 [header]
 selectLanguage = "Sprache wählen"
 noMoretTranslations = "Keine weiteren Übersetzungen"
 switchTheme = "Darstellung ändern"
-# === partials/header.html ===
+# === Header ===
 
-# === partials/footer.html ===
+# === Footer ===
 [footer]
 poweredBySome = "Realisiert durch {{ .Hugo }} | Thema - {{ .Theme }}"
 siteUV = "Besucher insgesamt"
 sitePV = "Besuche insgesamt"
 siteRunning = "Website läuft ..."
-# === partials/footer.html ===
+# === Footer ===
 
-# === partials/comment.html ===
+# === Comment ===
 [comment]
-valineLang = "en" # Deutsch unterstützt Valine nicht
 valinePlaceholder = "Ihr Kommentar ..."
-facebookLanguageCode = "de_DE"
-# === partials/comment.html ===
+# === Comment ===
 
-# === partials/assets.html ===
+# === Assets ===
 [assets]
 search = "Suche"
 searchPlaceholder = "Suche nach Titel und Inhalt..."
 searchIn = "Suche in {{ . }}"
+searchBy = "Suche von"
 gotoResultsPage = "Zu den Suchergebnissen ..."
 clear = "Leeren"
 cancel = "Abbrechen"
+navigate = "Navigieren"
+select = "Auswählen"
+close = "Schließen"
+refresh = "Aktualisieren"
 noResultsFound = "Keine Ergebnisse gefunden"
 copyToClipboard = "In Zwischenablage kopieren"
 copyText = "Kopieren"
@@ -103,19 +108,20 @@ toggleLineNumbers = "Zeilennummern umschalten"
 toggleLineWrap = "Zeilenumbruch umschalten"
 toggleCodeEditable = "Codeblock editierbar umschalten"
 downloadCode = "Code herunterladen"
-toggleCodeFullscreen = "Codeblock-Vollbild umschalten"
 expandCode = "Codeblock erweitern oder reduzieren"
+fullscreen = "Vollbild"
+exitFullscreen = "Vollbild verlassen"
 cookieconsentMessage = "Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern."
 cookieconsentDismiss = "Zustimmen"
 cookieconsentLink = "Erfahren Sie mehr"
-# === partials/assets.html ===
+# === Assets ===
 
-# === partials/plugin/share.html ===
+# === Share ===
 [shareOn]
 other = "Teilen auf"
-# === partials/plugin/share.html ===
+# === Share ===
 
-# === posts/single.html ===
+# === Single Post ===
 [single]
 contents = "Inhalt"
 pin = "Oben anheften"
@@ -139,6 +145,8 @@ encryptedMessage = "Bitte geben Sie das Passwort ein"
 password = "Passwort"
 enterBtn = "Eintreten"
 encryptyAgain = "Erneut verschlüsseln"
+encryptionWarning = "Inhaltsverschlüsselung erkannt, aber sie sind noch im Klartext!"
+encryptionCommand = "Führen Sie `npx @hugo-fixit/encrypt` nach dem Build aus, um sie tatsächlich zu verschlüsseln."
 relatedContent = "Ähnliche Inhalte"
 
 [single.includedIn]
@@ -163,34 +171,47 @@ wechatpay = "WeChat Pay"
 alipay = "Alipay"
 paypal = "PayPal"
 bitcoin = "Bitcoin"
-# === posts/single.html ===
+# === Single Post ===
 
-# === 404.html ===
+# === Error Pages ===
 [pageNotFound]
 other = "Seite nicht gefunden"
 
 [pageNotFoundText]
 other = "Leider konnte die von Ihnen angeforderte Seite nicht aufgerufen werden."
-# === 404.html ===
+# === Error Pages ===
 
-# === offline ===
+# === Offline ===
 [offlineTitle]
 other = "Offline"
 
 [offlineText]
 other = "Sie sind nicht mit dem Internet verbunden, es stehen nur zwischengespeicherte Seiten zur Verfügung."
-# === offline ===
+# === Offline ===
 
-# === GitHub Alert ===
+# === Service Worker ===
+[serviceWorker]
+updateTitle = "Update verfügbar"
+updateText = "Eine neue Version dieser Website ist verfügbar."
+# === Service Worker ===
+
+# === Link Redirection ===
+[linkRedirection]
+title = "Hinweis zur Weiterleitung"
+message = "Sie sind dabei, {{ .Title }} zu verlassen. Bitte achten Sie auf die Sicherheit Ihres Kontos und Vermögens."
+confirm = "Weiter besuchen"
+# === Link Redirection ===
+
+# === Alert ===
 [alert]
 note = "Hinweis"
 tip = "Tipp"
 important = "Wichtig"
 warning = "Warnung"
 caution = "Vorsicht"
-# === GitHub Alert ===
+# === Alert ===
 
-# === Task lists ===
+# === Task List ===
 [taskList]
 x = "Überprüft"
 " " = "Nicht überprüft"
@@ -199,10 +220,11 @@ x = "Überprüft"
 "<" = "Geplant"
 ">" = "Verschoben"
 "!" = "Wichtig"
+"!x" = "Wichtig Erledigt"
 "?" = "Frage"
-# === Task lists ===
+# === Task List ===
 
-# === shortcodes/admonition.html ===
+# === Admonition ===
 [admonition]
 note = "Notiz"
 abstract = "Kurzfassung"
@@ -217,12 +239,26 @@ danger = "Vorsicht"
 bug = "Bug"
 example = "Beispiel"
 quote = "Zitat"
-# === shortcodes/admonition.html ===
+# === Admonition ===
 
-# === shortcodes/version.html ===
+# === Version ===
 [version]
 new = "NEU"
 changed = "GEÄNDERT"
 deleted = "GELÖSCHT"
 deprecated = "VERALTET"
-# === shortcodes/version.html ===
+# === Version ===
+
+# === Diagram ===
+[diagram]
+zoomIn = "Vergrößern"
+zoomOut = "Verkleinern"
+reset = "Zurücksetzen"
+download = "SVG herunterladen"
+# === Diagram ===
+
+# === Tabs ===
+[tabs]
+diagram = "Diagramm"
+code = "Code"
+# === Tabs ===

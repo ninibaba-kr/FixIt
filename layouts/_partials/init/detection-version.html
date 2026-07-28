@@ -1,6 +1,25 @@
+{{- /*
+  Version detection and update checking partial.
+
+  Validates Hugo minimum version, checks Hugo Extended edition, detects the
+  FixIt theme version from params, warns about dev versions, and optionally
+  checks for newer releases via the GitHub API.
+*/ -}}
+
 {{- $version := hugo.Store.Get "version" -}}
 {{- $latest := $version -}}
 {{- $devOpts := .Site.Store.Get "devOpts" -}}
+
+{{- /* Check Hugo version */ -}}
+{{- $MINIMAL_HUGO_VERSION := "0.161.0" -}}
+{{- if lt hugo.Version $MINIMAL_HUGO_VERSION -}}
+  {{- errorf "\n\n%v\n\n" (dict "Current" hugo.Version "Minimal" $MINIMAL_HUGO_VERSION | T "init.hugoVersionError") -}}
+{{- end -}}
+
+{{- /* Check Hugo extend */ -}}
+{{- if eq hugo.IsExtended false -}}
+  {{- warnf "\n\n%v\n\n" (T "init.hugoExtendedWarn") -}}
+{{- end -}}
 
 {{- /* Check for updates */ -}}
 {{- if $devOpts.c4u -}}
@@ -10,10 +29,10 @@
 {{- end -}}
 
 {{- /* FixIt theme version detection */ -}}
-{{- if eq .Site hugo.Sites.Default -}}
+{{- if .Site.Language.IsDefault -}}
   {{- if not .Site.Params.version -}}
     {{- errorf "FixIt %v\n%v\n\n" $version (T "init.configurationError") -}}
-  {{- else if gt "0.2.0" (strings.TrimPrefix "v" .Site.Params.version) -}}
+  {{- else if gt "1.0.0" (strings.TrimPrefix "v" .Site.Params.version) -}}
     {{- errorf "FixIt %v\n%v\n\n" $version (dict "From" .Site.Params.version "To" $version | T "init.compatibilityError")  -}}
   {{- end -}}
   {{- if gt (len (findRE "^v[0-9]+\\.[0-9]+\\.[0-9]+-[0-9a-f]+$" $version)) 0 -}}

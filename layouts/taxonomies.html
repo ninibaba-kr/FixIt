@@ -1,9 +1,5 @@
 {{- /* Taxonomies Page */ -}}
-{{- $iconMap := dict
-  "category" "fa-regular fa-folder"
-  "collection" "fa-solid fa-layer-group"
--}}
-{{- $icon := index $iconMap .Data.Singular | default $iconMap.category -}}
+{{- $icon := .Params.cardIcon | default (dict "Taxonomy" .Data.Singular "Slot" "card" | partial "function/get-taxonomy-icon.html") -}}
 
 <div class="taxonomy-cards {{ .Data.Plural }}">
   {{- range .Data.Terms.ByCount -}}
@@ -25,7 +21,7 @@
               {{- if eq $repost.enable true -}}
                 {{- dict "Class" "fa-solid fa-share text-success me-1" | partial "plugin/icon.html" -}}
               {{- end -}}
-              {{- cond (.Param "capitalizeTitles") (title .LinkTitle) .LinkTitle -}}
+              {{- cond (.Param "capitalize_titles") (title .LinkTitle) .LinkTitle -}}
             </a>
           </article>
         {{- end -}}

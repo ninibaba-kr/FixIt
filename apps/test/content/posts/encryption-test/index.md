@@ -26,6 +26,17 @@ $$ \ce{CO2 + C -> 2 CO} $$
 
 $$ \ce{Hg^2+ ->[I-] HgI2 ->[I-] [Hg^{II}I4]^2-} $$
 
+## JSON
+
+```json
+{
+  "name": "fixit",
+  "version": "1.0.0",
+  "description": "A Hugo theme for creating encrypted content.",
+  "author": "Lruihao"
+}
+```
+
 ## style
 
 {{< style "text-align:right; strong{color:#00b1ff;}" >}}
@@ -37,10 +48,8 @@ This is a **right-aligned** paragraph.
 {{< script >}}
 console.log('before decrypting');
 
-document.addEventListener('DOMContentLoaded', () => {
-  fixit.decryptor.addEventListener('decrypted', function() {
-    console.log('after decrypting')
-  })
+document.addEventListener('fixit:decrypted', () => {
+  console.log('after decrypting')
 });
 {{< /script >}}
 
@@ -157,10 +166,8 @@ series:
 {{< typeit code=javascript >}}
 console.log('before decrypting');
 
-document.addEventListener('DOMContentLoaded', () => {
-  fixit.decryptor.addEventListener('decrypted', function() {
-    console.log('after decrypting')
-  })
+document.addEventListener('fixit:decrypted', () => {
+  console.log('after decrypting')
 });
 {{< /typeit >}}
 

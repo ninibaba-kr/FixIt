@@ -1,3 +1,14 @@
+{{- /*
+  Icon renderer for Font Awesome classes and SVG sources.
+  - Renders `<i>` element when `.Class` is provided.
+  - Resolves local SVG resources or external SVG URL fallback.
+  - Supports Simple Icons shorthand by icon name.
+  @param {String} [.Class] - Icon class name for `<i>`
+  @param {String} [.Src] - SVG source path or URL
+  @param {String} [.Simpleicons] - Simple-icons icon name
+  @param {String} [.Prefix] - Custom prefix for simple-icons source path
+*/ -}}
+
 {{- with .Class -}}
   <i class="{{ . }}" aria-hidden="true"></i>
 {{- else -}}
@@ -12,12 +23,12 @@
   {{- end -}}
 
   {{- if (urls.Parse $src).Host | not -}}
-    {{- $resource := resources.Get $src | minify -}}
-    {{ if not $resource }}
+    {{- with resources.Get $src -}}
+      {{- $resource := . | resources.Minify -}}
+      {{- $resource.Content | replaceRE `<svg ` `<svg class="icon" ` | safeHTML -}}
+    {{- else -}}
       {{- errorf "Icon does not exist %v" $src -}}
     {{- end -}}
-    {{- $resource := $resource.Content -}}
-    {{- $resource | replaceRE `<svg ` `<svg class="icon" ` | safeHTML -}}
   {{- else -}}
     {{- /* fetch svg icon from external source */ -}}
     <i data-svg-src="{{ $src }}" aria-hidden="true"></i>

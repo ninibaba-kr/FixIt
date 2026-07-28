@@ -2,21 +2,23 @@
 # Traduceri pentru limba română
 # https://gohugo.io/content-management/multilingual/#translation-of-strings
 
-# === init ===
+# === Init ===
 [init]
-configurationError = "Eroare de configurare\nNu ați configurat corect parametrul versiunii FixIt. Consultați https://fixit.lruihao.cn/documentation/basics/#theme-configuration"
+hugoVersionError = "Versiunea Hugo este prea veche.\n\nVersiunea curentă Hugo este {{ .Current }}, versiunea minimă compatibilă cu FixIt este {{ .Minimal }}.\n\nDacă rulați Hugo pe propriul computer, consultați https://gohugo.io/getting-started/installing/#upgrade-hugo pentru ghidul de actualizare.\n\nDacă implementați pe o platformă terță, configurați versiunea Hugo corespunzător."
+hugoExtendedWarn = "Versiunea Hugo Extended este necesară pentru suportul SCSS."
+configurationError = "Eroare de configurare\nNu ați configurat corect parametrul versiunii FixIt. Consultați https://fixit.lruihao.cn/docs/getting-started/configuration/params/"
 compatibilityError = "Eroare de compatibilitate ({{ .From }} -> {{ .To }}):\nAveți o actualizare incompatibilă. Consultați https://github.com/hugo-fixit/FixIt/releases"
 devVersionWarn = "Utilizați o versiune de dezvoltare a FixIt. Vă rugăm să luați în considerare utilizarea unei versiuni stabile.\nConsultați https://github.com/hugo-fixit/FixIt/releases"
 devEnvWarn = "Mediul curent este \"dezvoltare\". \"Sistemul de comentarii\", \"PWA\", \"CDN\", \"amprentă\" și \"analize\" vor fi dezactivate."
 quicklyUpgrade = "Actualizare rapidă utilizați comanda: "
-# === init ===
+# === Init ===
 
-# === baseof ===
+# === Base Layout ===
 [baseof]
 backToTop = "Înapoi Sus"
 viewComments = "Vizualizare Comentarii"
 noscript = "Acest site funcționează cel mai bine cu JavaScript activat."
-# === baseof ===
+# === Base Layout ===
 
 # === Taxonomy ===
 [archives]
@@ -65,36 +67,39 @@ other = "{{ .Count }} articole în total"
 more = "Mai mult"
 # === Pagination ===
 
-# === partials/header.html ===
+# === Header ===
 [header]
 selectLanguage = "Selectare Limbă"
 noMoretTranslations = "Nu mai sunt traduceri disponibile"
 switchTheme = "Schimbare Temă"
-# === partials/header.html ===
+# === Header ===
 
-# === partials/footer.html ===
+# === Footer ===
 [footer]
 poweredBySome = "Realizat de către {{ .Hugo }} | Temă - {{ .Theme }}"
 siteUV = "Total vizitatori"
 sitePV = "Total vizite"
 siteRunning = "Site-ul rulează ..."
-# === partials/footer.html ===
+# === Footer ===
 
-# === partials/comment.html ===
+# === Comment ===
 [comment]
-valineLang = "en" # Valine nu suporta romana
 valinePlaceholder = "Comentariul dvs ..."
-facebookLanguageCode = "ro_RO"
-# === partials/comment.html ===
+# === Comment ===
 
-# === partials/assets.html ===
+# === Assets ===
 [assets]
 search = "Căutare"
 searchPlaceholder = "Căutarea titlului sau conținutului articolului ..."
 searchIn = "Căutare în {{ . }}"
+searchBy = "Căutare prin"
 gotoResultsPage = "Mergi la pagina de rezultate a căutării ..."
 clear = "Golire"
 cancel = "Anulare"
+navigate = "Navigare"
+select = "Selectare"
+close = "Închide"
+refresh = "Reîmprospătare"
 noResultsFound = "Nici un rezultat gasit"
 copyToClipboard = "Copiați în clipboard"
 copyText = "Copiază"
@@ -103,19 +108,20 @@ toggleLineNumbers = "Comută numerele de linie"
 toggleLineWrap = "Comută înfășurarea liniei"
 toggleCodeEditable = "Comută blocul de cod editabil"
 downloadCode = "Descarcă codul"
-toggleCodeFullscreen = "Comută ecran complet pentru blocul de cod"
 expandCode = "Extinde sau restrânge blocul de cod"
+fullscreen = "Ecran complet"
+exitFullscreen = "Ieși din ecran complet"
 cookieconsentMessage = "Acest site web utilizează Cookies pentru a vă îmbunătăți experiența."
 cookieconsentDismiss = "De acord"
 cookieconsentLink = "Aflați mai multe"
-# === partials/assets.html ===
+# === Assets ===
 
-# === partials/plugin/share.html ===
+# === Share ===
 [shareOn]
 other = "Distribuie pe"
-# === partials/plugin/share.html ===
+# === Share ===
 
-# === posts/single.html ===
+# === Single Post ===
 [single]
 contents = "Cuprins"
 pin = "Fixează în partea de sus"
@@ -139,6 +145,8 @@ encryptedMessage = "Vă rugăm să introduceți parola"
 password = "Parolă"
 enterBtn = "Intră"
 encryptyAgain = "Criptează din nou"
+encryptionWarning = "Criptarea conținutului a fost detectată, dar sunt încă în text clar!"
+encryptionCommand = "Rulați `npx @hugo-fixit/encrypt` după compilare pentru a le cripta efectiv."
 relatedContent = "Conținut înrudit"
 
 [single.includedIn]
@@ -163,34 +171,47 @@ wechatpay = "WeChat Pay"
 alipay = "Alipay"
 paypal = "PayPal"
 bitcoin = "Bitcoin"
-# === posts/single.html ===
+# === Single Post ===
 
-# === 404.html ===
+# === Error Pages ===
 [pageNotFound]
 other = "Pagina nu a fost găsită"
 
 [pageNotFoundText]
 other = "Pagina pe care o căutați nu există. Ne cerem scuze."
-# === 404.html ===
+# === Error Pages ===
 
-# === offline ===
+# === Offline ===
 [offlineTitle]
 other = "Deconectat"
 
 [offlineText]
 other = "Nu sunteți conectat la Internet, vor fi disponibile doar paginile stocate în cache."
-# === offline ===
+# === Offline ===
 
-# === GitHub Alert ===
+# === Service Worker ===
+[serviceWorker]
+updateTitle = "Actualizare disponibilă"
+updateText = "O nouă versiune a acestui site este disponibilă."
+# === Service Worker ===
+
+# === Link Redirection ===
+[linkRedirection]
+title = "Notificare de redirecționare"
+message = "Urmează să părăsiți {{ .Title }}. Vă rugăm să acordați atenție securității contului și bunurilor dvs."
+confirm = "Continuă vizitarea"
+# === Link Redirection ===
+
+# === Alert ===
 [alert]
 note = "Notă"
 tip = "Sfat"
 important = "Important"
 warning = "Avertisment"
 caution = "Atenție"
-# === GitHub Alert ===
+# === Alert ===
 
-# === Task lists ===
+# === Task List ===
 [taskList]
 x = "Controlat"
 " " = "Necontrolat"
@@ -199,10 +220,11 @@ x = "Controlat"
 "<" = "Programat"
 ">" = "Reprogramat"
 "!" = "Important"
+"!x" = "Important Verificat"
 "?" = "Întrebare"
-# === Task lists ===
+# === Task List ===
 
-# === shortcodes/admonition.html ===
+# === Admonition ===
 [admonition]
 note = "Notă"
 abstract = "Rezumat"
@@ -217,12 +239,26 @@ danger = "Pericol"
 bug = "Bug"
 example = "Exemplu"
 quote = "Citat"
-# === shortcodes/admonition.html ===
+# === Admonition ===
 
-# === shortcodes/version.html ===
+# === Version ===
 [version]
 new = "NOU"
 changed = "SCHIMBAT"
 deleted = "ȘTERS"
 deprecated = "DEPRECIAȚI"
-# === shortcodes/version.html ===
+# === Version ===
+
+# === Diagram ===
+[diagram]
+zoomIn = "Mărește"
+zoomOut = "Micșorează"
+reset = "Resetează"
+download = "Descarcă SVG"
+# === Diagram ===
+
+# === Tabs ===
+[tabs]
+diagram = "Diagramă"
+code = "Cod"
+# === Tabs ===

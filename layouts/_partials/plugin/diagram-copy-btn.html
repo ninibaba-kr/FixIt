@@ -1,6 +1,12 @@
-{{- /* Diagram copy button */ -}}
-{{- $label := .Label | default "Copy Diagram code" -}}
+{{- /*
+  Copy button for diagram-like plugins.
+  @param {String} [.Label] - Aria label text for copy action
+*/ -}}
 
-<div class="diagram-copy-btn" aria-label="{{ $label }}" role="button">
+{{- $label := .Label | default "Copy Diagram code" -}}
+{{- $copyToClipboard := T "assets.copyToClipboard" -}}
+{{- $copiedText := T "assets.copiedText" -}}
+
+<button type="button" class="copy-icon-btn" aria-label="{{ $label }}" title="{{ $copyToClipboard }}" data-copied-text="{{ $copiedText }}">
   {{- dict "Class" "fa-regular fa-clone fa-width-auto" | partial "plugin/icon.html" -}}
-</div>
+</button>

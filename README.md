@@ -13,9 +13,9 @@
   <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=russian">Русский язык</a> |
   <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=spanish">Español</a> |
   <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=hindi">हिन्दी</a> |
-  <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=deutsch">deutsch</a> |
+  <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=deutsch">Deutsch</a> |
   <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=korean">한국어</a> |
-  <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=japanese">しろうと</a>
+  <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=japanese">日本語</a>
 </div>
 
 <a title="FixIt website" href="https://fixit.lruihao.cn"><img align="right" alt="FixIt logo" width="70" height="70" src="https://avatars.githubusercontent.com/u/110414864?s=200&v=4"></a>
@@ -26,10 +26,14 @@
 
 [![Build](https://img.shields.io/github/deployments/hugo-fixit/FixIt/Production?style=flat&label=Build&logo=vercel)](https://demo.fixit.lruihao.cn/)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/hugo-fixit/FixIt?style=flat&label=Release&logo=github&include_prereleases)](https://github.com/hugo-fixit/FixIt/releases)
-[![Hugo](https://img.shields.io/badge/Hugo-%5E0.156.0-ff4088?style=flat&logo=hugo)](https://gohugo.io/)
+[![Hugo](https://img.shields.io/badge/Hugo-%5E0.161.0-ff4088?style=flat&logo=hugo)](https://gohugo.io/)
 [![License](https://img.shields.io/github/license/hugo-fixit/FixIt?style=flat&label=License)](/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/hugo-fixit/FixIt?style=social)](https://github.com/hugo-fixit/FixIt)
 [![Gitee star of FixIt](https://gitee.com/lruihao/FixIt/badge/star.svg)](https://gitee.com/lruihao/FixIt/stargazers)
+
+> [!WARNING]
+> **The `main` branch contains the v1 code. For upgrade instructions, see the [v1 migration guide](https://fixit.lruihao.cn/guides/upgrade-to-v1/).**\
+> Version 1.0.0 is planned for release in **the first half of 2027**. Welcome to join the development and [discussion](https://github.com/orgs/hugo-fixit/discussions/723)!
 
 ## Live Preview
 
@@ -44,9 +48,9 @@
 
 ### Documentation
 
-Head to the [Quick Start](https://fixit.lruihao.cn/documentation/getting-started/quick-start/) page for a step-by-step guide on how to create a new website with FixIt.
+Head to the [Quick Start](https://fixit.lruihao.cn/docs/getting-started/quick-start/) page for a step-by-step guide on how to create a new website with FixIt.
 
-Outline: [Installation](https://fixit.lruihao.cn/documentation/installation/) ➜ [Getting Started](https://fixit.lruihao.cn/documentation/getting-started/) ➜ [Content Management](https://fixit.lruihao.cn/documentation/content-management/) ➜ [Advanced Usage](https://fixit.lruihao.cn/documentation/advanced/)
+Outline: [Installation](https://fixit.lruihao.cn/docs/installation/) ➜ [Getting Started](https://fixit.lruihao.cn/docs/getting-started/) ➜ [Content Management](https://fixit.lruihao.cn/docs/content-management/) ➜ [Advanced Usage](https://fixit.lruihao.cn/docs/advanced/)
 
 ### Starter Wizard
 
@@ -104,7 +108,7 @@ Click the following links to generate a new repository with template:
 - Globally consistent **design language**
 - **Pagination** supported
 - Easy-to-use and self-expanding **table of contents**
-- **Multilanguage** supported and i18n ready
+- **Multilanguage** supported and I18n ready
 - Beautiful **CSS animation**
 
 ### Social and Comment Systems
@@ -132,7 +136,7 @@ Click the following links to generate a new repository with template:
 - **Sub Menu** supported
 - **Content Encryption** supported (Pages, Partial)
 - **Friends** page embedded template
-- **Search** supported by [algolia](https://www.algolia.com/), [Fuse.js](https://fusejs.io/), CSE or [PostChat](https://ai.zhheo.com/console/login?InviteID=85041330)
+- **Search** supported by [algolia](https://www.algolia.com/), [Fuse.js](https://fusejs.io/), [Pagefind](https://pagefind.app), CSE or [PostChat](https://ai.zhheo.com/console/login?InviteID=85041330)
 - **Custom Search Engine (CSE)** supported by [Google](https://programmablesearchengine.google.com/)
 - **Twemoji** supported
 - Automatically **highlighting** code
@@ -163,9 +167,9 @@ Click the following links to generate a new repository with template:
 
 </details>
 
-## Multilingual and i18n
+## Multilingual and I18n
 
-FixIt supports multilingual and i18n. For more information, see the [Content Management](https://fixit.lruihao.cn/documentation/content-management/introduction#multilingual) documentation. You are welcome to [contribute with a new language](https://github.com/hugo-fixit/FixIt/pulls).
+FixIt supports multilingual and i18n. For more information, see the [Content Management](https://fixit.lruihao.cn/docs/content-management/introduction#multilingual) documentation. You are welcome to [contribute with a new language](https://github.com/hugo-fixit/FixIt/pulls).
 
 <details>
 <summary>FixIt supports the following languages.</summary>
@@ -189,9 +193,18 @@ FixIt supports multilingual and i18n. For more information, see the [Content Man
 
 </details>
 
+## Browsers Support
+
+The FixIt theme supports the last two versions of all major browsers.
+
+![Chrome](https://img.shields.io/badge/Chrome-last+2-blue?logo=googlechrome)
+![Edge](https://img.shields.io/badge/Edge-last+2-blue?logo=microsoft-edge)
+![Firefox](https://img.shields.io/badge/Firefox-last+2-orange?logo=firefox)
+![Safari](https://img.shields.io/badge/Safari-last+2-blue?logo=safari)
+
 ## Theme Components
 
-The FixIt theme balances **simplicity** and **extensibility** with extra [Hugo theme components](https://fixit.lruihao.cn/ecosystem/#-components) for customization.
+To balance **simplicity** and **extensibility**, FixIt theme provides extra [Hugo theme components](https://fixit.lruihao.cn/ecosystem/#-components) for customization.
 
 <details>
 <summary>Click to view.</summary>
@@ -233,19 +246,19 @@ The FixIt theme balances **simplicity** and **extensibility** with extra [Hugo t
 
 All feedback is welcome! Head over to the [discussions][discussions], [Pull requests][pulls] and [issues][issues] tracker.
 
-| Official Community          | Description                     |
-| :-------------------------- | :------------------------------ |
-| [Discussions][discussions]  | GitHub discussion forum         |
-| [FixIt WeChat group][wx-mp] | Follow and reply "FixIt" to get |
-| [FixIt QQ group][qq-group]  | QQ group: `814031017`           |
-| [Hugo FixIt Planet][zsxq]   | Paid knowledge Planet           |
+| Official Community           | Description                     |
+| :--------------------------- | :------------------------------ |
+| [Discussions][discussions]   | GitHub discussion forum         |
+| [FixIt WeChat group][wx-mp]  | Follow and reply "FixIt" to get |
+| [FixIt QQ group][qq-group]   | QQ group: `814031017`           |
+| [FixIt Dev group][dev-group] | QQ group: `770835493`           |
 
 [discussions]: https://github.com/hugo-fixit/FixIt/discussions
 [pulls]: https://github.com/hugo-fixit/FixIt/pulls
 [issues]: https://github.com/hugo-fixit/FixIt/issues
-[qq-group]: https://qm.qq.com/cgi-bin/qm/qr?k=awbwdTtSQ_-H5QGzeJxdWgv6JMbNehNM&jump_from=webapi
-[zsxq]: https://t.zsxq.com/GgKEW
 [wx-mp]: https://lruihao.cn/images/qr-wx-mp.webp
+[qq-group]: https://qm.qq.com/q/Mn1I7ljqsS
+[dev-group]: https://qm.qq.com/q/ky3uru0mbu
 
 ## Contributing
 
@@ -265,11 +278,12 @@ Thanks to the [Hugo DoIt](https://github.com/HEIGE-PCloud/DoIt) theme and [Hexo 
 <details>
 <summary>Thanks to all the open source projects used in the FixIt theme.</summary>
 
+- [UnoCSS](https://github.com/unocss/unocss)
 - [normalize.css](https://github.com/necolas/normalize.css)
-- [Font Awesome](https://fontawesome.com/)
+- [Font Awesome](https://github.com/FortAwesome/Font-Awesome)
 - [Simple Icons](https://github.com/simple-icons/simple-icons)
-- [Animate.css](https://daneden.github.io/animate.css/)
-- [autocomplete-js](https://github.com/algolia/autocomplete)
+- [Animate.css](https://github.com/animate-css/animate.css)
+- [autocomplete](https://github.com/algolia/autocomplete)
 - [algoliasearch](https://github.com/algolia/algoliasearch-client-javascript)
 - [Fuse.js](https://fusejs.io/)
 - [object-fit-images](https://github.com/fregante/object-fit-images)
@@ -297,9 +311,7 @@ Thanks to the [Hugo DoIt](https://github.com/HEIGE-PCloud/DoIt) theme and [Hexo 
 - [Twikoo](https://twikoo.js.org/)
 - [github-corners](https://github.com/tholman/github-corners)
 - [giscus](https://giscus.app/zh-CN)
-- [crypto-js](https://github.com/brix/crypto-js)
 - [pace](https://github.com/CodeByZach/pace)
-- [xxhash-wasm](https://github.com/jungomi/xxhash-wasm)
 - [`<tab-container>` element](https://github.com/github/tab-container-element)
 - [`<json-viewer>` element](https://github.com/Lruihao/json-viewer-element)
 
@@ -315,7 +327,7 @@ If you enjoy the theme, please consider buying me a cup of coffee ☕️. Thanks
 
 - [WeChat Pay](/images/wechatpay.jpg)
 - [Alipay](/images/alipay.jpg)
-- [PayPal](https://paypal.me/Lruihao)
+<!-- - [PayPal](https://paypal.me/Lruihao) -->
 
 Thanks to the following sponsors for their great support:
 

@@ -9,9 +9,22 @@ categories:
 tags:
   - Mermaid
   - Diagrams
+mermaid:
+  zenuml: https://cdn.jsdelivr.net/npm/@mermaid-js/mermaid-zenuml/dist/mermaid-zenuml.esm.min.mjs
 ---
 
 The FixIt theme supports two ways to use Mermaid: code block syntax and shortcode syntax.
+
+```mermaid {wrapper=false}
+---
+config:
+  theme: 'forest'
+---
+  graph TD
+    a --> b
+```
+
+<!--more-->
 
 ## Flowchart
 
@@ -23,8 +36,6 @@ flowchart TD
     D --> B
     B ---->|No| E[End]
 ```
-
-<!--more-->
 
 ## Sequence Diagram
 

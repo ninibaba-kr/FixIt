@@ -3,9 +3,21 @@
 # See: https://gohugo.io/configuration/all/
 # -------------------------------------------------------------------------------------
 
-title = "Hugo FixIt TEST"
+title = "FixIt TEST"
 baseURL = "https://demo.fixit.lruihao.cn/test/"
 ignoreLogs = [ "warning-file-tree" ]
+defaultContentLanguage = "en"
+
+# test for multilingual support
+# [languages]
+
+# [languages.en]
+# locale = "en"
+# label = "English"
+
+# [languages.zh-cn]
+# locale = "zh-CN"
+# label = "简体中文"
 
 [permalinks]
 
@@ -21,31 +33,37 @@ _merge = "shallow"
 [outputs]
 _merge = "shallow"
 
-# -------------------------------------------------------------------------------------
-# Taxonomies Configuration
-# See: https://gohugo.io/content-management/taxonomies/#configure-taxonomies
-# -------------------------------------------------------------------------------------
-
 [taxonomies]
 _merge = "shallow"
 
 # -------------------------------------------------------------------------------------
 # Theme Core Configuration
-# See: https://fixit.lruihao.cn/documentation/basics/#theme-configuration
+# See: https://fixit.lruihao.cn/docs/getting-started/configuration/params/
 # -------------------------------------------------------------------------------------
 
 [params]
-version = "0.3.X"
+version = "1.0.X"
+collection_list = true
+collection_navigation = true
 
-[params.page]
-collectionList = true
-collectionNavigation = true
+[params.home.profile]
+enable = true
+avatar_url = "/images/fixit-test.png"
+
+[params.social]
+
+[params.social.github]
+id = "hugo-fixit"
+weight = 2
+
+[params.social.twitter]
+id = "lruihao"
+weight = 1
+# for twitter cards
+# site = "hugo-fixit"
 
 [params.author]
 name = "Lruihao"
 email = ""
 link = "https://lruihao.cn"
 avatar = "https://lruihao.cn/images/avatar.jpg"
-
-[params.mermaid]
-zenuml = "https://cdn.jsdelivr.net/npm/@mermaid-js/mermaid-zenuml/dist/mermaid-zenuml.esm.min.mjs"

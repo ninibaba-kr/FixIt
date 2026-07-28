@@ -1,7 +1,15 @@
+{{- /*
+  Global initialization partial.
+
+  Merges translations, resolves main section pages, stores them for cross-partial
+  access, and sets up the GitHub API token header from the HUGO_PARAMS_GHTOKEN
+  environment variable.
+*/ -}}
+
 {{- $pages := .Site.RegularPages }}
 
 {{- /* Merge missing translations from other languages */ -}}
-{{- if .Site.Params.enableTranslationMerge -}}
+{{- if .Site.Params.enable_translation_merge -}}
   {{- range .Site.Home.Translations -}}
     {{- $pages = $pages | lang.Merge .Site.RegularPages -}}
   {{- end -}}

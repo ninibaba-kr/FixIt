@@ -7,7 +7,7 @@
 # See: https://gohugo.io/getting-started/configuration/
 # -------------------------------------------------------------------------------------
 
-title = "Hugo FixIt Demo"
+title = "FixIt Demo"
 baseURL = "https://demo.fixit.lruihao.cn/"
 # theme = "FixIt"
 
@@ -17,20 +17,15 @@ _merge = "shallow"
 [outputs]
 _merge = "shallow"
 
-# -------------------------------------------------------------------------------------
-# Taxonomies Configuration
-# See: https://gohugo.io/content-management/taxonomies/#configure-taxonomies
-# -------------------------------------------------------------------------------------
-
 [taxonomies]
 _merge = "shallow"
 
 # -------------------------------------------------------------------------------------
 # Theme Core Configuration
-# See: https://fixit.lruihao.cn/documentation/basics/#theme-configuration
+# See: https://fixit.lruihao.cn/docs/getting-started/configuration/params/
 # -------------------------------------------------------------------------------------
 
 [params]
 # FixIt theme version
-version = "0.3.X" # e.g. "0.2.X", "0.2.15", "v0.2.15" etc.
+version = "1.0.X"
 # ...

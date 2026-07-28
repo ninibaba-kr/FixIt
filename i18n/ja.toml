@@ -2,21 +2,23 @@
 # 日本語翻訳
 # https://gohugo.io/content-management/multilingual/#translation-of-strings
 
-# === init ===
+# === Init ===
 [init]
-configurationError = "設定ファイルエラー\nまだ FixIt のバージョンパラメータを正しく設定していません。 https://fixit.lruihao.cn/zh-cn/documentation/basics/#theme-configuration を参照してください"
+hugoVersionError = "Hugo のバージョンが低すぎます。\n\n現在の Hugo バージョンは {{ .Current }} ですが、FixIt がサポートする最小バージョンは {{ .Minimal }} です。\n\n自分のコンピューターで Hugo を実行している場合は、https://gohugo.io/getting-started/installing/#upgrade-hugo でアップグレードガイドを参照してください。\n\nサードパーティプラットフォームにデプロイしている場合は、Hugo バージョンを適切に設定してください。"
+hugoExtendedWarn = "SCSS サポートには Hugo Extended バージョンが必要です。"
+configurationError = "設定ファイルエラー\nまだ FixIt のバージョンパラメータを正しく設定していません。 https://fixit.lruihao.cn/docs/getting-started/configuration/params/?lang=japanese を参照してください"
 compatibilityError = "互換性エラー ({{ .From }} -> {{ .To }}):\n互換性のない更新が行われました。 https://github.com/hugo-fixit/FixIt/releases を参照してください"
 devVersionWarn = "開発版の FixIt を使用しています。安定版の使用を検討してください。\n https://github.com/hugo-fixit/FixIt/releases を参照"
 devEnvWarn = "現在の実行環境は「development」です。「コメントシステム」、「PWA」、「CDN」、「フィンガープリント」、「統計」は有効になりません。"
 quicklyUpgrade = "コマンドを使用して迅速にアップグレード："
-# === init ===
+# === Init ===
 
-# === baseof ===
+# === Base Layout ===
 [baseof]
 backToTop = "トップに戻る"
 viewComments = "コメントを見る"
 noscript = "このサイトは JavaScript を有効にした状態で最適に表示されます。"
-# === baseof ===
+# === Base Layout ===
 
 # === Taxonomy ===
 [archives]
@@ -63,36 +65,39 @@ other = "合計 {{ .Count }} 件の記事"
 more = "もっと見る"
 # === Pagination ===
 
-# === partials/header.html ===
+# === Header ===
 [header]
 selectLanguage = "言語を選択"
 noMoretTranslations = "これ以上の翻訳はありません"
 switchTheme = "テーマを切り替え"
-# === partials/header.html ===
+# === Header ===
 
-# === partials/footer.html ===
+# === Footer ===
 [footer]
 poweredBySome = "{{ .Hugo }} によって強力に駆動されています | テーマ - {{ .Theme }}"
 siteUV = "総訪問者数"
 sitePV = "総訪問数"
 siteRunning = "サイトが実行中……"
-# === partials/footer.html ===
+# === Footer ===
 
-# === partials/comment.html ===
+# === Comment ===
 [comment]
-valineLang = "zh-cn"
 valinePlaceholder = "あなたのコメント……"
-facebookLanguageCode = "zh_CN"
-# === partials/comment.html ===
+# === Comment ===
 
-# === partials/assets.html ===
+# === Assets ===
 [assets]
 search = "検索"
 searchPlaceholder = "タイトルまたは内容を検索..."
 searchIn = "{{ . }} で検索"
+searchBy = "検索エンジン"
 gotoResultsPage = "検索結果ページへ移動..."
 clear = "クリア"
 cancel = "キャンセル"
+navigate = "移動"
+select = "選択"
+close = "閉じる"
+refresh = "更新"
 noResultsFound = "結果が見つかりません"
 copyToClipboard = "クリップボードにコピー"
 copyText = "コピー"
@@ -101,19 +106,20 @@ toggleLineNumbers = "行番号の切り替え"
 toggleLineWrap = "自動折り返しの切り替え"
 toggleCodeEditable = "コードブロックの編集切り替え"
 downloadCode = "コードをダウンロード"
-toggleCodeFullscreen = "コードブロックの全画面表示を切り替え"
 expandCode = "コードブロックの展開/折りたたみ"
+fullscreen = "全画面"
+exitFullscreen = "全画面を終了"
 cookieconsentMessage = "このウェブサイトはクッキーを使用して体験を向上させます。"
 cookieconsentDismiss = "同意する"
 cookieconsentLink = "詳細はこちら"
-# === partials/assets.html ===
+# === Assets ===
 
-# === partials/plugin/share.html ===
+# === Share ===
 [shareOn]
 other = "共有先"
-# === partials/plugin/share.html ===
+# === Share ===
 
-# === posts/single.html ===
+# === Single Post ===
 [single]
 contents = "目次"
 pin = "ピン留め"
@@ -137,6 +143,8 @@ encryptedMessage = "パスワードを入力してください"
 password = "パスワード"
 enterBtn = "入る"
 encryptyAgain = "再度暗号化"
+encryptionWarning = "コンテンツの暗号化が検出されましたが、まだ平文です！"
+encryptionCommand = "実際に暗号化するには、ビルド後に `npx @hugo-fixit/encrypt` を実行してください。"
 relatedContent = "関連コンテンツ"
 
 [single.includedIn]
@@ -159,34 +167,47 @@ wechatpay = "WeChat"
 alipay = "アリペイ"
 paypal = "ペイパル"
 bitcoin = "ビットコイン"
-# === posts/single.html ===
+# === Single Post ===
 
-# === 404.html ===
+# === Error Pages ===
 [pageNotFound]
 other = "ページが見つかりません"
 
 [pageNotFoundText]
 other = "申し訳ありませんが、お探しのページは存在しません。"
-# === 404.html ===
+# === Error Pages ===
 
-# === offline ===
+# === Offline ===
 [offlineTitle]
 other = "オフライン"
 
 [offlineText]
 other = "インターネットに接続されていません。キャッシュされたページのみが利用可能です。"
-# === offline ===
+# === Offline ===
 
-# === GitHub Alert ===
+# === Service Worker ===
+[serviceWorker]
+updateTitle = "アップデートがあります"
+updateText = "このサイトの新しいバージョンが利用可能です。"
+# === Service Worker ===
+
+# === Link Redirection ===
+[linkRedirection]
+title = "リダイレクト通知"
+message = "{{ .Title }} から離れようとしています。アカウントと資産の安全にご注意ください。"
+confirm = "閲覧を続ける"
+# === Link Redirection ===
+
+# === Alert ===
 [alert]
 note = "注意"
 tip = "ヒント"
 important = "重要"
 warning = "警告"
 caution = "慎重"
-# === GitHub Alert ===
+# === Alert ===
 
-# === Task lists ===
+# === Task List ===
 [taskList]
 x = "完了"
 " " = "未完了"
@@ -195,10 +216,11 @@ x = "完了"
 "<" = "予定"
 ">" = "再予定"
 "!" = "重要"
+"!x" = "重要・確認済み"
 "?" = "問題"
-# === Task lists ===
+# === Task List ===
 
-# === shortcodes/admonition.html ===
+# === Admonition ===
 [admonition]
 note = "注意"
 abstract = "要約"
@@ -213,12 +235,26 @@ danger = "危険"
 bug = "バグ"
 example = "例"
 quote = "引用"
-# === shortcodes/admonition.html ===
+# === Admonition ===
 
-# === shortcodes/version.html ===
+# === Version ===
 [version]
 new = "新規"
 changed = "変更"
 deleted = "削除"
 deprecated = "非推奨"
-# === shortcodes/version.html ===
+# === Version ===
+
+# === Diagram ===
+[diagram]
+zoomIn = "拡大"
+zoomOut = "縮小"
+reset = "リセット"
+download = "SVG をダウンロード"
+# === Diagram ===
+
+# === Tabs ===
+[tabs]
+diagram = "図"
+code = "コード"
+# === Tabs ===

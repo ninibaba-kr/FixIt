@@ -1,21 +1,23 @@
 # Translations for Vietnamese
 # https://gohugo.io/content-management/multilingual/#translation-of-strings
 
-# === init ===
+# === Init ===
 [init]
-configurationError = "Lỗi cấu hình\nBạn chưa cấu hình tham số phiên bản FixIt đúng cách. Xem https://fixit.lruihao.cn/documentation/basics/#theme-configuration"
+hugoVersionError = "Phiên bản Hugo quá thấp.\n\nPhiên bản Hugo hiện tại là {{ .Current }}, phiên bản tối thiểu được hỗ trợ cho FixIt là {{ .Minimal }}.\n\nNếu bạn đang chạy Hugo trên máy tính của mình, hãy xem https://gohugo.io/getting-started/installing/#upgrade-hugo để biết hướng dẫn nâng cấp.\n\nNếu bạn đang triển khai trên nền tảng của bên thứ ba, vui lòng cấu hình phiên bản Hugo cho phù hợp."
+hugoExtendedWarn = "Phiên bản Hugo Extended là cần thiết để hỗ trợ SCSS."
+configurationError = "Lỗi cấu hình\nBạn chưa cấu hình tham số phiên bản FixIt đúng cách. Xem https://fixit.lruihao.cn/docs/getting-started/configuration/params/"
 compatibilityError = "Lỗi tương thích ({{ .From }} -> {{ .To }}):\nBạn có một bản cập nhật không tương thích. Xem https://github.com/hugo-fixit/FixIt/releases"
 devVersionWarn = "Bạn đang sử dụng một phiên bản phát triển của FixIt. Vui lòng xem xét sử dụng một phiên bản ổn định.\nXem https://github.com/hugo-fixit/FixIt/releases"
 devEnvWarn = "Môi trường hiện tại là \"development\". \"Hệ thống bình luận\", \"PWA\", \"CDN\", \"vân tay\" và \"thống kê\" sẽ bị vô hiệu hóa."
 quicklyUpgrade = "Nâng cấp nhanh bằng lệnh: "
-# === init ===
+# === Init ===
 
-# === baseof ===
+# === Base Layout ===
 [baseof]
 backToTop = "Lên trên"
 viewComments = "Xem bình luận"
 noscript = "Trang web này hoạt động tốt nhất khi JavaScript được kích hoạt."
-# === baseof ===
+# === Base Layout ===
 
 # === Taxonomy ===
 [archives]
@@ -64,36 +66,39 @@ other = "{{ .Count }} bài viết"
 more = "Thêm"
 # === Pagination ===
 
-# === partials/header.html ===
+# === Header ===
 [header]
 selectLanguage = "Chọn Ngôn ngữ"
 noMoretTranslations = "Không có nữa"
 switchTheme = "Đổi chủ đề"
-# === partials/header.html ===
+# === Header ===
 
-# === partials/footer.html ===
+# === Footer ===
 [footer]
 poweredBySome = "Cung cấp bởi {{ .Hugo }} | Chủ đề - {{ .Theme }}"
 siteUV = "Tổng khách truy cập"
 sitePV = "Tổng lượt truy cập"
 siteRunning = "Trang web đang chạy ..."
-# === partials/footer.html ===
+# === Footer ===
 
-# === partials/comment.html ===
+# === Comment ===
 [comment]
-valineLang = "en" # Valine không hỗ trợ tiếng Việt
 valinePlaceholder = "Bình luận của bạn ..."
-facebookLanguageCode = "vi"
-# === partials/comment.html ===
+# === Comment ===
 
-# === partials/assets.html ===
+# === Assets ===
 [assets]
 search = "Tìm kiếm"
 searchPlaceholder = "Tìm tiêu đề hoặc nội dung..."
 searchIn = "Tìm kiếm trong {{ . }}"
+searchBy = "Tìm kiếm bằng"
 gotoResultsPage = "Đi đến trang kết quả tìm kiếm ..."
 clear = "Xoá"
 cancel = "Huỷ"
+navigate = "Điều hướng"
+select = "Chọn"
+close = "Đóng"
+refresh = "Làm mới"
 noResultsFound = "Không tìm thấy kết quả"
 copyToClipboard = "Sao chép vào bộ nhớ tạm"
 copyText = "Sao chép"
@@ -102,19 +107,20 @@ toggleLineNumbers = "Chuyển đổi số dòng"
 toggleLineWrap = "Chuyển đổi xuống dòng"
 toggleCodeEditable = "Chuyển đổi khối mã có thể chỉnh sửa"
 downloadCode = "Tải mã"
-toggleCodeFullscreen = "Chuyển đổi toàn màn hình khối mã"
 expandCode = "Mở rộng hoặc thu gọn khối mã"
+fullscreen = "Toàn màn hình"
+exitFullscreen = "Thoát toàn màn hình"
 cookieconsentMessage = "Trang web này sử dụng Cookies để cải thiện trải nghiệm của bạn."
 cookieconsentDismiss = "Đã hiểu!"
 cookieconsentLink = "Tìm hiểu thêm"
-# === partials/assets.html ===
+# === Assets ===
 
-# === partials/plugin/share.html ===
+# === Share ===
 [shareOn]
 other = "Chia sẻ trên"
-# === partials/plugin/share.html ===
+# === Share ===
 
-# === posts/single.html ===
+# === Single Post ===
 [single]
 contents = "Nội dung"
 pin = "Ghim ở đầu trang"
@@ -138,6 +144,8 @@ encryptedMessage = "Vui lòng nhập mật khẩu"
 password = "Mật khẩu"
 enterBtn = "Nhập"
 encryptyAgain = "Mã hóa lại"
+encryptionWarning = "Phát hiện mã hóa nội dung, nhưng chúng vẫn ở dạng văn bản thuần!"
+encryptionCommand = "Chạy `npx @hugo-fixit/encrypt` sau khi build để thực sự mã hóa chúng."
 relatedContent = "Nội dung liên quan"
 
 [single.includedIn]
@@ -162,34 +170,47 @@ wechatpay = "WeChat Pay"
 alipay = "Alipay"
 paypal = "PayPal"
 bitcoin = "Bitcoin"
-# === posts/single.html ===
+# === Single Post ===
 
-# === 404.html ===
+# === Error Pages ===
 [pageNotFound]
 other = "Không tìm thấy trang"
 
 [pageNotFoundText]
 other = "Trang bạn đang tìm kiếm không tồn tại. Xin lỗi."
-# === 404.html ===
+# === Error Pages ===
 
-# === offline ===
+# === Offline ===
 [offlineTitle]
 other = "ngoại tuyến"
 
 [offlineText]
 other = "Bạn chưa kết nối với Internet, chỉ các trang được lưu trong bộ nhớ cache sẽ khả dụng."
-# === offline ===
+# === Offline ===
 
-# === GitHub Alert ===
+# === Service Worker ===
+[serviceWorker]
+updateTitle = "Có bản cập nhật"
+updateText = "Một phiên bản mới của trang web này đã sẵn sàng."
+# === Service Worker ===
+
+# === Link Redirection ===
+[linkRedirection]
+title = "Thông báo chuyển hướng"
+message = "Bạn sắp rời khỏi {{ .Title }}, vui lòng chú ý an toàn cho tài khoản và tài sản của mình."
+confirm = "Tiếp tục truy cập"
+# === Link Redirection ===
+
+# === Alert ===
 [alert]
 note = "Ghi chú"
 tip = "Mẹo"
 important = "Quan trọng"
 warning = "Cảnh báo"
 caution = "Chú ý"
-# === GitHub Alert ===
+# === Alert ===
 
-# === Task lists ===
+# === Task List ===
 [taskList]
 x = "Đã kiểm tra"
 " " = "Chưa kiểm tra"
@@ -198,10 +219,11 @@ x = "Đã kiểm tra"
 "<" = "Đã lên lịch"
 ">" = "Đã lên lịch lại"
 "!" = "Quan trọng"
+"!x" = "Quan trọng Đã kiểm tra"
 "?" = "Câu hỏi"
-# === Task lists ===
+# === Task List ===
 
-# === shortcodes/admonition.html ===
+# === Admonition ===
 [admonition]
 note = "Ghi chú"
 abstract = "Tóm tắt"
@@ -216,12 +238,26 @@ danger = "Nguy hiểm"
 bug = "Lỗi"
 example = "Ví dụ"
 quote = "Trích dẫn"
-# === shortcodes/admonition.html ===
+# === Admonition ===
 
-# === shortcodes/version.html ===
+# === Version ===
 [version]
 new = "MỚI"
 changed = "THAY ĐỔI"
 deleted = "XOÁ"
 deprecated = "KHÔNG CÒN SỬ DỤNG"
-# === shortcodes/version.html ===
+# === Version ===
+
+# === Diagram ===
+[diagram]
+zoomIn = "Phóng to"
+zoomOut = "Thu nhỏ"
+reset = "Đặt lại"
+download = "Tải SVG"
+# === Diagram ===
+
+# === Tabs ===
+[tabs]
+diagram = "Sơ đồ"
+code = "Mã"
+# === Tabs ===

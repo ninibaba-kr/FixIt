@@ -128,7 +128,7 @@ $$
 
 ### Dark Mode Adaptation
 
-Use `.auto-dark-mode` class to automatically adapt to dark mode by inverting the color and hue:
+Use `.auto-dark-mode` class or `auto-dark` shortcode to automatically adapt to dark mode by inverting the color and hue:
 
 For inline formula:
 
@@ -137,9 +137,14 @@ $\bbox[border: solid .4pt magenta, pink]{x^2=4}$
 
 For formula blocks:
 
-{{< style "[data-theme=dark] & { filter: invert(1) hue-rotate(0.5turn); }" >}}
+{{< auto-dark >}}
 $$
 \bbox[border: solid .4pt magenta, pink]{x^2=4}
 $$
-{.auto-dark-mode}
-{{< /style >}}
+{{< /auto-dark >}}
+
+### In Encrypted Content
+
+{{% fixit-encryptor "1212" %}}
+$c = \pm\sqrt{a^2 + b^2}$ and \(f(x)=\int_{-\infty}^{\infty} \hat{f}(\xi) e^{2 \pi i \xi x} d \xi\)
+{{% /fixit-encryptor %}}

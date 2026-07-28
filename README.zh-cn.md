@@ -13,9 +13,9 @@
   <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=russian">Русский язык</a> |
   <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=spanish">Español</a> |
   <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=hindi">हिन्दी</a> |
-  <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=deutsch">deutsch</a> |
+  <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=deutsch">Deutsch</a> |
   <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=korean">한국어</a> |
-  <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=japanese">しろうと</a>
+  <a href="https://fixit.lruihao.cn/ecosystem/hugo-fixit/fixit/?lang=japanese">日本語</a>
 </div>
 
 <a title="FixIt 官网" href="https://fixit.lruihao.cn/zh-cn/"><img align="right" alt="FixIt logo" width="70" height="70" src="https://avatars.githubusercontent.com/u/110414864?s=200&v=4"></a>
@@ -26,10 +26,14 @@
 
 [![Build](https://img.shields.io/github/deployments/hugo-fixit/FixIt/Production?style=flat&label=Build&logo=vercel)](https://demo.fixit.lruihao.cn/)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/hugo-fixit/FixIt?style=flat&label=Release&logo=github&include_prereleases)](https://github.com/hugo-fixit/FixIt/releases)
-[![Hugo](https://img.shields.io/badge/Hugo-%5E0.156.0-ff4088?style=flat&logo=hugo)](https://gohugo.io/)
+[![Hugo](https://img.shields.io/badge/Hugo-%5E0.161.0-ff4088?style=flat&logo=hugo)](https://gohugo.io/)
 [![License](https://img.shields.io/github/license/hugo-fixit/FixIt?style=flat&label=License)](/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/hugo-fixit/FixIt?style=social)](https://github.com/hugo-fixit/FixIt)
 [![Gitee star of FixIt](https://gitee.com/lruihao/FixIt/badge/star.svg)](https://gitee.com/lruihao/FixIt/stargazers)
+
+> [!WARNING]
+> **当前 `main` 分支包含 v1 代码，升级详见 [v1 升级指南](https://fixit.lruihao.cn/guides/upgrade-to-v1/)**。\
+> 1.0 版本计划在 **2027 年上半年** 发布，欢迎加入开发和 [讨论](https://github.com/orgs/hugo-fixit/discussions/723)！
 
 ## 即时预览
 
@@ -44,9 +48,9 @@
 
 ### 主题文档
 
-前往 [快速上手](https://fixit.lruihao.cn/zh-cn/documentation/getting-started/quick-start/) 页面，了解如何使用 FixIt 主题创建一个新网站的详细步骤。
+前往 [快速上手](https://fixit.lruihao.cn/zh-cn/docs/getting-started/quick-start/) 页面，了解如何使用 FixIt 主题创建一个新网站的详细步骤。
 
-大纲：[安装篇](https://fixit.lruihao.cn/zh-cn/documentation/installation/) ➜ [入门篇](https://fixit.lruihao.cn/zh-cn/documentation/getting-started/) ➜ [内容管理](https://fixit.lruihao.cn/zh-cn/documentation/content-management/) ➜ [进阶篇](https://fixit.lruihao.cn/zh-cn/documentation/advanced/)
+大纲：[安装篇](https://fixit.lruihao.cn/zh-cn/docs/installation/) ➜ [入门篇](https://fixit.lruihao.cn/zh-cn/docs/getting-started/) ➜ [内容管理](https://fixit.lruihao.cn/zh-cn/docs/content-management/) ➜ [进阶篇](https://fixit.lruihao.cn/zh-cn/docs/advanced/)
 
 ### 快速开始
 
@@ -85,8 +89,8 @@ pnpx fixit-cli create my-blog
 
 ### 性能和 SEO
 
-- **性能**优化：在 [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights) 中，99/100 的移动设备得分和 100/100 的桌面设备得分
-- 使用基于 JSON-LD 格式 的 **SEO SCHEMA** 文件进行 SEO 优化
+- **性能优化**：在 [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights) 中，99/100 的移动设备得分和 100/100 的桌面设备得分
+- 使用基于 JSON-LD 格式的 **SEO SCHEMA** 文件进行 SEO 优化
 - 支持 **[Google Analytics](https://analytics.google.com/analytics)**
 - 支持 **[Fathom Analytics](https://usefathom.com/)**
 - 支持 **[百度统计](https://tongji.baidu.com/)**
@@ -94,23 +98,23 @@ pnpx fixit-cli create my-blog
 - 支持 **[Plausible Analytics](https://plausible.io/)**
 - 支持 **[Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics)**
 - 支持 **[Splitbee Analytics](https://splitbee.io)**
-- 支持搜索引擎的**网站验证** (Google, Bing, Yandex, Pinterest, Baidu, 360 and Sogou)
+- 支持搜索引擎的 **网站验证** (Google, Bing, Yandex, Pinterest, Baidu, 360 and Sogou)
 - 支持所有第三方库的 **CDN**
 
 ### 外观和布局
 
-- **响应式**布局
+- **响应式** 布局
 - **浅色/深色** 主题模式
-- 全局一致的**设计语言**
-- 支持**分页**
-- 易用和自动展开的**文章目录**
-- 支持**多语言**和国际化
+- 全局一致的 **设计语言**
+- 支持 **分页**
+- 易用和自动展开的 **文章目录**
+- 支持 **多语言** 和国际化
 - 美观的 **CSS 动画**
 
 ### 社交和评论系统
 
 - 支持 **[Gravatar](https://gravatar.com)** 头像
-- 支持本地**头像**
+- 支持本地 **头像**
 - 支持多达 **87** 种社交链接
 - 支持多达 **28** 种网站分享
 - 支持 **[Disqus](https://disqus.com)** 评论系统
@@ -128,44 +132,44 @@ pnpx fixit-cli create my-blog
 ### 扩展功能
 
 - 支持基于 [PostChat](https://ai.zhheo.com/console/login?InviteID=85041330) 的 **AI 摘要**、**AI 搜索** 和 **AI 智能客服**
-- 支持**渐进式网页应用**
-- 支持**二级菜单**
-- 支持**内容加密**（页面、局部）
-- 支持**友情链接**的页面模板
-- 支持基于 [algolia](https://www.algolia.com/)、[Fuse.js](https://fusejs.io/)、 **CSE** 或 [PostChat](https://ai.zhheo.com/console/login?InviteID=85041330) 的**搜索**
-- 支持基于 [Google](https://programmablesearchengine.google.com/) 的**自定义搜索引擎 (CSE)**
+- 支持 **渐进式网页应用**
+- 支持 **二级菜单**
+- 支持 **内容加密**（页面、局部）
+- 支持 **友情链接** 的页面模板
+- 支持基于 [algolia](https://www.algolia.com/)、[Fuse.js](https://fusejs.io/)、[Pagefind](https://pagefind.app)、CSE 或 [PostChat](https://ai.zhheo.com/console/login?InviteID=85041330) 的 **搜索**
+- 支持基于 [Google](https://programmablesearchengine.google.com/) 的 **自定义搜索引擎 (CSE)**
 - 支持 **Twemoji**
-- 支持**代码高亮**
-- 一键**复制代码**到剪贴板
-- 支持基于 [lightgallery](https://github.com/sachinchoolur/lightgallery) 的**图片画廊**
-- 支持 **[Font Awesome](https://fontawesome.com/) 图标**的 Markdown 扩展语法
-- 支持**上标注释**的 Markdown 扩展语法
-- 支持**分数**的 Markdown 扩展语法
+- 支持 **代码高亮**
+- 一键 **复制代码** 到剪贴板
+- 支持基于 [lightgallery](https://github.com/sachinchoolur/lightgallery) 的 **图片画廊**
+- 支持 **[Font Awesome](https://fontawesome.com/) 图标** 的 Markdown 扩展语法
+- 支持 **上标注释** 的 Markdown 扩展语法
+- 支持 **分数** 的 Markdown 扩展语法
 - 支持多种 **admonitions** shortcode 或 **alerts** 的 Markdown 扩展语法
-- 支持**标签页**的 shortcode，提供多种设计样式
-- 支持基于 [KaTeX](https://katex.org/) 或 [MathJax](https://www.mathjax.org) 的**数学公式**
-- 支持基于 [mermaid](https://github.com/knsv/mermaid) 的**图表** 代码块扩展语法和 shortcode
-- 支持基于 [ECharts](https://echarts.apache.org/) 的**交互式数据可视化** 代码块扩展语法和 shortcode
+- 支持 **标签页** 的 shortcode，提供多种设计样式
+- 支持基于 [KaTeX](https://katex.org/) 或 [MathJax](https://www.mathjax.org) 的 **数学公式**
+- 支持基于 [mermaid](https://github.com/knsv/mermaid) 的 **图表** 代码块扩展语法和 shortcode
+- 支持基于 [ECharts](https://echarts.apache.org/) 的 **交互式数据可视化** 代码块扩展语法和 shortcode
 - 支持 **Timeline** 的代码块扩展语法和 shortcode
 - 支持 **文件树** 的代码块扩展语法和 shortcode
 - 支持基于 [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js) 的 **Mapbox** shortcode
-- 支持基于 [APlayer](https://github.com/MoePlayer/APlayer) 和 [MetingJS](https://github.com/metowolf/MetingJS) 的**音乐播放器** shortcode
+- 支持基于 [APlayer](https://github.com/MoePlayer/APlayer) 和 [MetingJS](https://github.com/metowolf/MetingJS) 的 **音乐播放器** shortcode
 - 支持 **Bilibili 视频** 和 **抖音视频** shortcode
-- 支持**自定义样式**的 shortcode
-- 支持**自定义脚本**的 shortcode
-- 支持**自定义模板块**
+- 支持 **自定义样式** 的 shortcode
+- 支持 **自定义脚本** 的 shortcode
+- 支持 **自定义模板块**
 - 支持基于 [TypeIt](https://typeitjs.com/) 的**打字动画** shortcode
 - 支持基于 [cookieconsent](https://github.com/osano/cookieconsent) 的 **Cookie 许可横幅**
-- 支持基于 [cell-watermark](https://github.com/Lruihao/watermark) 的**网页水印**
-- 支持基于 [pangu.js](https://github.com/vinta/pangu.js) 的**中文排版**
-- 支持本地**缓存远程图床图片**
+- 支持基于 [cell-watermark](https://github.com/Lruihao/watermark) 的 **网页水印**
+- 支持基于 [pangu.js](https://github.com/vinta/pangu.js) 的 **中文排版**
+- 支持本地 **缓存远程图床图片**
 - ……
 
 </details>
 
 ## 多语言和国际化
 
-FixIt 主题多语言基本配置及自动翻译等详见 [内容管理](https://fixit.lruihao.cn/zh-cn/documentation/content-management/introduction#multilingual) 文档，欢迎 [贡献一种新的语言](https://github.com/hugo-fixit/FixIt/pulls)。
+FixIt 主题多语言基本配置及自动翻译等详见 [内容管理](https://fixit.lruihao.cn/zh-cn/docs/content-management/introduction#multilingual) 文档，欢迎 [贡献一种新的语言](https://github.com/hugo-fixit/FixIt/pulls)。
 
 <details>
 <summary>FixIt 支持下列语言。</summary>
@@ -189,9 +193,18 @@ FixIt 主题多语言基本配置及自动翻译等详见 [内容管理](https:/
 
 </details>
 
+## 浏览器支持
+
+FixIt 主题支持所有主流浏览器的最近两个版本。
+
+![Chrome](https://img.shields.io/badge/Chrome-last+2-blue?logo=googlechrome)
+![Edge](https://img.shields.io/badge/Edge-last+2-blue?logo=microsoft-edge)
+![Firefox](https://img.shields.io/badge/Firefox-last+2-orange?logo=firefox)
+![Safari](https://img.shields.io/badge/Safari-last+2-blue?logo=safari)
+
 ## 主题组件
 
-FixIt 主题旨在在**简洁性**和**可扩展性**之间取得平衡。为此，我们开发了一系列额外的 [Hugo 主题组件](https://fixit.lruihao.cn/zh-cn/ecosystem/#-组件) 供用户选择。
+为了平衡 FixIt 主题的 **简洁性** 和 **可扩展性**，我们额外开发了一系列 [Hugo 主题组件](https://fixit.lruihao.cn/zh-cn/ecosystem/#-组件) 供用户选择。
 
 <details>
 <summary>点击展开</summary>
@@ -238,14 +251,14 @@ FixIt 主题旨在在**简洁性**和**可扩展性**之间取得平衡。为此
 | [Discussions][discussions]         | GitHub 讨论区                   |
 | [FixIt 主题交流群（微信）][wx-mp]  | 关注「菠菜眾長」回复“FixIt”获取 |
 | [FixIt 主题交流群（QQ）][qq-group] | QQ 群：`814031017`              |
-| [Hugo FixIt 星球][zsxq]            | 付费知识星球                    |
+| [FixIt 开发交流群][dev-group]      | QQ 群：`770835493`              |
 
 [discussions]: https://github.com/hugo-fixit/FixIt/discussions
 [pulls]: https://github.com/hugo-fixit/FixIt/pulls
 [issues]: https://github.com/hugo-fixit/FixIt/issues
-[qq-group]: https://qm.qq.com/cgi-bin/qm/qr?k=awbwdTtSQ_-H5QGzeJxdWgv6JMbNehNM&jump_from=webapi
-[zsxq]: https://t.zsxq.com/GgKEW
 [wx-mp]: https://lruihao.cn/images/qr-wx-mp.webp
+[qq-group]: https://qm.qq.com/q/Mn1I7ljqsS
+[dev-group]: https://qm.qq.com/q/ky3uru0mbu
 
 ## 参与贡献
 
@@ -265,11 +278,12 @@ FixIt 主题旨在在**简洁性**和**可扩展性**之间取得平衡。为此
 <details>
 <summary>感谢 FixIt 主题中使用的所有开源项目。</summary>
 
+- [UnoCSS](https://github.com/unocss/unocss)
 - [normalize.css](https://github.com/necolas/normalize.css)
-- [Font Awesome](https://fontawesome.com/)
+- [Font Awesome](https://github.com/FortAwesome/Font-Awesome)
 - [Simple Icons](https://github.com/simple-icons/simple-icons)
-- [Animate.css](https://daneden.github.io/animate.css/)
-- [autocomplete-js](https://github.com/algolia/autocomplete)
+- [Animate.css](https://github.com/animate-css/animate.css)
+- [autocomplete](https://github.com/algolia/autocomplete)
 - [algoliasearch](https://github.com/algolia/algoliasearch-client-javascript)
 - [Fuse.js](https://fusejs.io/)
 - [object-fit-images](https://github.com/fregante/object-fit-images)
@@ -297,9 +311,7 @@ FixIt 主题旨在在**简洁性**和**可扩展性**之间取得平衡。为此
 - [Twikoo](https://twikoo.js.org/)
 - [github-corners](https://github.com/tholman/github-corners)
 - [giscus](https://giscus.app/zh-CN)
-- [crypto-js](https://github.com/brix/crypto-js)
 - [pace](https://github.com/CodeByZach/pace)
-- [xxhash-wasm](https://github.com/jungomi/xxhash-wasm)
 - [`<tab-container>` element](https://github.com/github/tab-container-element)
 - [`<json-viewer>` element](https://github.com/Lruihao/json-viewer-element)
 
@@ -315,11 +327,11 @@ FixIt 根据 **MIT** 许可协议授权。更多信息请查看 [LICENSE 文件]
 
 - [微信支付](/images/wechatpay.jpg)
 - [支付宝](/images/alipay.jpg)
-- [PayPal](https://paypal.me/Lruihao)
+<!-- - [PayPal](https://paypal.me/Lruihao) -->
 
 感谢以下赞助商提供大力支持：
 
-- [translate.js](https://github.com/xnx3/translate) 赞助[企业级翻译通道](https://translate.zvo.cn/4087.html)。
+- [translate.js](https://github.com/xnx3/translate) 赞助 [企业级翻译通道](https://translate.zvo.cn/4087.html)。
 
 ## 作者
 

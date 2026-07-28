@@ -6,19 +6,27 @@ Make sure that you follow [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) while contrib
 
 Before you start contributing, make sure you have the following tools installed:
 
-- **Node.js** (>= 20.0.0) - Required for package management and build tools
-- **Hugo Extended** (>= 0.156.0) - The static site generator
-- **pnpm** - Package manager (recommended)
+- **Hugo Extended** (>= 0.161.0) - The static site generator
+- **Dart Sass** - Required for SCSS compilation
+- **Node.js** (>= 22) - Required for package management and build tools
+- **pnpm** - Package manager
 
 You can check your installed versions:
 
 ```bash
-node --version
 hugo version
+sass --version
+node --version
 pnpm --version
 ```
 
-## How to contribute to this project
+Check the Hugo environment information:
+
+```bash
+hugo env
+```
+
+## How to Contribute
 
 First, fork this repository by clicking the fork button.
 
@@ -36,9 +44,16 @@ pnpm install
 
 And now you are ready to go!
 
-Here are some useful commands for development:
+### Workflow
 
-### Development
+1. **Make your changes** in the appropriate directories
+2. **Test locally** using `pnpm dev:demo` or `pnpm dev:test`
+3. **Check code quality** with `pnpm lint` and `pnpm typecheck`
+4. **Check different environments** with production builds (`pnpm build:demo` or `pnpm build:test`)
+5. **Verify documentation** changes with `pnpm dev:docs` (if applicable)
+6. **Commit your changes** following the commit message format below
+
+### Commands
 
 ```bash
 # Start demo site development server
@@ -47,30 +62,48 @@ pnpm dev:demo
 pnpm dev:test
 # Start documentation development server (requires fixit-docs as sibling directory)
 pnpm dev:docs
-```
 
-> [!TIP]
->
-> - Add `-e production` to the development command to check the production environment, e.g. `pnpm dev:test -e production`.
-> - For documentation-related theme changes, it is recommended to clone both `FixIt` and `fixit-docs` as sibling directories.
-
-### Building
-
-```bash
 # Build demo site
 pnpm build:demo
 # Build test site
 pnpm build:test
 # Build all sites
 pnpm build
-```
 
-### Preview
+# Lint with ESLint
+pnpm lint
+# TypeScript type checking
+pnpm typecheck
 
-```bash
+# Regenerate Chroma lexer map (assets/scss/core/maps/_chroma-lexers.scss)
+pnpm gen:lexers
+
 # Preview the built site locally (requires build first)
 pnpm preview
+
+# Build UnoCSS utility classes (pre-built, committed to repo)
+pnpm unocss
+# Watch mode for UnoCSS (for theme developers)
+pnpm unocss:watch
 ```
+
+> [!TIP]
+>
+> - Add `-e production` to the development command to check the production environment, e.g. `pnpm dev:test -e production`.
+> - Add `-e debug` to enable debug mode (if applicable), e.g. `pnpm dev:test -e debug`.
+> - For documentation-related theme changes, it is recommended to clone both `FixIt` and `fixit-docs` as sibling directories.
+
+### Pull Request
+
+- Create a feature branch from `main`
+- Make your changes with clear, focused commits
+- Test your changes thoroughly
+- Update documentation if needed
+- Submit a pull request with a clear description
+
+Finally, create a new pull request at <https://github.com/hugo-fixit/FixIt/pulls> to submit your contribution.
+
+---
 
 ## Project Structure
 
@@ -83,38 +116,26 @@ FixIt/
 │   └── test/           # Test site
 ├── archetypes/         # Content templates
 ├── assets/             # Theme assets
-│   ├── css/            # SCSS stylesheets
-│   ├── js/             # JavaScript files
+│   ├── css/            # UnoCSS pre-built output (unocss.css)
 │   ├── images/         # Image assets
-│   └── lib/            # Third-party libraries
+│   ├── js/             # JavaScript files
+│   ├── lib/            # Third-party libraries
+│   └── scss/           # SCSS stylesheets
 ├── i18n/               # Internationalization files
 ├── layouts/            # Hugo template files
 │   ├── _markup/        # Hugo render hooks
 │   ├── _partials/      # Reusable template components
 │   └── _shortcodes/    # Custom shortcodes
-├── packages/           # Theme-related packages
+├── packages/           # Theme-related packages (pnpm workspaces)
+│   ├── chroma-lexers/  # Chroma lexer SCSS map generator
+│   ├── integration/    # Post-build site merging
+│   ├── shared/         # Shared utilities
+│   └── versioning/     # Version management (pre-commit)
 ├── static/             # Static files
 ├── hugo.toml           # Default theme configuration
+├── uno.config.ts       # UnoCSS configuration
 └── package.json        # npm scripts and dependencies
 ```
-
-## Development Workflow
-
-1. **Make your changes** in the appropriate directories
-2. **Test locally** using `pnpm dev` or `pnpm test`
-3. **Check different environments** with production builds
-4. **Verify documentation** changes with `pnpm dev:docs` (if applicable)
-5. **Commit your changes** following the commit message format below
-
-## Pull Request Guidelines
-
-- Create a feature branch from `main`
-- Make your changes with clear, focused commits
-- Test your changes thoroughly
-- Update documentation if needed
-- Submit a pull request with a clear description
-
-Finally, create a new pull request at <https://github.com/hugo-fixit/FixIt/pulls> to submit your contribution 🎉
 
 ## Git Commit Guidelines
 
@@ -133,6 +154,13 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 |      |____________ Scope: The specific part of the codebase affected (optional but recommended).
 |___________________ Type: Indicates the kind of change.
 ```
+
+> [!NOTE]
+>
+> - Keep the subject line concise and ideally within 72 characters.
+> - If the change is more than a sentence, add a body.
+> - Do not include secrets (tokens/keys) or personal data in commit messages.
+> - Do not invent issue/PR numbers or facts that are not present in the diff.
 
 ### Allowed Types
 

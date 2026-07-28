@@ -1,17 +1,17 @@
 {{- /*
   The basic syntax of alert is compatible with GitHub, Obsidian, and Typora.
-  @param {String} .Type the type of the alert box
-  @param {String} .Text the content of the alert box
-  @param {Map} [.Attributes] the attributes of the alert box
+  @param {String} .Type - The type of the alert box
+  @param {String} .Text - The content of the alert box
+  @param {Map} [.Attributes] - The attributes of the alert box
   @example {{- dict "Text" .Text "Type" .AlertType "Attributes" .Attributes | partial "plugin/alert.html" -}}
 */ -}}
 
 {{- $iconMap := dict
-  "note" "images/icons/alerts/info.svg"
-  "tip" "images/icons/alerts/light-bulb.svg"
-  "important" "images/icons/alerts/report.svg"
-  "warning" "images/icons/alerts/alert.svg"
-  "caution" "images/icons/alerts/stop.svg"
+  "note" "octicon-info-16 me-2"
+  "tip" "octicon-light-bulb-16 me-2"
+  "important" "octicon-report-16 me-2"
+  "warning" "octicon-alert-16 me-2"
+  "caution" "octicon-stop-16 me-2"
 -}}
 
 {{- $attrs := "" }}
@@ -29,7 +29,7 @@
 <div {{ $attrs | safeHTMLAttr }}>
   {{- $icon := index $iconMap .Type -}}
   <p class="alert-title">
-    {{- dict "Src" $icon | partial "plugin/icon.html" }}
+    {{- dict "Class" $icon | partial "plugin/icon.html" }}
     {{- or (T (printf "alert.%v" .Type)) (title .Type) -}}
   </p>
   {{- .Text | safeHTML -}}
