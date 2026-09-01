@@ -220,7 +220,7 @@
 
 {{- /* Tabs */ -}}
 {{- if .Store.Get "hasTabs" | and (not $isArchivesOrOffline) -}}
-  {{- $source := $cdn.tabContainerElementJS | default "lib/tab-container-element/bundle.min.js" -}}
+  {{- $source := $cdn.tabContainerElementJS | default "lib/tab-container-element/bundle.js" -}}
   {{- dict "Source" $source "Fingerprint" $fingerprint "Attr" `type="module"` "Defer" true | dict "Page" . "Data" | partial "store/script.html" -}}
 {{- end -}}
 
@@ -265,6 +265,11 @@
   -}}
   {{- $config = dict "watermark" $watermarkConfig | merge $config -}}
   {{- dict "Source" "js/lib/watermark.ts" "Build" true "Fingerprint" $fingerprint "Defer" true | dict "Page" . "Data" | partial "store/script.html" -}}
+{{- end -}}
+
+{{- /* Table Sort */ -}}
+{{- if .Store.Get "hasTableSort" -}}
+  {{- dict "Source" "js/lib/table-sort.ts" "Build" true "Fingerprint" $fingerprint "Defer" true | dict "Page" . "Data" | partial "store/script.html" -}}
 {{- end -}}
 
 {{- /* Content Decryption */ -}}
