@@ -52,6 +52,7 @@ other = "المقالات"
 # === Section ===
 [section]
 recentlyUpdated = "تم التحديث مؤخراً"
+subscribeRSS = "اشترك في خلاصة RSS"
 
 [section.totalWordCount]
 one = "كلمة واحدة"
@@ -115,6 +116,7 @@ exitFullscreen = "الخروج من ملء الشاشة"
 cookieconsentMessage = "يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربتك."
 cookieconsentDismiss = "فهمت!"
 cookieconsentLink = "اعرف المزيد"
+toggleSortOrder = "تبديل ترتيب الفرز"
 # === Assets ===
 
 # === Share ===

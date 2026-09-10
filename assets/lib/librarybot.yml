@@ -28,7 +28,7 @@ libraries:
         - from: dist/APlayer.min.js
           to: aplayer/APlayer.min.js
   - npm: cell-tooltip
-    version: 0.4.0
+    version: 0.4.1
     local:
       items:
         - from: dist/cell-tooltip.umd.js
@@ -126,7 +126,7 @@ libraries:
           baseDir: static/lib
           clean: true
   - npm: mapbox-gl
-    version: 3.29.0
+    version: 3.30.0
     local:
       items:
         - from: dist/mapbox-gl.css

@@ -18,8 +18,8 @@ libFiles:
   artalkJS: artalk@latest/dist/Artalk.js
   # @algolia/autocomplete-js@1.19.9 https://github.com/algolia/autocomplete
   autocompleteJS: '@algolia/autocomplete-js@1.19.9/dist/umd/index.production.js'
-  # cell-tooltip@0.4.0 https://github.com/Lruihao/cell-tooltip
-  cellTooltipJS: cell-tooltip@0.4.0/dist/cell-tooltip.umd.js
+  # cell-tooltip@0.4.1 https://github.com/Lruihao/cell-tooltip
+  cellTooltipJS: cell-tooltip@0.4.1/dist/cell-tooltip.umd.js
   # cell-watermark@1.0.4 https://github.com/Lruihao/watermark
   cellWatermarkJS: cell-watermark@1.0.4/src/watermark.js
   # cookieconsent@3.1.1 https://github.com/osano/cookieconsent
@@ -44,9 +44,9 @@ libFiles:
   lightgalleryJS: lightgallery@2.9.0/lightgallery.min.js
   lightgalleryThumbnailJS: lightgallery@2.9.0/plugins/thumbnail/lg-thumbnail.min.js
   lightgalleryZoomJS: lightgallery@2.9.0/plugins/zoom/lg-zoom.min.js
-  # mapbox-gl@3.29.0 https://docs.mapbox.com/mapbox-gl-js
-  mapboxGLCSS: mapbox-gl@3.29.0/dist/mapbox-gl.css
-  mapboxGLJS: mapbox-gl@3.29.0/dist/mapbox-gl.js
+  # mapbox-gl@3.30.0 https://docs.mapbox.com/mapbox-gl-js
+  mapboxGLCSS: mapbox-gl@3.30.0/dist/mapbox-gl.css
+  mapboxGLJS: mapbox-gl@3.30.0/dist/mapbox-gl.js
   # meting@2.0.2 https://github.com/metowolf/MetingJS
   metingJS: meting@2.0.2/dist/Meting.min.js
   # object-fit-images@3.2.4 https://github.com/fregante/object-fit-images

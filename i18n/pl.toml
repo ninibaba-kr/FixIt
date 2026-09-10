@@ -51,6 +51,7 @@ other = "Posty"
 # === Section ===
 [section]
 recentlyUpdated = "Ostatnio zaktualizowane"
+subscribeRSS = "Subskrybuj kanał RSS"
 
 [section.totalWordCount]
 one = "Jedno słowo"
@@ -114,6 +115,7 @@ exitFullscreen = "Wyjdź z pełnego ekranu"
 cookieconsentMessage = "Ta strona korzysta z plików Cookies, aby poprawić komfort użytkowania."
 cookieconsentDismiss = "Zgodzić się"
 cookieconsentLink = "Ucz się więcej"
+toggleSortOrder = "Zmień kolejność sortowania"
 # === Assets ===
 
 # === Share ===

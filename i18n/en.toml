@@ -51,6 +51,7 @@ other = "Posts"
 # === Section ===
 [section]
 recentlyUpdated = "Recently Updated"
+subscribeRSS = "Subscribe to RSS feed"
 
 [section.totalWordCount]
 one = "Total one word"
@@ -114,6 +115,7 @@ exitFullscreen = "Exit fullscreen"
 cookieconsentMessage = "This website uses Cookies to improve your experience."
 cookieconsentDismiss = "Got it!"
 cookieconsentLink = "Learn more"
+toggleSortOrder = "Toggle sort order"
 # === Assets ===
 
 # === Share ===

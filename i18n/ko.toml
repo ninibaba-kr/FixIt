@@ -51,6 +51,7 @@ other = "게시물"
 # === Section ===
 [section]
 recentlyUpdated = "최근 업데이트"
+subscribeRSS = "RSS 피드 구독"
 
 [section.totalWordCount]
 other = "총 약 {{ .Count }} 자"
@@ -112,6 +113,7 @@ exitFullscreen = "전체 화면 종료"
 cookieconsentMessage = "이 웹사이트는 쿠키를 사용하여 경험을 향상시킵니다."
 cookieconsentDismiss = "동의"
 cookieconsentLink = "자세히 알아보기"
+toggleSortOrder = "정렬 순서 전환"
 # === Assets ===
 
 # === Share ===
