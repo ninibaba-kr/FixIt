@@ -26,6 +26,12 @@ other = "归档"
 [allSome]
 other = "所有{{ .Some }}"
 
+[author]
+other = "作者"
+
+[authors]
+other = "作者"
+
 [category]
 other = "分类"
 
@@ -268,3 +274,8 @@ download = "下载 SVG"
 diagram = "图表"
 code = "代码"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "已过期"
+# === Friends ===

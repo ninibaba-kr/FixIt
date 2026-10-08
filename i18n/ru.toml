@@ -26,6 +26,12 @@ other = "Архив"
 [allSome]
 other = "Все {{ .Some }}"
 
+[author]
+other = "Автор"
+
+[authors]
+other = "Авторы"
+
 [category]
 other = "Категория"
 
@@ -272,3 +278,8 @@ download = "Скачать SVG"
 diagram = "Диаграмма"
 code = "Код"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "Истёкший"
+# === Friends ===

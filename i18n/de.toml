@@ -26,6 +26,12 @@ other = "Archiv"
 [allSome]
 other = "Alle {{ .Some }}"
 
+[author]
+other = "Autor"
+
+[authors]
+other = "Autoren"
+
 [category]
 other = "Kategorie"
 
@@ -272,3 +278,8 @@ download = "SVG herunterladen"
 diagram = "Diagramm"
 code = "Code"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "Abgelaufen"
+# === Friends ===

@@ -26,6 +26,12 @@ other = "Arhive"
 [allSome]
 other = "Toate {{ .Some }}"
 
+[author]
+other = "Autor"
+
+[authors]
+other = "Autori"
+
 [category]
 other = "Categorie"
 
@@ -272,3 +278,8 @@ download = "Descarcă SVG"
 diagram = "Diagramă"
 code = "Cod"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "Expirat"
+# === Friends ===

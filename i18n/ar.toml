@@ -26,6 +26,12 @@ other = "الأرشيف"
 [allSome]
 other = "جميع {{ .Some }}"
 
+[author]
+other = "المؤلف"
+
+[authors]
+other = "المؤلفون"
+
 [category]
 other = "التصنيف"
 
@@ -273,3 +279,8 @@ download = "تحميل SVG"
 diagram = "مخطط"
 code = "الكود"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "منتهي الصلاحية"
+# === Friends ===

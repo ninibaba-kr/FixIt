@@ -26,6 +26,12 @@ other = "بایگانی"
 [allSome]
 other = "همه {{ .Some }}"
 
+[author]
+other = "نویسنده"
+
+[authors]
+other = "نویسندگان"
+
 [category]
 other = "دسته‌بندی"
 
@@ -273,3 +279,8 @@ download = "دانلود SVG"
 diagram = "نمودار"
 code = "کد"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "منقضی شده"
+# === Friends ===

@@ -26,6 +26,12 @@ other = "آرکائیو"
 [allSome]
 other = "تمام {{ .Some }}"
 
+[author]
+other = "مصنف"
+
+[authors]
+other = "مصنفین"
+
 [category]
 other = "زمرہ"
 
@@ -273,3 +279,8 @@ download = "SVG ڈاؤن لوڈ"
 diagram = "ڈائیگرام"
 code = "کوڈ"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "میعاد ختم"
+# === Friends ===

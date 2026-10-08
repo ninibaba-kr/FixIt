@@ -26,6 +26,12 @@ other = "Archivi"
 [allSome]
 other = "Tutti {{ .Some }}"
 
+[author]
+other = "Autore"
+
+[authors]
+other = "Autori"
+
 [category]
 other = "Categoria"
 
@@ -272,3 +278,8 @@ download = "Scarica SVG"
 diagram = "Diagramma"
 code = "Codice"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "Scaduto"
+# === Friends ===

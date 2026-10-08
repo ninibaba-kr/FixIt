@@ -26,6 +26,12 @@ other = "보관함"
 [allSome]
 other = "모두 {{ .Some }}"
 
+[author]
+other = "저자"
+
+[authors]
+other = "저자"
+
 [category]
 other = "분류"
 
@@ -268,3 +274,8 @@ download = "SVG 다운로드"
 diagram = "다이어그램"
 code = "코드"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "만료됨"
+# === Friends ===

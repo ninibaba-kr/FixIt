@@ -26,6 +26,12 @@ other = "अभिलेखागार"
 [allSome]
 other = "सभी {{ .Some }}"
 
+[author]
+other = "रचयिता"
+
+[authors]
+other = "रचयिता"
+
 [category]
 other = "श्रेणी"
 
@@ -273,3 +279,8 @@ download = "SVG डाउनलोड करें"
 diagram = "आरेख"
 code = "कोड"
 # === Tabs ===
+
+# === Friends ===
+[friends]
+expired = "समय सीमा समाप्त"
+# === Friends ===

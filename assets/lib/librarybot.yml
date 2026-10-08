@@ -2,13 +2,13 @@ schemaVersion: 1
 baseDir: assets/lib
 libraries:
   - npm: '@algolia/autocomplete-js'
-    version: 1.19.9
+    version: 1.19.12
     local:
       items:
         - from: dist/umd/index.production.js
           to: autocomplete-js/index.production.js
   - npm: algoliasearch
-    version: 5.57.0
+    version: 5.59.0
     local:
       items:
         - from: dist/lite/builds/browser.umd.js
@@ -91,7 +91,7 @@ libraries:
         - from: dist/json-viewer-element.umd.js
           to: json-viewer-element/json-viewer-element.umd.js
   - npm: katex
-    version: 0.18.5
+    version: 0.18.10
     local:
       items:
         - from: dist/contrib/copy-tex.min.js
@@ -126,7 +126,7 @@ libraries:
           baseDir: static/lib
           clean: true
   - npm: mapbox-gl
-    version: 3.30.0
+    version: 3.32.0
     local:
       items:
         - from: dist/mapbox-gl.css
@@ -146,7 +146,7 @@ libraries:
         - from: pace.min.js
           to: pace/pace.min.js
   - npm: pangu
-    version: 9.1.1
+    version: 10.4.1
     local:
       items:
         - from: dist/browser/pangu.umd.js
@@ -164,7 +164,7 @@ libraries:
         - from: sharer.min.js
           to: sharer/sharer.min.js
   - npm: simple-icons
-    version: 16.29.0
+    version: 16.33.0
     local:
       items:
         - type: dir
@@ -184,7 +184,7 @@ libraries:
         - from: dist/twemoji.min.js
           to: twemoji/twemoji.min.js
   - npm: twikoo
-    version: 1.7.20
+    version: 2.0.12
     local:
       items:
         - from: dist/twikoo.all.min.js
@@ -202,7 +202,7 @@ libraries:
         - from: dist/Valine.min.js
           to: valine/Valine.min.js
   - npm: '@waline/client'
-    version: 3.15.2
+    version: 3.16.0
     local:
       items:
         - from: dist/waline.css
