@@ -83,7 +83,7 @@ systemMenu = "站點功能"
 
 # === Footer ===
 [footer]
-poweredBySome = "由 {{ .Hugo }} 強力驅動 | 主題 - {{ .Theme }}"
+poweredBySome = "由 {{ .Hugo }} 與 {{ .Theme }} 驅動"
 siteUV = "總訪客數"
 sitePV = "總訪問量"
 siteRunning = "網站運行中……"
@@ -186,6 +186,10 @@ wechatpay = "微信"
 alipay = "支付寶"
 paypal = "PayPal"
 bitcoin = "比特幣"
+
+[single.follow]
+btn = "追蹤"
+title = "在 {{ .Platform }} 上追蹤我！"
 # === Single Post ===
 
 # === Error Pages ===

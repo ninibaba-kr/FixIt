@@ -85,7 +85,7 @@ systemMenu = "Контроле сајта"
 
 # === Footer ===
 [footer]
-poweredBySome = "Покреће {{ .Hugo }} | Тема - {{ .Theme }}"
+poweredBySome = "Покреће {{ .Hugo }} & {{ .Theme }}"
 siteUV = "Укупно посетилаца"
 sitePV = "Укупно посета"
 siteRunning = "Website running ..."
@@ -190,6 +190,10 @@ wechatpay = "WeChat Pay"
 alipay = "Alipay"
 paypal = "PayPal"
 bitcoin = "Bitcoin"
+
+[single.follow]
+btn = "Прати"
+title = "Прати ме на {{ .Platform }}!"
 # === Single Post ===
 
 # === Error Pages ===

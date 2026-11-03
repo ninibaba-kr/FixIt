@@ -86,7 +86,7 @@ systemMenu = "عناصر التحكم بالموقع"
 
 # === Footer ===
 [footer]
-poweredBySome = "بدعم من {{ .Hugo }} | السمة - {{ .Theme }}"
+poweredBySome = "بدعم من {{ .Hugo }} و{{ .Theme }}"
 siteUV = "إجمالي الزوار"
 sitePV = "إجمالي الزيارات"
 siteRunning = "الموقع يعمل منذ ..."
@@ -191,6 +191,10 @@ wechatpay = "WeChat Pay"
 alipay = "Alipay"
 paypal = "PayPal"
 bitcoin = "Bitcoin"
+
+[single.follow]
+btn = "متابعة"
+title = "تابعني على {{ .Platform }}!"
 # === Single Post ===
 
 # === Error Pages ===

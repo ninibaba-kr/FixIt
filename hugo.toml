@@ -67,6 +67,9 @@ capitalizeListTitles = false
 #     "warning-link-check"               - external link check failed
 #     "warning-pagefind"                 - Pagefind search index not found
 #     "warning-remote-image"             - failed to get remote image
+#     "warning-watermark-config"         - watermark `image` or `text` not configured
+#     "warning-watermark-font"           - watermark font not found or CJK font missing
+#     "warning-watermark-image"          - watermark image not found
 #   Hugo message IDs:
 #     "err-youtube-remote"               - youtube shortcode failed to retrieve remote data
 #     "shortcode-vimeo-simple"           - vimeo_simple shortcode failed to retrieve remote data
@@ -604,6 +607,9 @@ instant_page = false
 collection_list = false
 # Whether to enable collection navigation at the end of the post.
 collection_navigation = false
+# Follow me widget in the post TOC sidebar and mobile drawer.
+# Set to a `params.social` platform key to enable (e.g. "github"); empty disables it.
+follow = ""
 # End of post flag.
 end_flag = ""
 
@@ -657,6 +663,37 @@ optimise = false
 # A list of image file names or patterns to exclude from optimisation.
 # Example: `["no-optimize.jpg", "*.tiff", "images/exclude-*.webp"]`
 black_list = []
+
+# Image watermark configuration.
+# Applied to content images and featured images. Enabling the watermark
+# triggers image processing even when `optimise = false`.
+[params.image.watermark]
+# Whether to add a watermark to images.
+enable = false
+# Watermark image path relative to `assets`, takes precedence over `text`
+# unless the image shortcode passes `watermark="text"`.
+# A transparent PNG is recommended.
+image = ""
+# Text watermark. Used when `image` is empty, or when an image is rendered with
+# `watermark="text"` in the `image` shortcode.
+text = ""
+# Font path relative to `assets`, required for non-ASCII text such as Chinese.
+# The font must be a TTF or OTF file; font family names are not supported.
+font = ""
+# Position: top-left, top, top-right, left, center, right, bottom-left, bottom, bottom-right.
+position = "bottom-right"
+# Horizontal offset from the image edge in pixels.
+offset_x = 16
+# Vertical offset from the image edge in pixels.
+offset_y = 16
+# Text size in pixels. 0 or negative = auto, about 3% of the image width.
+size = 0
+# Text color in 3- or 6-digit hexadecimal notation.
+color = "#ffffff"
+# Opacity of the image watermark, between 0.0 and 1.0.
+opacity = 0.8
+# Width of the image watermark as a fraction of the image width. 0 = original size.
+scale = 0.15
 
 # Code block wrapper configuration.
 # You can override the global config via Markdown attributes.
@@ -1439,6 +1476,10 @@ reverse = false
 # Footer configuration.
 [params.footer]
 enable = true
+# Whether to show the site brand (logo/avatar and title).
+brand = false
+# Whether to show social links in the footer.
+social = false
 # Whether to show copyright info.
 copyright = true
 # Whether to show the author.
@@ -1466,15 +1507,6 @@ icon = "fa-solid fa-heartbeat"
 pre = ""
 # Example: "2021-12-18T16:15:22+08:00"
 value = ""
-
-# Footer lines order.
-# Available values: ["first", 0-5, "last"]
-[params.footer.order]
-powered = 0
-copyright = 0
-statistics = 0
-visitor = 0
-beian = 0
 
 # Archives page configuration (all pages of posts type).
 [params.archives]
@@ -1564,6 +1596,10 @@ enable = true
 paginate = 6
 # Whether to show featured image preview in home page post list.
 image_preview = true
+# Number of columns for the home post list.
+# Available values: [1, 2]
+# 2 enables the horizontal two-column card layout on extra-large screens (>= 1440px).
+columns = 1
 
 # Social configuration about the author.
 # Custom social links like the following.

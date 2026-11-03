@@ -86,7 +86,7 @@ systemMenu = "साइट नियंत्रण"
 
 # === Footer ===
 [footer]
-poweredBySome = "{{ .Hugo }} के द्वारा संचालित | थीम - {{ .Theme }}"
+poweredBySome = "{{ .Hugo }} और {{ .Theme }} द्वारा संचालित"
 siteUV = "कुल विज़िटर"
 sitePV = "कुल विज़िट"
 siteRunning = "वेबसाइट चल रही है ..."
@@ -191,6 +191,10 @@ wechatpay = "वीचैट पे"
 alipay = "अली पे"
 paypal = "पेपैल"
 bitcoin = "बिटकॉइन"
+
+[single.follow]
+btn = "फ़ॉलो करें"
+title = "मुझे {{ .Platform }} पर फ़ॉलो करें!"
 # === Single Post ===
 
 # === Error Pages ===

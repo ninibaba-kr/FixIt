@@ -83,7 +83,7 @@ systemMenu = "サイトコントロール"
 
 # === Footer ===
 [footer]
-poweredBySome = "{{ .Hugo }} によって強力に駆動されています | テーマ - {{ .Theme }}"
+poweredBySome = "{{ .Hugo }} と {{ .Theme }} による構築"
 siteUV = "総訪問者数"
 sitePV = "総訪問数"
 siteRunning = "サイトが実行中……"
@@ -186,6 +186,10 @@ wechatpay = "WeChat"
 alipay = "アリペイ"
 paypal = "ペイパル"
 bitcoin = "ビットコイン"
+
+[single.follow]
+btn = "フォロー"
+title = "{{ .Platform }} でフォローしてください！"
 # === Single Post ===
 
 # === Error Pages ===

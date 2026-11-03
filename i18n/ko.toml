@@ -83,7 +83,7 @@ systemMenu = "사이트 컨트롤"
 
 # === Footer ===
 [footer]
-poweredBySome = "{{ .Hugo }}로 구동 | 테마 - {{ .Theme }}"
+poweredBySome = "{{ .Hugo }}와 {{ .Theme }}로 구동"
 siteUV = "총 방문자 수"
 sitePV = "총 페이지 뷰 수"
 siteRunning = "사이트 운영 중……"
@@ -186,6 +186,10 @@ wechatpay = "위챗페이"
 alipay = "알리페이"
 paypal = "페이팔"
 bitcoin = "비트코인"
+
+[single.follow]
+btn = "팔로우"
+title = "{{ .Platform }}에서 저를 팔로우하세요!"
 # === Single Post ===
 
 # === Error Pages ===

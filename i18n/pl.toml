@@ -85,7 +85,7 @@ systemMenu = "Elementy sterujące witryny"
 
 # === Footer ===
 [footer]
-poweredBySome = "Napędzany przez {{ .Hugo }} | Szablon - {{ .Theme }}"
+poweredBySome = "Napędzany przez {{ .Hugo }} & {{ .Theme }}"
 siteUV = "Całkowita odwiedzających"
 sitePV = "Łączna wizyt"
 siteRunning = "Website running ..."
@@ -190,6 +190,10 @@ wechatpay = "WeChat Pay"
 alipay = "Alipay"
 paypal = "PayPal"
 bitcoin = "Bitcoin"
+
+[single.follow]
+btn = "Obserwuj"
+title = "Obserwuj mnie na {{ .Platform }}!"
 # === Single Post ===
 
 # === Error Pages ===

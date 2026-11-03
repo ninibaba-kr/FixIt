@@ -86,7 +86,7 @@ systemMenu = "سائٹ کنٹرولز"
 
 # === Footer ===
 [footer]
-poweredBySome = "{{ .Hugo }} سے چلتا ہے | تھیم - {{ .Theme }}"
+poweredBySome = "{{ .Hugo }} اور {{ .Theme }} سے چلتا ہے"
 siteUV = "کل زائرین"
 sitePV = "کل ملاقاتیں"
 siteRunning = "سائٹ چل رہی ہے ..."
@@ -191,6 +191,10 @@ wechatpay = "WeChat Pay"
 alipay = "Alipay"
 paypal = "PayPal"
 bitcoin = "Bitcoin"
+
+[single.follow]
+btn = "فالو کریں"
+title = "مجھے {{ .Platform }} پر فالو کریں!"
 # === Single Post ===
 
 # === Error Pages ===
