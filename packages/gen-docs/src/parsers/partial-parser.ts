@@ -40,16 +40,23 @@ const GROUP_DESCRIPTIONS: Record<string, string> = {
 
 /**
  * Extract the leading Hugo comment block from file content.
+ * Skips marker-only comments (e.g. `@unocss-skip-start`) wrapping the doc block.
  */
 function extractComment(content: string): string | null {
-  const match = content.match(/^\{\{-?\s*\/\*[\s\S]*?\*\/\s*-?\}\}/)
-  if (!match)
-    return null
-  // Strip the delimiters: {{- /* at start, */ -}} at end
-  const inner = match[0]
-    .replace(/^\{\{-?\s*\/\*\s*/, '')
-    .replace(/\s*\*\/\s*-?\}\}$/, '')
-  return inner.trim()
+  let rest = content
+  while (true) {
+    const match = rest.match(/^\{\{-?\s*\/\*[\s\S]*?\*\/\s*-?\}\}/)
+    if (!match)
+      return null
+    // Strip the delimiters: {{- /* at start, */ -}} at end
+    const inner = match[0]
+      .replace(/^\{\{-?\s*\/\*\s*/, '')
+      .replace(/\s*\*\/\s*-?\}\}$/, '')
+      .trim()
+    if (!/^@unocss-skip-(?:start|end)$/.test(inner))
+      return inner
+    rest = rest.slice(match[0].length).replace(/^\s+/, '')
+  }
 }
 
 /**
@@ -64,7 +71,10 @@ function splitByTags(block: string): { key: string, lines: string[] }[] {
 
   function flush() {
     if (current.length > 0) {
-      sections.push({ key: currentKey, lines: [...current] })
+      sections.push({
+        key: currentKey,
+        lines: [...current],
+      })
       current = []
     }
   }
@@ -135,8 +145,11 @@ function parseParams(paramLines: string[]): PartialParam[] {
 function parseReturn(returnLines: string[]): string {
   for (const line of returnLines) {
     const match = line.trim().match(/@return\s+\{([^}]+)\}\s*(.*)/)
-    if (match)
-      return `\`${match[1]}\`${match[2] ? ` - ${match[2].trim()}` : ''}`
+    if (match) {
+      return `\`${match[1]}\`${match[2]
+        ? ` - ${match[2].trim()}`
+        : ''}`
+    }
   }
   return ''
 }
@@ -212,7 +225,9 @@ function parseDescription(descLines: string[]): string {
     else if (line.startsWith('- ')) {
       flushParagraph()
       const text = line.slice(2)
-      const capitalized = /^https?:\/\//i.test(text) ? text : `${text.charAt(0).toUpperCase()}${text.slice(1)}`
+      const capitalized = /^https?:\/\//i.test(text)
+        ? text
+        : `${text.charAt(0).toUpperCase()}${text.slice(1)}`
       result.push(`- ${capitalized}`)
     }
     else {
@@ -227,7 +242,9 @@ function parseDescription(descLines: string[]): string {
     if (i > 0) {
       const prevIsList = result[i - 1].startsWith('- ')
       const currIsList = result[i].startsWith('- ')
-      output += (prevIsList && currIsList) ? '\n' : '\n\n'
+      output += (prevIsList && currIsList)
+        ? '\n'
+        : '\n\n'
     }
     output += result[i]
   }
@@ -306,7 +323,9 @@ export function parsePartials(partialsDir?: string): PartialGroup[] {
   for (const { filePath, relativePath } of files) {
     const doc = parsePartialFile(filePath, relativePath)
     const dirName = path.dirname(relativePath)
-    const group = dirName === '.' ? '(root)' : dirName
+    const group = dirName === '.'
+      ? '(root)'
+      : dirName
 
     if (!groupMap.has(group)) {
       groupMap.set(group, [])
@@ -316,7 +335,9 @@ export function parsePartials(partialsDir?: string): PartialGroup[] {
 
   // Sort groups by name, with (root) last
   const groups: PartialGroup[] = []
-  const sortedKeys = [...groupMap.keys()].sort((a, b) => {
+  const sortedKeys = [
+    ...groupMap.keys(),
+  ].sort((a, b) => {
     if (a === '(root)')
       return 1
     if (b === '(root)')
