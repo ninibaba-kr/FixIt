@@ -811,7 +811,7 @@ enable = false
 # Disclaimer type.
 # Available values: ["ai", "repost", "original", "custom"]
 type = "ai"
-# Custom disclaimer content (optional, uses I18n default if empty).
+# Custom disclaimer content in Markdown format (optional, uses I18n default if empty).
 content = ""
 
 # Display a message at the beginning of an article to warn the reader that its content might be expired.
@@ -1608,6 +1608,8 @@ social = true
 disclaimer = ""
 # Whether to show the contribution heatmap inside the home profile.
 contribution = true
+# Whether the home profile fills the first screen height.
+fullscreen = true
 
 # Home page posts.
 [params.home.posts]

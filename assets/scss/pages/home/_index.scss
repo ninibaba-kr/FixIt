@@ -8,6 +8,15 @@
   .home-profile {
     text-align: center;
 
+    &[data-fullscreen] {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      // Use svh so the mobile browser toolbar collapsing does not reflow the hero.
+      min-height: MAX(calc(100svh - #{fi-var(header-height)}), 600px);
+    }
+
     .home-avatar {
       padding: 0.5rem;
 
@@ -19,6 +28,9 @@
         transition: all 0.4s ease;
         box-shadow: 0 0 0 0.3618em light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
         @include border-radius(full);
+        @include media('xs') {
+          width: 6rem;
+        }
 
         &:hover {
           position: relative;
@@ -115,9 +127,14 @@
 
   .home-profile {
     padding: 4rem 0;
+
+    &[data-fullscreen] {
+      margin-bottom: 2rem;
+    }
   }
 
-  .home-avatar img {
+  // Compact (non-fullscreen) profile keeps the smaller avatar.
+  .home-profile:not([data-fullscreen]) .home-avatar img {
     width: 6rem;
   }
 
