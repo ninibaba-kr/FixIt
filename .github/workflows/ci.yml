@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ vars.HUGO_VERSION || 'latest' }}
+          extended: true
+
+      - name: Install Dart Sass
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/dart-sass.tar.gz" \
+            "https://github.com/sass/dart-sass/releases/download/1.108.2/dart-sass-1.108.2-linux-x64.tar.gz"
+          tar -xzf "$RUNNER_TEMP/dart-sass.tar.gz" -C "$RUNNER_TEMP"
+          "$RUNNER_TEMP/dart-sass/sass" --embedded --version
+          echo "$RUNNER_TEMP/dart-sass" >> "$GITHUB_PATH"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Verify generated UnoCSS
+        run: |
+          pnpm unocss
+          git diff --exit-code -- assets/css/unocss.css
+
+      - name: Build demo site
+        run: pnpm build:demo
+
+      - name: Build test site
+        run: pnpm build:test
